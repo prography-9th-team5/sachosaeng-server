@@ -52,6 +52,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: 빌드 후 생긴 jar 파일을 서버에 전송합니다.
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        port: ${{ secrets.PORT }}
+        key: ${{ secrets.KEY }}
+        source: "./build/libs/server-0.0.1-SNAPSHOT.jar"
+        target: "/home/ubuntu/"
+    
     - name: ssh로 서버에 접속하여 배포 스크립트를 실행합니다
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -59,4 +69,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        script: ./deploy.sh
+        script: ./deploy-jar.sh
