@@ -29,13 +29,13 @@ jobs:
     - name: Gradle build를 수행합니다
       run: ./gradlew clean build
 
-    - name: Publish Test Results
+    - name: 테스트 결과를 작성합니다
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
         files: '**/build/test-results/test/TEST-*.xml'
 
-    - name: Publish Test Report
+    - name: 테스트가 실패한 위치에 코멘트를 작성합니다
       uses: mikepenz/action-junit-report@v4
       if: failure()
       with:
