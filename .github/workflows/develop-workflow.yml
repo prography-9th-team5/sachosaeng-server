@@ -65,6 +65,9 @@ jobs:
     - name: Gradle build를 수행합니다
       run: ./gradlew clean build
       
+    - name: 현재 경로를 디버깅합니다
+      run: ls -al
+      
     - name: 빌드 후 생긴 jar 파일을 서버에 전송합니다.
       uses: appleboy/scp-action@v0.1.7
       with:
