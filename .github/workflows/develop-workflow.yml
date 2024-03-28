@@ -63,10 +63,15 @@ jobs:
       run: chmod +x gradlew
 
     - name: Gradle build를 수행합니다
-      run: ./gradlew clean build
+      run: ./gradlew bootJar
       
     - name: 현재 경로를 디버깅합니다
       run: ls -al
+
+    - name: 디렉터리 이동 후 경로를 디버깅합니다
+      run: |
+        cd build/libs
+        ls -al
       
     - name: 빌드 후 생긴 jar 파일을 서버에 전송합니다.
       uses: appleboy/scp-action@v0.1.7
@@ -75,7 +80,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
         key: ${{ secrets.KEY }}
-        source: 'build/libs/*.jar'
+        source: 'server-0.0.1-SNAPSHOT.jar'
         target: '/home/ubuntu'
     
     - name: ssh로 서버에 접속하여 배포 스크립트를 실행합니다
