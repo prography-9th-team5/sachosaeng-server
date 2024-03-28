@@ -8,7 +8,6 @@ class ServerApplicationTests {
 
 	@Test
 	void contextLoads() {
-		//머라도 추가
 	}
 
 }
