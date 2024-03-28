@@ -28,3 +28,15 @@ jobs:
 
     - name: Gradle build를 수행합니다
       run: ./gradlew clean build
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: '**/build/test-results/test/TEST-*.xml'
+
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v4
+      if: failure()
+      with:
+        report_paths: '**/build/test-results/test/TEST-*.xml'
