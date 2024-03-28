@@ -52,6 +52,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
     - name: 빌드 후 생긴 jar 파일을 서버에 전송합니다.
       uses: appleboy/scp-action@v0.1.7
       with:
