@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "Swagger API Docs", description = "API 명세서"))
+@OpenAPIDefinition(info = @Info(title = "사초생 API Docs", description = "사초생 API 명세서입니다."))
 public class OpenApiConfig {
 
 }
