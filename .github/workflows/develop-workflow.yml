@@ -24,6 +24,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: true
+        token: ${{ secrets.ACTION_TOKEN }}
     - name: JDK 21을 설치합니다
       uses: actions/setup-java@v4
       with:
@@ -57,6 +58,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         submodules: true
+        token: ${{ secrets.ACTION_TOKEN }}
     - name: JDK 21을 설치합니다
       uses: actions/setup-java@v4
       with:
