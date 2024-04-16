@@ -1,0 +1,4 @@
+[submodule "server/server-secret"]
+	path = server/server-secret
+	url = https://github.com/prography-9th-team5/server-secret.git
+	branch = develop
