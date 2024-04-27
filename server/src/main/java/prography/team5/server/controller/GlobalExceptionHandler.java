@@ -14,6 +14,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CommonApiResponse<Void>> handleException(final Exception e) {
         log.error("알 수 없는 에러 발생", e);
         return ResponseEntity.internalServerError()
-                .body(new CommonApiResponse<>(0, "서버에서 장애가 발생했습니다."));
+                .body(new CommonApiResponse<>(-1, "서버에서 장애가 발생했습니다."));
     }
 }
