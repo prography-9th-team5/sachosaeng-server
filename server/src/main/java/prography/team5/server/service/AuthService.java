@@ -3,8 +3,8 @@ package prography.team5.server.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import prography.team5.server.domain.Member;
-import prography.team5.server.domain.MemberRepository;
+import prography.team5.server.domain.User;
+import prography.team5.server.domain.UserRepository;
 import prography.team5.server.service.dto.JoinRequest;
 
 @RequiredArgsConstructor
@@ -12,9 +12,11 @@ import prography.team5.server.service.dto.JoinRequest;
 @Service
 public class AuthService {
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
-    public void joinNewMember(final JoinRequest joinRequest) {
-        memberRepository.save(new Member(joinRequest.email()));
+    public long joinNewUser(final JoinRequest joinRequest) {
+        final User user = new User(joinRequest.email());
+        userRepository.save(user);
+        return user.getId();
     }
 }
