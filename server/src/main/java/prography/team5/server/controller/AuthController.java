@@ -21,6 +21,7 @@ public class AuthController {
     @PostMapping("/join")
     public ResponseEntity<CommonApiResponse<Void>> join(@RequestBody JoinRequest joinRequest) {
         authService.joinNewMember(joinRequest);
-        return ResponseEntity.created(URI.create("/login")).build();
+        return ResponseEntity.created(URI.create("/login"))
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
 }
