@@ -10,7 +10,7 @@ public class HeaderUtils {
             throw new IllegalArgumentException();
         }
         final String[] split = authorizationHeader.split(" ");
-        if(split.length == 2 && split[0].equalsIgnoreCase(tokenType)) {
+        if (split.length == 2 && split[0].equalsIgnoreCase(tokenType)) {
             return split[1];
         }
         throw new IllegalArgumentException();
