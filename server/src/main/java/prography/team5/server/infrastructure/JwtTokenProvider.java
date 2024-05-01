@@ -7,7 +7,7 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 import prography.team5.server.service.auth.AccessTokenProvider;
 
-public class JwtAccessTokenProvider implements AccessTokenProvider {
+public class JwtTokenProvider implements AccessTokenProvider {
 
     private static final String USER_ID = "userId";
     private static final int MINUTES_TO_MILLISECONDS = 60 * 1000;
@@ -15,7 +15,7 @@ public class JwtAccessTokenProvider implements AccessTokenProvider {
     private final SecretKey secretKey;
     private final long expirationMinutes;
 
-    public JwtAccessTokenProvider(final String secretKey, final long expirationMinutes) {
+    public JwtTokenProvider(final String secretKey, final long expirationMinutes) {
         this.secretKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         this.expirationMinutes = expirationMinutes;
     }
