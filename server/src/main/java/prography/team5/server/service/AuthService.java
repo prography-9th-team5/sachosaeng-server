@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.domain.User;
 import prography.team5.server.domain.UserRepository;
-import prography.team5.server.service.dto.JoinRequest;
+import prography.team5.server.service.dto.EmailRequest;
 
 @RequiredArgsConstructor
 @Transactional
@@ -14,8 +14,8 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
-    public long joinNewUser(final JoinRequest joinRequest) {
-        final User user = new User(joinRequest.email());
+    public long joinNewUser(final EmailRequest emailRequest) {
+        final User user = new User(emailRequest.email());
         userRepository.save(user);
         return user.getId();
     }
