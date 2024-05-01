@@ -1,11 +1,11 @@
-package prography.team5.server.service;
+package prography.team5.server.service.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.domain.User;
 import prography.team5.server.domain.UserRepository;
-import prography.team5.server.service.dto.EmailRequest;
+import prography.team5.server.service.auth.dto.EmailRequest;
 
 @RequiredArgsConstructor
 @Transactional

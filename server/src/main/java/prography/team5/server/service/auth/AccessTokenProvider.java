@@ -1,4 +1,4 @@
-package prography.team5.server.service;
+package prography.team5.server.service.auth;
 
 public interface AccessTokenProvider {
 

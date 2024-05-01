@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.controller.dto.CommonApiResponse;
-import prography.team5.server.service.AuthService;
-import prography.team5.server.service.dto.EmailRequest;
+import prography.team5.server.service.auth.AuthService;
+import prography.team5.server.service.auth.dto.EmailRequest;
 
 @RequiredArgsConstructor
 @RestController

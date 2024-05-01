@@ -5,7 +5,7 @@ import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.crypto.SecretKey;
-import prography.team5.server.service.AccessTokenProvider;
+import prography.team5.server.service.auth.AccessTokenProvider;
 
 public class JwtAccessTokenProvider implements AccessTokenProvider {
 

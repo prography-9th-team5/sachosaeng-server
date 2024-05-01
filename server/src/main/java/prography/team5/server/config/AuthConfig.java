@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import prography.team5.server.infrastructure.JwtAccessTokenProvider;
-import prography.team5.server.service.AccessTokenProvider;
+import prography.team5.server.service.auth.AccessTokenProvider;
 
 @Configuration
 public class AuthConfig {
