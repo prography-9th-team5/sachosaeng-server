@@ -31,7 +31,7 @@ public class AuthService {
                 .orElseThrow();
         final String accessToken = accessTokenProvider.provide(user.getId());
         //todo: refreshToken
-        return new LoginResponse(accessToken, null);
+        return new LoginResponse(user.getId(), accessToken, null);
     }
 
     public VerifiedUser verifyUserFromToken(final String token) {
