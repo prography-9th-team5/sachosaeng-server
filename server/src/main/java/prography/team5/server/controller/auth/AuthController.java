@@ -4,6 +4,7 @@ import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import prography.team5.server.service.auth.AuthService;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
 import prography.team5.server.service.auth.dto.EmailRequest;
 import prography.team5.server.service.auth.dto.LoginResponse;
+import prography.team5.server.service.auth.dto.VerifiedUser;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,7 +37,6 @@ public class AuthController {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
-    //todo: refreshToken으로 accessToken 재발급
     @PostMapping("/refresh")
     public ResponseEntity<CommonApiResponse<AccessTokenResponse>> refreshAccessToken(
             @CookieValue(value = "Refresh", required = false) final String refreshToken
@@ -43,5 +44,11 @@ public class AuthController {
         final AccessTokenResponse response = authService.refreshAccessToken(refreshToken);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<CommonApiResponse<Void>> test(@AuthRequired final VerifiedUser verifiedUser) {
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
 }

@@ -29,4 +29,11 @@ public class UUIDRefreshTokenManager implements RefreshTokenManager {
             throw new IllegalArgumentException("리프레시 토큰 만료");
         }
     }
+
+    @Override
+    public long extractUserId(final String token) {
+        return refreshTokenRepository.findByToken(token)
+                .orElseThrow()
+                .getUserId();
+    }
 }

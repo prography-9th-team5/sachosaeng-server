@@ -46,7 +46,8 @@ public class AuthService {
             throw new IllegalArgumentException("리프레시 토큰 없음");
         }
         refreshTokenManager.validate(refreshToken);
-        //final String accessToken = accessTokenProvider.provide();
-        return new AccessTokenResponse("new access token");
+        final long userId = refreshTokenManager.extractUserId(refreshToken);
+        final String accessToken = accessTokenManager.provide(userId);
+        return new AccessTokenResponse(accessToken);
     }
 }
