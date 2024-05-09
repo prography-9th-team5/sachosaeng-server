@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
 import prography.team5.server.service.auth.dto.EmailRequest;
@@ -35,7 +34,7 @@ public interface AuthApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "엑세스 토큰 재발급 성공입니다.")
     ResponseEntity<CommonApiResponse<AccessTokenResponse>> refreshAccessToken(
-            @CookieValue(value = "Refresh", required = false) final String refreshToken
+            @Parameter(hidden = true) final String refreshToken
     );
 
     @Operation(
