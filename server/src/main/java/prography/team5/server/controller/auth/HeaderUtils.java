@@ -1,4 +1,4 @@
-package prography.team5.server.controller;
+package prography.team5.server.controller.auth;
 
 import lombok.extern.slf4j.Slf4j;
 

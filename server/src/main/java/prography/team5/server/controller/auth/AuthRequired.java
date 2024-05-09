@@ -1,4 +1,4 @@
-package prography.team5.server.controller;
+package prography.team5.server.controller.auth;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
