@@ -10,6 +10,8 @@ import prography.team5.server.controller.dto.CommonApiResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    //todo: 예외처리
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CommonApiResponse<Void>> handleException(final Exception e) {
         log.error("알 수 없는 에러 발생", e);

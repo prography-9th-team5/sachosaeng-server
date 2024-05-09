@@ -32,4 +32,6 @@ public class AuthController {
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
+
+    //todo: refreshToken으로 accessToken 재발급
 }

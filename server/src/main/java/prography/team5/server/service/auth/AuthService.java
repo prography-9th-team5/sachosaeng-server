@@ -19,6 +19,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final AccessTokenProvider accessTokenProvider;
     private final AccessTokenExtractor accessTokenExtractor;
+    private final RefreshTokenProvider refreshTokenProvider;
 
     public long joinNewUser(final EmailRequest emailRequest) {
         final User user = new User(emailRequest.email());
@@ -27,11 +28,11 @@ public class AuthService {
     }
 
     public LoginResponse login(final EmailRequest emailRequest) {
-        User user = userRepository.findByEmail(emailRequest.email())
+        final User user = userRepository.findByEmail(emailRequest.email())
                 .orElseThrow();
         final String accessToken = accessTokenProvider.provide(user.getId());
-        //todo: refreshToken
-        return new LoginResponse(user.getId(), accessToken, null);
+        final String refreshToken = refreshTokenProvider.provide(user.getId());
+        return new LoginResponse(user.getId(), accessToken, refreshToken);
     }
 
     public VerifiedUser verifyUserFromToken(final String token) {

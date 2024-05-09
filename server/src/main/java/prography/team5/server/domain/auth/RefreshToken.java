@@ -1,4 +1,4 @@
-package prography.team5.server.domain;
+package prography.team5.server.domain.auth;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

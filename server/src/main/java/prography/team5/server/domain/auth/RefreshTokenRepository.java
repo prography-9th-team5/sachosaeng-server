@@ -1,4 +1,4 @@
-package prography.team5.server.domain;
+package prography.team5.server.domain.auth;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
