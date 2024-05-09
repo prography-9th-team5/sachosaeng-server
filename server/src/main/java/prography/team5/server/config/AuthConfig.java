@@ -5,12 +5,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import prography.team5.server.domain.auth.RefreshTokenRepository;
-import prography.team5.server.service.auth.UUIDRefreshTokenProvider;
-import prography.team5.server.infrastructure.JwtTokenExtractor;
-import prography.team5.server.infrastructure.JwtTokenProvider;
-import prography.team5.server.service.auth.AccessTokenExtractor;
-import prography.team5.server.service.auth.AccessTokenProvider;
-import prography.team5.server.service.auth.RefreshTokenProvider;
+import prography.team5.server.infrastructure.JwtTokenManager;
+import prography.team5.server.service.auth.AccessTokenManager;
+import prography.team5.server.service.auth.RefreshTokenManager;
+import prography.team5.server.service.auth.UUIDRefreshTokenManager;
 
 @Configuration
 public class AuthConfig {
@@ -30,17 +28,12 @@ public class AuthConfig {
     }
 
     @Bean
-    public AccessTokenProvider accessTokenProvider() {
-        return new JwtTokenProvider(secretKey, accessTokenExpirationMinutes);
+    public AccessTokenManager accessTokenManager() {
+        return new JwtTokenManager(secretKey, accessTokenExpirationMinutes);
     }
 
     @Bean
-    public AccessTokenExtractor accessTokenExtractor() {
-        return new JwtTokenExtractor(secretKey);
-    }
-
-    @Bean
-    public RefreshTokenProvider refreshTokenProvider(@Autowired RefreshTokenRepository refreshTokenRepository) {
-        return new UUIDRefreshTokenProvider(refreshTokenRepository, refreshTokenExpirationDays);
+    public RefreshTokenManager refreshTokenManager(@Autowired RefreshTokenRepository refreshTokenRepository) {
+        return new UUIDRefreshTokenManager(refreshTokenRepository, refreshTokenExpirationDays);
     }
 }

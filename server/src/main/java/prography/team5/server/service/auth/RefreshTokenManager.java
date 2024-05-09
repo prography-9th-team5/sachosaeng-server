@@ -1,6 +1,8 @@
 package prography.team5.server.service.auth;
 
-public interface RefreshTokenValidator {
+public interface RefreshTokenManager {
+
+    String provide(final long userId);
 
     void validate(final String token);
 }
