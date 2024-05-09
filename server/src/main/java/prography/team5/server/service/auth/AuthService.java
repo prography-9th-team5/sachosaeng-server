@@ -42,7 +42,7 @@ public class AuthService {
     }
 
     public AccessTokenResponse refreshAccessToken(final String refreshToken) {
-        if(Objects.isEmpty(refreshToken)) {
+        if (Objects.isEmpty(refreshToken)) {
             throw new IllegalArgumentException("리프레시 토큰 없음");
         }
         refreshTokenManager.validate(refreshToken);

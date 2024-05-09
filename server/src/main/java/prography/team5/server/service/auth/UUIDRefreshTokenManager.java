@@ -24,7 +24,7 @@ public class UUIDRefreshTokenManager implements RefreshTokenManager {
     @Override
     public void validate(final String token) {
         final RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow();
-        if(refreshToken.isExpired()) {
+        if (refreshToken.isExpired()) {
             refreshTokenRepository.deleteByToken(token);
             throw new IllegalArgumentException("리프레시 토큰 만료");
         }
