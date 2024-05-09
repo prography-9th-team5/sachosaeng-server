@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import prography.team5.server.domain.auth.RefreshTokenRepository;
-import prography.team5.server.domain.auth.UUIDRefreshTokenProvider;
+import prography.team5.server.service.auth.UUIDRefreshTokenProvider;
 import prography.team5.server.infrastructure.JwtTokenExtractor;
 import prography.team5.server.infrastructure.JwtTokenProvider;
 import prography.team5.server.service.auth.AccessTokenExtractor;

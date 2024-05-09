@@ -21,6 +21,7 @@ public class AuthService {
     private final AccessTokenExtractor accessTokenExtractor;
     private final RefreshTokenProvider refreshTokenProvider;
 
+    //todo: 전체적으로 예외처리
     public long joinNewUser(final EmailRequest emailRequest) {
         final User user = new User(emailRequest.email());
         userRepository.save(user);

@@ -4,5 +4,5 @@ import prography.team5.server.service.auth.dto.VerifiedUser;
 
 public interface AccessTokenExtractor {
 
-    VerifiedUser extract(String token);
+    VerifiedUser extract(final String token);
 }

@@ -1,9 +1,10 @@
-package prography.team5.server.domain.auth;
+package prography.team5.server.service.auth;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import prography.team5.server.service.auth.RefreshTokenProvider;
+import prography.team5.server.domain.auth.RefreshToken;
+import prography.team5.server.domain.auth.RefreshTokenRepository;
 
 @RequiredArgsConstructor
 public class UUIDRefreshTokenProvider implements RefreshTokenProvider {
