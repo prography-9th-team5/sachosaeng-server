@@ -24,6 +24,9 @@ public class AuthService {
 
     //todo: 전체적으로 예외처리
     public long joinNewUser(final EmailRequest emailRequest) {
+        if(userRepository.existsByEmail(emailRequest.email())) {
+            throw new IllegalArgumentException("이미 가입된 이메일");
+        }
         final User user = new User(emailRequest.email());
         userRepository.save(user);
         return user.getId();
