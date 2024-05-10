@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import prography.team5.server.controller.dto.CommonApiResponse;
+import prography.team5.server.exception.ErrorType;
 
 @Slf4j
 @RestControllerAdvice
@@ -14,8 +15,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<CommonApiResponse<Void>> handleException(final Exception e) {
-        log.error("알 수 없는 에러 발생", e);
+        final ErrorType errorType = ErrorType.SERVER_ERROR;
+        log.error(errorType.getMessage(), e);
         return ResponseEntity.internalServerError()
-                .body(new CommonApiResponse<>(-1, "서버에서 장애가 발생했습니다."));
+                .body(new CommonApiResponse<>(errorType.getCode(), errorType.getMessage()));
     }
 }
