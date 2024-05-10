@@ -17,7 +17,7 @@ public enum ErrorType {
     INVALID_REFRESH_TOKEN(-3, "유효하지 않은 Refresh Token입니다."),
     REFRESH_TOKEN_EXPIRATION(-3, "Refresh Token이 만료되었습니다. 다시 로그인이 필요합니다."),
 
-    //인증 관련 에러 - 이메일
+    //이메일 에러
     DUPLICATED_EMAIL(-4, "이미 가입한 적이 있는 이메일입니다."),
     INVALID_EMAIL(-4, "존재하지 않는 이메일입니다.");
 
