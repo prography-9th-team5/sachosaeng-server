@@ -1,5 +1,8 @@
 package prography.team5.server.exception;
 
+import lombok.Getter;
+
+@Getter
 public class SachosaengException extends RuntimeException {
 
     private final ErrorType errorType;

@@ -3,11 +3,15 @@ package prography.team5.server.infrastructure;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.crypto.SecretKey;
+import prography.team5.server.exception.ErrorType;
+import prography.team5.server.exception.SachosaengException;
 import prography.team5.server.service.auth.AccessTokenManager;
 import prography.team5.server.service.auth.dto.VerifiedUser;
 
@@ -45,10 +49,15 @@ public class JwtTokenManager implements AccessTokenManager {
                     .getPayload();
             final Long userId = payload.get(USER_ID, Long.class);
             return new VerifiedUser(userId);
+        } catch (MalformedJwtException e) {
+            throw new SachosaengException(ErrorType.ACCESS_TOKEN_MALFORMED);
+        } catch (UnsupportedJwtException e) {
+            throw new SachosaengException(ErrorType.ACCESS_TOKEN_UNSUPPORTED);
         } catch (ExpiredJwtException e) {
-            throw new IllegalArgumentException();
+            throw new SachosaengException(ErrorType.ACCESS_TOKEN_EXPIRATION);
         } catch (SignatureException e) {
-            throw new IllegalArgumentException();
+            throw new SachosaengException(ErrorType.ACCESS_TOKEN_SIGNATURE_FAIL);
         }
+        //todo: 예외 더 있으면 추가
     }
 }

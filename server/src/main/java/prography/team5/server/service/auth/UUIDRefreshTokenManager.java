@@ -5,6 +5,8 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import prography.team5.server.domain.auth.RefreshToken;
 import prography.team5.server.domain.auth.RefreshTokenRepository;
+import prography.team5.server.exception.ErrorType;
+import prography.team5.server.exception.SachosaengException;
 
 @RequiredArgsConstructor
 public class UUIDRefreshTokenManager implements RefreshTokenManager {
@@ -23,17 +25,18 @@ public class UUIDRefreshTokenManager implements RefreshTokenManager {
 
     @Override
     public void validate(final String token) {
-        final RefreshToken refreshToken = refreshTokenRepository.findByToken(token).orElseThrow();
+        final RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_REFRESH_TOKEN));
         if (refreshToken.isExpired()) {
             refreshTokenRepository.deleteByToken(token);
-            throw new IllegalArgumentException("리프레시 토큰 만료");
+            throw new SachosaengException(ErrorType.REFRESH_TOKEN_EXPIRATION);
         }
     }
 
     @Override
     public long extractUserId(final String token) {
         return refreshTokenRepository.findByToken(token)
-                .orElseThrow()
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_REFRESH_TOKEN))
                 .getUserId();
     }
 }
