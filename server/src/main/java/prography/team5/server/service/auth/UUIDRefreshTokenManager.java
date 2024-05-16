@@ -24,19 +24,17 @@ public class UUIDRefreshTokenManager implements RefreshTokenManager {
     }
 
     @Override
-    public void validate(final String token) {
+    public long extractUserId(final String token) {
         final RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_REFRESH_TOKEN));
-        if (refreshToken.isExpired()) {
-            refreshTokenRepository.deleteByToken(token);
-            throw new SachosaengException(ErrorType.REFRESH_TOKEN_EXPIRATION);
-        }
+        checkExpiration(refreshToken);
+        return refreshToken.getUserId();
     }
 
-    @Override
-    public long extractUserId(final String token) {
-        return refreshTokenRepository.findByToken(token)
-                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_REFRESH_TOKEN))
-                .getUserId();
+    private void checkExpiration(final RefreshToken refreshToken) {
+        if (refreshToken.isExpired()) {
+            refreshTokenRepository.deleteByToken(refreshToken.getToken());
+            throw new SachosaengException(ErrorType.REFRESH_TOKEN_EXPIRATION);
+        }
     }
 }

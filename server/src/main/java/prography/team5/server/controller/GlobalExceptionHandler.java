@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(SachosaengException.class)
     public ResponseEntity<CommonApiResponse<Void>> handleSachosaengException(final SachosaengException e) {
-        log.error(e.getMessage(), e);
+        //log.error(e.getMessage(), e);
         return ResponseEntity.status(errorTypeToHttpStatus.get(e.getErrorType()))
                 .body(new CommonApiResponse<>(e.getCode(), e.getMessage()));
     }

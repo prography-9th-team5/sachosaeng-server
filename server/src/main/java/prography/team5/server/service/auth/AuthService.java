@@ -49,7 +49,6 @@ public class AuthService {
         if (Objects.isEmpty(refreshToken)) {
             throw new SachosaengException(ErrorType.NO_REFRESH_TOKEN);
         }
-        refreshTokenManager.validate(refreshToken);
         final long userId = refreshTokenManager.extractUserId(refreshToken);
         final String accessToken = accessTokenManager.provide(userId);
         return new AccessTokenResponse(accessToken);
