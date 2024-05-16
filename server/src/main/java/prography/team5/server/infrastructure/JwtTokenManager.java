@@ -13,11 +13,11 @@ import javax.crypto.SecretKey;
 import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
 import prography.team5.server.service.auth.AccessTokenManager;
-import prography.team5.server.service.auth.dto.VerifiedUser;
+import prography.team5.server.service.auth.dto.Accessor;
 
 public class JwtTokenManager implements AccessTokenManager {
 
-    private static final String USER_ID = "userId";
+    private static final String ACCESSOR_ID = "accessorId";
     private static final int MINUTES_TO_MILLISECONDS = 60 * 1000;
 
     private final SecretKey secretKey;
@@ -29,10 +29,10 @@ public class JwtTokenManager implements AccessTokenManager {
     }
 
     @Override
-    public String provide(final long userId) {
+    public String provide(final long id) {
         Date now = new Date();
         return Jwts.builder()
-                .claim(USER_ID, userId)
+                .claim(ACCESSOR_ID, id)
                 .issuedAt(now)
                 .expiration(new Date(now.getTime() + expirationMinutes * MINUTES_TO_MILLISECONDS))
                 .signWith(secretKey)
@@ -40,15 +40,15 @@ public class JwtTokenManager implements AccessTokenManager {
     }
 
     @Override
-    public VerifiedUser extract(final String token) {
+    public Accessor extract(final String token) {
         try {
             final Claims payload = Jwts.parser()
                     .verifyWith(secretKey)
                     .build()
                     .parseSignedClaims(token)
                     .getPayload();
-            final Long userId = payload.get(USER_ID, Long.class);
-            return new VerifiedUser(userId);
+            final Long accessorId = payload.get(ACCESSOR_ID, Long.class);
+            return new Accessor(accessorId);
         } catch (MalformedJwtException e) {
             throw new SachosaengException(ErrorType.ACCESS_TOKEN_MALFORMED);
         } catch (UnsupportedJwtException e) {

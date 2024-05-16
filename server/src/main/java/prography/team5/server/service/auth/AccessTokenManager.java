@@ -1,10 +1,10 @@
 package prography.team5.server.service.auth;
 
-import prography.team5.server.service.auth.dto.VerifiedUser;
+import prography.team5.server.service.auth.dto.Accessor;
 
 public interface AccessTokenManager {
 
-    String provide(final long userId);
+    String provide(final long id);
 
-    VerifiedUser extract(final String token);
+    Accessor extract(final String token);
 }

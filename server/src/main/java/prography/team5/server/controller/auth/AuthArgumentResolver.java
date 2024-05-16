@@ -9,7 +9,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import prography.team5.server.service.auth.AuthService;
-import prography.team5.server.service.auth.dto.VerifiedUser;
+import prography.team5.server.service.auth.dto.Accessor;
 
 @RequiredArgsConstructor
 @Component
@@ -21,7 +21,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(final MethodParameter parameter) {
-        return parameter.getParameterType().equals(VerifiedUser.class)
+        return parameter.getParameterType().equals(Accessor.class)
                 && parameter.hasParameterAnnotation(AuthRequired.class);
     }
 

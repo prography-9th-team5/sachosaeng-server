@@ -12,7 +12,7 @@ import prography.team5.server.exception.SachosaengException;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
 import prography.team5.server.service.auth.dto.EmailRequest;
 import prography.team5.server.service.auth.dto.LoginResponse;
-import prography.team5.server.service.auth.dto.VerifiedUser;
+import prography.team5.server.service.auth.dto.Accessor;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,7 +41,7 @@ public class AuthService {
         return new LoginResponse(user.getId(), accessToken, refreshToken);
     }
 
-    public VerifiedUser verifyUserFromToken(final String token) {
+    public Accessor verifyUserFromToken(final String token) {
         return accessTokenManager.extract(token);
     }
 

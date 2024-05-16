@@ -9,7 +9,7 @@ import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
 import prography.team5.server.service.auth.dto.EmailRequest;
 import prography.team5.server.service.auth.dto.LoginResponse;
-import prography.team5.server.service.auth.dto.VerifiedUser;
+import prography.team5.server.service.auth.dto.Accessor;
 
 @Tag(name = "1. 인증", description = "인증 관련 기능입니다.")
 public interface AuthApiDocs {
@@ -42,5 +42,5 @@ public interface AuthApiDocs {
             description = "Authorization 헤더에 Bearer {엑세스 토큰}을 담아 보냈을 때 응답이 성공하는지 테스트 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "인증 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> test(@Parameter(hidden = true) final VerifiedUser verifiedUser);
+    ResponseEntity<CommonApiResponse<Void>> test(@Parameter(hidden = true) final Accessor accessor);
 }

@@ -14,7 +14,7 @@ import prography.team5.server.service.auth.AuthService;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
 import prography.team5.server.service.auth.dto.EmailRequest;
 import prography.team5.server.service.auth.dto.LoginResponse;
-import prography.team5.server.service.auth.dto.VerifiedUser;
+import prography.team5.server.service.auth.dto.Accessor;
 
 @RequiredArgsConstructor
 @RestController
@@ -47,7 +47,7 @@ public class AuthController implements AuthApiDocs {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<CommonApiResponse<Void>> test(@AuthRequired final VerifiedUser verifiedUser) {
+    public ResponseEntity<CommonApiResponse<Void>> test(@AuthRequired final Accessor accessor) {
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
