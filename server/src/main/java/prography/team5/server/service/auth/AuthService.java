@@ -25,7 +25,7 @@ public class AuthService {
     private final RefreshTokenManager refreshTokenManager;
 
     public long joinNewUser(final EmailRequest emailRequest) {
-        if(userRepository.existsByEmail(emailRequest.email())) {
+        if (userRepository.existsByEmail(emailRequest.email())) {
             throw new SachosaengException(ErrorType.DUPLICATED_EMAIL);
         }
         final User user = new User(emailRequest.email());

@@ -15,6 +15,7 @@ public class SachosaengException extends RuntimeException {
     public int getCode() {
         return errorType.getCode();
     }
+
     @Override
     public String getMessage() {
         return errorType.getMessage();

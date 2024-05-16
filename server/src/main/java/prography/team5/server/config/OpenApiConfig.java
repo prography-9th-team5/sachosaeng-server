@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI openAPI(){
+    public OpenAPI openAPI() {
         String jwtSchemeName = "Access Token";
         SecurityScheme securityScheme = new SecurityScheme()
                 .type(Type.HTTP)
@@ -42,7 +42,7 @@ public class OpenApiConfig {
                         new Components()
                                 .addSecuritySchemes(jwtSchemeName, securityScheme)
                                 .addSecuritySchemes(refreshSchemeName, refreshTokenSecurityScheme)
-                        )
+                )
                 .addSecurityItem(securityRequirement);
     }
 }

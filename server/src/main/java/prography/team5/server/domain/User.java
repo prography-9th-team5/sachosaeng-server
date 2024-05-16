@@ -23,7 +23,7 @@ public class User extends TimeRecord {
     private Long id;
     @Column(unique = true)
     private String email;
-    private String nickname = "멋쟁이 프로도";
+    private String nickname = "멋쟁이 프로도"; //todo: 닉네임 랜덤 생성기
     private boolean deleted = false;
 
     public User(final String email) {

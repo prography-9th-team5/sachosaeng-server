@@ -1,6 +1,5 @@
 package prography.team5.server.controller.auth;
 
-import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
