@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    open-in-view: false
+
+auth:
+  jwt:
+    secret-key: fightingscs-awesomescs-fantasticscs-scsisthebest-thisiswrittenby59
+    access-token-expiration-minutes: 30
+  refresh-token:
+    expiration-days: 14
