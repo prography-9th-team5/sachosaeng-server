@@ -25,7 +25,7 @@ public class AuthService {
 
     @Transactional
     public long joinNewUser(final EmailRequest emailRequest) {
-        if (userRepository.existsByEmail(emailRequest.email())) {
+        if (userRepository.existsByEmailValue(emailRequest.email())) {
             throw new SachosaengException(ErrorType.DUPLICATED_EMAIL);
         }
         final User user = new User(emailRequest.email());
@@ -35,7 +35,7 @@ public class AuthService {
 
     @Transactional
     public LoginResponse login(final EmailRequest emailRequest) {
-        final User user = userRepository.findByEmail(emailRequest.email())
+        final User user = userRepository.findByEmailValue(emailRequest.email())
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_EMAIL));
         final String accessToken = accessTokenManager.provide(user.getId());
         final String refreshToken = refreshTokenManager.provide(user.getId());
