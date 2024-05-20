@@ -1,6 +1,6 @@
 package prography.team5.server.domain;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,12 +21,12 @@ public class User extends TimeRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
-    private String email;
+    @Embedded
+    private Email email;
     private String nickname = "멋쟁이 프로도"; //todo: 닉네임 랜덤 생성기
     private boolean deleted = false;
 
     public User(final String email) {
-        this.email = email;
+        this.email = Email.from(email);
     }
 }

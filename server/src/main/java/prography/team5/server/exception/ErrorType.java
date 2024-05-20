@@ -19,7 +19,8 @@ public enum ErrorType {
 
     //이메일 에러
     DUPLICATED_EMAIL(-4, "이미 가입한 적이 있는 이메일입니다."),
-    INVALID_EMAIL(-4, "존재하지 않는 이메일입니다.");
+    INVALID_EMAIL(-4, "존재하지 않는 이메일입니다."),
+    INVALID_EMAIL_FORMAT(-4, "올바른 이메일 형식이 아닙니다.");
 
     private final int code;
     private final String message;
