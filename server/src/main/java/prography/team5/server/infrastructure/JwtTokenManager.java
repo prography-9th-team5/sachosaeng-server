@@ -18,6 +18,8 @@ import prography.team5.server.service.auth.dto.Accessor;
 public class JwtTokenManager implements AccessTokenManager {
 
     private static final String ACCESSOR_ID = "accessorId";
+    private static final String CODE = "code";
+    private static final String USER_CODE = "user";
     private static final int MINUTES_TO_MILLISECONDS = 60 * 1000;
 
     private final SecretKey secretKey;
@@ -33,6 +35,7 @@ public class JwtTokenManager implements AccessTokenManager {
         Date now = new Date();
         return Jwts.builder()
                 .claim(ACCESSOR_ID, id)
+                .claim(CODE, USER_CODE) //todo: 지금은 사용하지 않고 추후 admin 구분시 사용
                 .issuedAt(now)
                 .expiration(new Date(now.getTime() + expirationMinutes * MINUTES_TO_MILLISECONDS))
                 .signWith(secretKey)
