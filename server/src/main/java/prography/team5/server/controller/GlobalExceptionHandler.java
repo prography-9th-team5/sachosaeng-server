@@ -10,6 +10,7 @@ import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_UNSUPPORTE
 import static prography.team5.server.exception.ErrorType.DUPLICATED_EMAIL;
 import static prography.team5.server.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
 import static prography.team5.server.exception.ErrorType.INVALID_EMAIL;
+import static prography.team5.server.exception.ErrorType.INVALID_EMAIL_FORMAT;
 import static prography.team5.server.exception.ErrorType.INVALID_REFRESH_TOKEN;
 import static prography.team5.server.exception.ErrorType.NO_AUTHORIZATION_HEADER;
 import static prography.team5.server.exception.ErrorType.NO_REFRESH_TOKEN;
@@ -17,6 +18,7 @@ import static prography.team5.server.exception.ErrorType.REFRESH_TOKEN_EXPIRATIO
 import static prography.team5.server.exception.ErrorType.SERVER_ERROR;
 
 import java.util.EnumMap;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,12 +52,17 @@ public class GlobalExceptionHandler {
         //400
         errorTypeToHttpStatus.put(DUPLICATED_EMAIL, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_EMAIL, BAD_REQUEST);
+        errorTypeToHttpStatus.put(INVALID_EMAIL_FORMAT, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)
     public ResponseEntity<CommonApiResponse<Void>> handleSachosaengException(final SachosaengException e) {
-        //log.error(e.getMessage(), e);
-        return ResponseEntity.status(errorTypeToHttpStatus.get(e.getErrorType()))
+        HttpStatus httpStatus = errorTypeToHttpStatus.getOrDefault(e.getErrorType(), null);
+        if(Objects.isNull(httpStatus)) {
+            log.warn("예외에 대한 상태코드 등록 필요: {}", e.getErrorType().toString());
+            httpStatus = BAD_REQUEST; //임시로 400 반환
+        }
+        return ResponseEntity.status(httpStatus)
                 .body(new CommonApiResponse<>(e.getCode(), e.getMessage()));
     }
 
