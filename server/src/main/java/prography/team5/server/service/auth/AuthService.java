@@ -16,7 +16,6 @@ import prography.team5.server.service.auth.dto.Accessor;
 
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 @Service
 public class AuthService {
 
@@ -24,6 +23,7 @@ public class AuthService {
     private final AccessTokenManager accessTokenManager;
     private final RefreshTokenManager refreshTokenManager;
 
+    @Transactional
     public long joinNewUser(final EmailRequest emailRequest) {
         if (userRepository.existsByEmail(emailRequest.email())) {
             throw new SachosaengException(ErrorType.DUPLICATED_EMAIL);
@@ -33,6 +33,7 @@ public class AuthService {
         return user.getId();
     }
 
+    @Transactional
     public LoginResponse login(final EmailRequest emailRequest) {
         final User user = userRepository.findByEmail(emailRequest.email())
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_EMAIL));
