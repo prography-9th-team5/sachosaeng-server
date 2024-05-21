@@ -35,4 +35,8 @@ public class User extends TimeRecord {
     public String getEmail() {
         return email.getValue();
     }
+
+    public void updateNickname(final String nickname) {
+        this.nickname = nickname;
+    }
 }
