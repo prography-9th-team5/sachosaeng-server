@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import prography.team5.server.domain.TimeRecord;
 
-@Getter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
@@ -21,13 +20,19 @@ public class User extends TimeRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
     @Embedded
     private Email email;
+    @Getter
     private String nickname = "멋쟁이 프로도"; //todo: 닉네임 랜덤 생성기
     private boolean deleted = false;
 
     public User(final String email) {
         this.email = Email.from(email);
+    }
+
+    public String getEmail() {
+        return email.getValue();
     }
 }
