@@ -1,4 +1,4 @@
-package prography.team5.server.controller;
+package prography.team5.server.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
@@ -7,6 +7,7 @@ import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_EXPIRATION
 import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_MALFORMED;
 import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_SIGNATURE_FAIL;
 import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_UNSUPPORTED;
+import static prography.team5.server.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.exception.ErrorType.DUPLICATED_EMAIL;
 import static prography.team5.server.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
 import static prography.team5.server.exception.ErrorType.INVALID_EMAIL;
@@ -25,8 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import prography.team5.server.controller.dto.CommonApiResponse;
-import prography.team5.server.exception.ErrorType;
-import prography.team5.server.exception.SachosaengException;
 
 @Slf4j
 @RestControllerAdvice
@@ -53,12 +52,13 @@ public class GlobalExceptionHandler {
         errorTypeToHttpStatus.put(DUPLICATED_EMAIL, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_EMAIL, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_EMAIL_FORMAT, BAD_REQUEST);
+        errorTypeToHttpStatus.put(DUPLICATED_CATEGORY, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)
     public ResponseEntity<CommonApiResponse<Void>> handleSachosaengException(final SachosaengException e) {
         HttpStatus httpStatus = errorTypeToHttpStatus.getOrDefault(e.getErrorType(), null);
-        if(Objects.isNull(httpStatus)) {
+        if (Objects.isNull(httpStatus)) {
             log.warn("예외에 대한 상태코드 등록 필요: {}", e.getErrorType().toString());
             httpStatus = BAD_REQUEST; //임시로 400 반환
         }

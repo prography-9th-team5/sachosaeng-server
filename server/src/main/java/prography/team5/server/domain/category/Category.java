@@ -1,32 +1,29 @@
-package prography.team5.server.domain;
+package prography.team5.server.domain.category;
 
-import jakarta.persistence.Embedded;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import prography.team5.server.domain.TimeRecord;
 
 @Getter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "member")
 @Entity
-public class User extends TimeRecord {
+public class Category extends TimeRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Embedded
-    private Email email;
-    private String nickname = "멋쟁이 프로도"; //todo: 닉네임 랜덤 생성기
-    private boolean deleted = false;
+    @Column(nullable = false, unique = true)
+    private String name;
 
-    public User(final String email) {
-        this.email = Email.from(email);
+    public Category(final String name) {
+        this.name = name;
     }
 }
