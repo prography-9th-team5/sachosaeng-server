@@ -1,4 +1,4 @@
-package prography.team5.server.controller.docs;
+package prography.team5.server.docs;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

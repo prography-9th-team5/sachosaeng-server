@@ -1,4 +1,4 @@
-package prography.team5.server.controller.docs;
+package prography.team5.server.docs;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,7 +9,7 @@ import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.category.dto.CategoryRequest;
 import prography.team5.server.service.category.dto.CategoryResponse;
 
-@Tag(name = "2. 인증", description = "카테고리 관련 기능입니다.")
+@Tag(name = "2. 카테고리", description = "카테고리 관련 기능입니다.")
 public interface CategoryApiDocs {
 
     @Operation(
