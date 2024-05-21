@@ -46,6 +46,7 @@ public class AuthService {
         return accessTokenManager.extract(token);
     }
 
+    @Transactional
     public AccessTokenResponse refreshAccessToken(final String refreshToken) {
         if (Objects.isEmpty(refreshToken)) {
             throw new SachosaengException(ErrorType.NO_REFRESH_TOKEN);
