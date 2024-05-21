@@ -1,4 +1,4 @@
-package prography.team5.server.domain;
+package prography.team5.server.domain.user;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -10,6 +10,8 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import prography.team5.server.domain.TimeRecord;
+import prography.team5.server.domain.user.Email;
 
 @Getter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)

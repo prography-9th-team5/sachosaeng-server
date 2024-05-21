@@ -1,4 +1,4 @@
-package prography.team5.server.domain;
+package prography.team5.server.domain.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

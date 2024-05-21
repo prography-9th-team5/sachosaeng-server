@@ -1,4 +1,4 @@
-package prography.team5.server.domain;
+package prography.team5.server.domain.user;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import prography.team5.server.domain.user.Email;
 import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
 
