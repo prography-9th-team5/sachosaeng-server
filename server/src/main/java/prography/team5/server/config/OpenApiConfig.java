@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "사초생 API Docs", description = "사초생 API 명세서입니다."))
+@OpenAPIDefinition(info = @Info(title = "사초생 API Docs", description = "사초생 API 명세서입니다. 에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs"))
 public class OpenApiConfig {
 
     @Bean
