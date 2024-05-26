@@ -15,7 +15,7 @@ import prography.team5.server.domain.TimeRecord;
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class BookmarkCategory extends TimeRecord {
+public class MyCategory extends TimeRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class BookmarkCategory extends TimeRecord {
     @ManyToOne
     private Category category;
 
-    public BookmarkCategory(final Long userId, final Category category) {
+    public MyCategory(final Long userId, final Category category) {
         this.userId = userId;
         this.category = category;
     }

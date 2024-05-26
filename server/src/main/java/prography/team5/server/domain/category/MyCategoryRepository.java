@@ -3,9 +3,9 @@ package prography.team5.server.domain.category;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BookmarkCategoryRepository extends JpaRepository<BookmarkCategory, Long> {
+public interface MyCategoryRepository extends JpaRepository<MyCategory, Long> {
 
-    List<BookmarkCategory> findAllByUserId(long userId);
+    List<MyCategory> findAllByUserId(long userId);
 
     void deleteAllByUserId(long userId);
 

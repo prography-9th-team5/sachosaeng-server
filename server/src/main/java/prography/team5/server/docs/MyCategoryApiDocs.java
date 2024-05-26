@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.BookmarkCategoryRequest;
+import prography.team5.server.service.dto.MyCategoryRequest;
 import prography.team5.server.service.dto.CardResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 
 @Tag(name = "5. 관심 카테고리", description = "관심 카테고리 관련 기능입니다.")
-public interface BookmarkCategoryApiDocs {
+public interface MyCategoryApiDocs {
 
     @Operation(
             summary = "관심 카테고리 조회 API",
@@ -33,7 +33,7 @@ public interface BookmarkCategoryApiDocs {
     @ApiResponse(responseCode = "200", description = "관심 카테고리 갱신 성공입니다.")
     ResponseEntity<CommonApiResponse<Void>> updateByUserId(
             @Parameter(hidden = true) Accessor accessor,
-            @RequestBody BookmarkCategoryRequest bookmarkCategoryRequest
+            @RequestBody MyCategoryRequest myCategoryRequest
     );
 
     @Operation(

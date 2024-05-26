@@ -11,23 +11,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.controller.auth.AuthRequired;
 import prography.team5.server.controller.dto.CommonApiResponse;
-import prography.team5.server.docs.BookmarkCategoryApiDocs;
-import prography.team5.server.service.BookmarkCategoryService;
+import prography.team5.server.docs.MyCategoryApiDocs;
+import prography.team5.server.service.MyCategoryService;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.BookmarkCategoryRequest;
+import prography.team5.server.service.dto.MyCategoryRequest;
 import prography.team5.server.service.dto.CardResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/bookmark-categories")
-public class BookmarkCategoryController implements BookmarkCategoryApiDocs {
+public class MyCategoryController implements MyCategoryApiDocs {
 
-    private final BookmarkCategoryService bookmarkCategoryService;
+    private final MyCategoryService myCategoryService;
 
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findAllByUserId(@AuthRequired Accessor accessor) {
-        final List<CategoryResponse> response = bookmarkCategoryService.findAllByUserId(accessor.id());
+        final List<CategoryResponse> response = myCategoryService.findAllByUserId(accessor.id());
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
@@ -35,9 +35,9 @@ public class BookmarkCategoryController implements BookmarkCategoryApiDocs {
     @PutMapping
     public ResponseEntity<CommonApiResponse<Void>> updateByUserId(
             @AuthRequired Accessor accessor,
-            @RequestBody BookmarkCategoryRequest bookmarkCategoryRequest
+            @RequestBody MyCategoryRequest myCategoryRequest
     ) {
-        bookmarkCategoryService.updateAllByUserId(accessor.id(), bookmarkCategoryRequest);
+        myCategoryService.updateAllByUserId(accessor.id(), myCategoryRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
@@ -47,7 +47,7 @@ public class BookmarkCategoryController implements BookmarkCategoryApiDocs {
             @AuthRequired Accessor accessor,
             @RequestParam(name = "cursor", required = false) final Long cursor
     ) {
-        List<CardResponse> response = bookmarkCategoryService.findAllCardsByUserId(accessor.id(), cursor);
+        List<CardResponse> response = myCategoryService.findAllCardsByUserId(accessor.id(), cursor);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

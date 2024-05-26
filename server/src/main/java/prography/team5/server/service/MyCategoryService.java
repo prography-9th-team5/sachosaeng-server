@@ -7,44 +7,44 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.domain.card.CardRepository;
-import prography.team5.server.domain.category.BookmarkCategory;
-import prography.team5.server.domain.category.BookmarkCategoryRepository;
+import prography.team5.server.domain.category.MyCategory;
+import prography.team5.server.domain.category.MyCategoryRepository;
 import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
-import prography.team5.server.service.dto.BookmarkCategoryRequest;
+import prography.team5.server.service.dto.MyCategoryRequest;
 import prography.team5.server.service.dto.CardResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 
 @RequiredArgsConstructor
 @Service
-public class BookmarkCategoryService {
+public class MyCategoryService {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
 
-    private final BookmarkCategoryRepository bookmarkCategoryRepository;
+    private final MyCategoryRepository myCategoryRepository;
     private final CategoryRepository categoryRepository;
     private final CardRepository cardRepository;
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAllByUserId(final long userId) {
-        List<BookmarkCategory> categories = bookmarkCategoryRepository.findAllByUserId(userId);
-        return CategoryResponse.from(categories.stream().map(BookmarkCategory::getCategory).toList());
+        List<MyCategory> categories = myCategoryRepository.findAllByUserId(userId);
+        return CategoryResponse.from(categories.stream().map(MyCategory::getCategory).toList());
     }
 
     //todo : 리팩터링
     @Transactional
-    public void updateAllByUserId(final long userId, final BookmarkCategoryRequest bookmarkCategoryRequest) {
-        final List<Category> categories = categoryRepository.findAllByIdIn(bookmarkCategoryRequest.categoryIds());
-        final List<BookmarkCategory> bookmarkCategories = categories.stream()
-                .map(each -> new BookmarkCategory(userId, each))
+    public void updateAllByUserId(final long userId, final MyCategoryRequest myCategoryRequest) {
+        final List<Category> categories = categoryRepository.findAllByIdIn(myCategoryRequest.categoryIds());
+        final List<MyCategory> bookmarkCategories = categories.stream()
+                .map(each -> new MyCategory(userId, each))
                 .toList();
-        bookmarkCategoryRepository.deleteAllByUserId(userId);
-        bookmarkCategoryRepository.saveAll(bookmarkCategories);
+        myCategoryRepository.deleteAllByUserId(userId);
+        myCategoryRepository.saveAll(bookmarkCategories);
     }
 
     @Transactional(readOnly = true)
     public List<CardResponse> findAllCardsByUserId(final Long userId, final Long cursor) {
-        final List<Long> categoryIds = bookmarkCategoryRepository.findAllByUserId(userId)
+        final List<Long> categoryIds = myCategoryRepository.findAllByUserId(userId)
                 .stream()
                 .map(each -> each.getCategory().getId())
                 .toList();
