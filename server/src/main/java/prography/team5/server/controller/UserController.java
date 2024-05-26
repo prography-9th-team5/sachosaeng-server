@@ -15,6 +15,7 @@ import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.UserService;
 import prography.team5.server.service.dto.NicknameRequest;
 import prography.team5.server.service.dto.UserResponse;
+import prography.team5.server.service.dto.UserTypeRequest;
 
 @RequiredArgsConstructor
 @RestController
@@ -36,6 +37,16 @@ public class UserController implements UserApiDocs {
             @RequestBody NicknameRequest nicknameRequest
     ) {
         userService.updateNickname(accessor.id(), nicknameRequest);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+    }
+
+    @PutMapping("/user-type")
+    public ResponseEntity<CommonApiResponse<UserResponse>> updateUserType(
+            @AuthRequired Accessor accessor,
+            @RequestBody UserTypeRequest userTypeRequest
+    ) {
+        userService.updateUserType(accessor.id(), userTypeRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }

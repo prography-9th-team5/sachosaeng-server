@@ -9,6 +9,7 @@ import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
 import prography.team5.server.service.dto.NicknameRequest;
 import prography.team5.server.service.dto.UserResponse;
+import prography.team5.server.service.dto.UserTypeRequest;
 
 @RequiredArgsConstructor
 @Service
@@ -31,5 +32,11 @@ public class UserService {
     public void updateNickname(final long userId, final NicknameRequest nicknameRequest) {
         final User user = findUserById(userId);
         user.updateNickname(nicknameRequest.nickname());
+    }
+
+    @Transactional
+    public void updateUserType(final long userId, final UserTypeRequest userTypeRequest) {
+        final User user = findUserById(userId);
+        user.updateUserType(userTypeRequest.userType());
     }
 }

@@ -2,6 +2,8 @@ package prography.team5.server.domain.user;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,6 +30,8 @@ public class User extends TimeRecord {
     @Getter
     private String nickname;
     private boolean deleted = false;
+    @Enumerated(value = EnumType.STRING)
+    private UserType userType;
 
     public User(final String email) {
         this.email = Email.from(email);
@@ -40,5 +44,9 @@ public class User extends TimeRecord {
 
     public void updateNickname(final String nickname) {
         this.nickname = nickname;
+    }
+
+    public void updateUserType(final String userType) {
+        this.userType = UserType.convert(userType);
     }
 }
