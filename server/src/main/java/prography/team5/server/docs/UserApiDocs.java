@@ -6,11 +6,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
-import prography.team5.server.controller.auth.AuthRequired;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.user.dto.NicknameRequest;
-import prography.team5.server.service.user.dto.UserResponse;
+import prography.team5.server.service.dto.NicknameRequest;
+import prography.team5.server.service.dto.UserResponse;
 
 @Tag(name = "3. 유저 정보", description = "유저 정보 관련 기능입니다.")
 public interface UserApiDocs {

@@ -26,7 +26,10 @@ public enum ErrorType {
     DUPLICATED_CATEGORY(-5, "이미 존재하는 카테고리입니다."),
 
     //유저 에러
-    INVALID_USER_ID(-6, "존재하지 않는 유저입니다.");
+    INVALID_USER_ID(-6, "존재하지 않는 유저입니다."),
+
+    //카드 에러
+    INVALID_CARD_ID(-7, "존재하지 않는 카드입니다.");
 
     private final int code;
     private final String message;

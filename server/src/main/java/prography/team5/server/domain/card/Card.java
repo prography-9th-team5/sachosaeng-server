@@ -43,4 +43,9 @@ public class Card extends TimeRecord {
     //private String imageUrl; //todo: 이미지 등록 가능
     private Long writerId; //todo: 관리자가 아닌 유저가 직접 글을 등록하는 경우
 
+    public Card(final String title, final String content, final List<Category> categories) {
+        this.title = title;
+        this.content = content;
+        this.categories = categories;
+    }
 }

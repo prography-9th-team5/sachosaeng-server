@@ -1,4 +1,4 @@
-package prography.team5.server.service.user;
+package prography.team5.server.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -7,8 +7,8 @@ import prography.team5.server.domain.user.User;
 import prography.team5.server.domain.user.UserRepository;
 import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
-import prography.team5.server.service.user.dto.NicknameRequest;
-import prography.team5.server.service.user.dto.UserResponse;
+import prography.team5.server.service.dto.NicknameRequest;
+import prography.team5.server.service.dto.UserResponse;
 
 @RequiredArgsConstructor
 @Service
