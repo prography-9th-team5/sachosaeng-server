@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import prography.team5.server.docs.CategoryApiDocs;
 import prography.team5.server.controller.dto.CommonApiResponse;
+import prography.team5.server.docs.CategoryApiDocs;
 import prography.team5.server.service.CategoryService;
 import prography.team5.server.service.dto.CategoryIdResponse;
 import prography.team5.server.service.dto.CategoryRequest;
@@ -31,7 +31,8 @@ public class CategoryController implements CategoryApiDocs {
 
     //todo: 어드민 페이지
     @PostMapping
-    public ResponseEntity<CommonApiResponse<CategoryIdResponse>> add(@RequestBody final CategoryRequest categoryRequest) {
+    public ResponseEntity<CommonApiResponse<CategoryIdResponse>> add(
+            @RequestBody final CategoryRequest categoryRequest) {
         final CategoryIdResponse response = categoryService.add(categoryRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));

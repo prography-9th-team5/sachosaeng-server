@@ -26,9 +26,6 @@ public class Category extends TimeRecord {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    private List<Card> cards;
-
     public Category(final String name) {
         this.name = name;
     }

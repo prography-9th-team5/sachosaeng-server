@@ -13,4 +13,8 @@ public record CardResponse(Long cardId, String title, String content, List<Categ
                 CategoryResponse.from(card.getCategories())
         );
     }
+
+    public static List<CardResponse> from(final List<Card> cards) {
+        return cards.stream().map(CardResponse::from).toList();
+    }
 }
