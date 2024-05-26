@@ -1,5 +1,6 @@
 package prography.team5.server.domain.card;
 
+import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,9 +17,22 @@ public interface CardRepository extends JpaRepository<Card, Long> {
 
     @Query("SELECT c FROM Card c JOIN c.categories cat " +
             "WHERE cat.id = :categoryId AND c.id < :cursor ORDER BY c.id DESC")
-    Slice<Card> findByCategoriesIdBeforeCursor(@Param("cursor") long cursor, @Param("categoryId") long categoryId, PageRequest pageRequest);
+    Slice<Card> findByCategoriesIdBeforeCursor(@Param("cursor") long cursor, @Param("categoryId") long categoryId,
+                                               PageRequest pageRequest);
 
     @Query("SELECT c FROM Card c JOIN c.categories cat " +
             "WHERE cat.id = :categoryId ORDER BY c.id DESC")
     Slice<Card> findLatestCardsByCategoriesId(@Param("categoryId") long categoryId, PageRequest pageRequest);
+
+    @Query("SELECT c FROM Card c JOIN c.categories cat " +
+            "WHERE cat.id IN :categoryIds ORDER BY c.id DESC")
+    Slice<Card> findLatestCardsByCategoriesIdIn(@Param("categoryIds") List<Long> categoryIds, PageRequest pageRequest);
+
+    @Query("SELECT c FROM Card c JOIN c.categories cat " +
+            "WHERE cat.id IN :categoryIds AND c.id < :cursor ORDER BY c.id DESC")
+    Slice<Card> findByCategoriesIdInBeforeCursor(
+            @Param("cursor") long cursor,
+            @Param("categoryIds") List<Long> categoryIds,
+            PageRequest pageRequest
+    );
 }
