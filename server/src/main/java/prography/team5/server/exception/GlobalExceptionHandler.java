@@ -16,6 +16,7 @@ import static prography.team5.server.exception.ErrorType.INVALID_EMAIL;
 import static prography.team5.server.exception.ErrorType.INVALID_EMAIL_FORMAT;
 import static prography.team5.server.exception.ErrorType.INVALID_REFRESH_TOKEN;
 import static prography.team5.server.exception.ErrorType.INVALID_USER_ID;
+import static prography.team5.server.exception.ErrorType.INVALID_USER_TYPE;
 import static prography.team5.server.exception.ErrorType.NO_AUTHORIZATION_HEADER;
 import static prography.team5.server.exception.ErrorType.NO_REFRESH_TOKEN;
 import static prography.team5.server.exception.ErrorType.REFRESH_TOKEN_EXPIRATION;
@@ -58,6 +59,7 @@ public class GlobalExceptionHandler {
         errorTypeToHttpStatus.put(DUPLICATED_CATEGORY, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_CATEGORY, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_USER_ID, BAD_REQUEST);
+        errorTypeToHttpStatus.put(INVALID_USER_TYPE, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_CARD_ID, BAD_REQUEST);
     }
 

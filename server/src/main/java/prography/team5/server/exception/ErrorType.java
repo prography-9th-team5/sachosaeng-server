@@ -28,6 +28,7 @@ public enum ErrorType {
 
     //유저 에러
     INVALID_USER_ID(-6, "존재하지 않는 유저입니다."),
+    INVALID_USER_TYPE(-6, "존재하지 않는 유저 타입입니다."),
 
     //카드 에러
     INVALID_CARD_ID(-7, "존재하지 않는 카드입니다.");

@@ -1,6 +1,9 @@
 package prography.team5.server.domain.user;
 
+import static prography.team5.server.exception.ErrorType.INVALID_USER_TYPE;
+
 import java.util.Arrays;
+import prography.team5.server.exception.SachosaengException;
 
 public enum UserType {
 
@@ -20,6 +23,6 @@ public enum UserType {
         return Arrays.stream(values())
                 .filter(each -> each.name().equalsIgnoreCase(userType))
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new SachosaengException(INVALID_USER_TYPE));
     }
 }
