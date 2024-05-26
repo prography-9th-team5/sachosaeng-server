@@ -7,4 +7,6 @@ public interface BookmarkCategoryRepository extends JpaRepository<BookmarkCatego
 
     List<BookmarkCategory> findAllByUserId(long userId);
 
+    void deleteAllByUserId(long userId);
+
 }

@@ -23,4 +23,9 @@ public class BookmarkCategory extends TimeRecord {
     private Long userId;
     @ManyToOne
     private Category category;
+
+    public BookmarkCategory(final Long userId, final Category category) {
+        this.userId = userId;
+        this.category = category;
+    }
 }
