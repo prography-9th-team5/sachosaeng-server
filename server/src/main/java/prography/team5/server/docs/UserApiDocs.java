@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.Accessor;
@@ -19,7 +20,7 @@ public interface UserApiDocs {
             description = "유저 정보(조회 항목: 닉네임)를 조회 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "유저 정보 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<UserResponse>> findById(final long userId);
+    ResponseEntity<CommonApiResponse<UserResponse>> findById(@PathVariable(value = "userId") final long userId);
 
     @Operation(
             summary = "유저 닉네임 수정 API",
