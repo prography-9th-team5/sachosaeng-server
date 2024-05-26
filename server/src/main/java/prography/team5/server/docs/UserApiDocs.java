@@ -12,7 +12,7 @@ import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.dto.NicknameRequest;
 import prography.team5.server.service.dto.UserResponse;
 
-@Tag(name = "3. 유저 정보", description = "유저 정보 관련 기능입니다.")
+@Tag(name = "2. 유저 정보", description = "유저 정보 관련 기능입니다.")
 public interface UserApiDocs {
 
     @Operation(
