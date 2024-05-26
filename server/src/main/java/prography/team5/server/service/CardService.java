@@ -43,28 +43,25 @@ public class CardService {
 
     @Transactional(readOnly = true)
     public List<CardResponse> findAll(final Long cursor, final Long categoryId) {
-        if(Objects.isNull(categoryId)) {
+        if (Objects.isNull(categoryId)) {
             return findAll(cursor);
         }
-        return null;
-        //return findAllByCategoryId(cursor, categoryId);
+        return findAllByCategoryId(cursor, categoryId);
     }
 
     private List<CardResponse> findAll(final Long cursor) {
         final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
-        if(Objects.isNull(cursor)) {
+        if (Objects.isNull(cursor)) {
             return CardResponse.from(cardRepository.findLatestCards(pageRequest).getContent());
         }
-        return CardResponse.from(cardRepository.findCardsBeforeCursor(cursor, pageRequest).getContent());
+        return CardResponse.from(cardRepository.findBeforeCursor(cursor, pageRequest).getContent());
     }
 
-/*    //todo: 고치기
     private List<CardResponse> findAllByCategoryId(final Long cursor, final long categoryId) {
-        final PageRequest pageRequest = PageRequest.ofSize(3);
-        if(Objects.isNull(cursor)) {
-            cardRepository.findLatestCardsByCategoriesId(pageRequest);
+        final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
+        if (Objects.isNull(cursor)) {
+            return CardResponse.from(cardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
         }
-        List<Card> cards = cardRepository.findByCategoriesId(categoryId);
-        return CardResponse.from(cards);
-    }*/
+        return CardResponse.from(cardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());
+    }
 }
