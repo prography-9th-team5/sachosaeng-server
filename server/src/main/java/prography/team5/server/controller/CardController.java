@@ -39,7 +39,6 @@ public class CardController implements CardApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
-    //todo: 한번에 조회할 사이즈... 등등
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<CardResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,

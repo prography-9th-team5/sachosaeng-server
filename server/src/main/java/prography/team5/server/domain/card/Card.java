@@ -39,7 +39,6 @@ public class Card extends TimeRecord {
     private List<Category> categories;
 
     //todo: 투표기능
-
     //private String imageUrl; //todo: 이미지 등록 가능
     private Long writerId; //todo: 관리자가 아닌 유저가 직접 글을 등록하는 경우
 
