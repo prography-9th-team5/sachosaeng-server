@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import prography.team5.server.domain.TimeRecord;
+import prography.team5.server.util.RandomNicknameGenerator;
 
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,11 +26,12 @@ public class User extends TimeRecord {
     @Embedded
     private Email email;
     @Getter
-    private String nickname = "멋쟁이 프로도"; //todo: 닉네임 랜덤 생성기
+    private String nickname;
     private boolean deleted = false;
 
     public User(final String email) {
         this.email = Email.from(email);
+        this.nickname = RandomNicknameGenerator.generate();
     }
 
     public String getEmail() {

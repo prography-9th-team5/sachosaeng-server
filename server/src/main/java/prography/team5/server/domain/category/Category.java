@@ -5,14 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import prography.team5.server.domain.TimeRecord;
-import prography.team5.server.domain.card.Card;
 
 @Getter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
