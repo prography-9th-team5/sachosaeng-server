@@ -1,4 +1,4 @@
-package prography.team5.server.controller.user;
+package prography.team5.server.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +12,9 @@ import prography.team5.server.controller.auth.AuthRequired;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.UserApiDocs;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.user.UserService;
-import prography.team5.server.service.user.dto.NicknameRequest;
-import prography.team5.server.service.user.dto.UserResponse;
+import prography.team5.server.service.UserService;
+import prography.team5.server.service.dto.NicknameRequest;
+import prography.team5.server.service.dto.UserResponse;
 
 @RequiredArgsConstructor
 @RestController

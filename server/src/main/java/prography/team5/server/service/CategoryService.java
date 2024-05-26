@@ -1,4 +1,4 @@
-package prography.team5.server.service.category;
+package prography.team5.server.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +8,9 @@ import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
 import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
-import prography.team5.server.service.category.dto.CategoryRequest;
-import prography.team5.server.service.category.dto.CategoryResponse;
+import prography.team5.server.service.dto.CategoryIdResponse;
+import prography.team5.server.service.dto.CategoryRequest;
+import prography.team5.server.service.dto.CategoryResponse;
 
 @RequiredArgsConstructor
 @Service
@@ -26,10 +27,10 @@ public class CategoryService {
     }
 
     @Transactional
-    public void add(final CategoryRequest categoryRequest) {
+    public CategoryIdResponse add(final CategoryRequest categoryRequest) {
         if (categoryRepository.existsByName(categoryRequest.name())) {
             throw new SachosaengException(ErrorType.DUPLICATED_CATEGORY);
         }
-        categoryRepository.save(new Category(categoryRequest.name()));
+        return new CategoryIdResponse(categoryRepository.save(new Category(categoryRequest.name())).getId());
     }
 }
