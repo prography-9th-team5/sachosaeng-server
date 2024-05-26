@@ -5,11 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import prography.team5.server.domain.TimeRecord;
+import prography.team5.server.domain.card.Card;
 
 @Getter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
@@ -22,6 +25,9 @@ public class Category extends TimeRecord {
     private Long id;
     @Column(nullable = false, unique = true)
     private String name;
+
+    @ManyToMany(mappedBy = "categories")
+    private List<Card> cards;
 
     public Category(final String name) {
         this.name = name;
