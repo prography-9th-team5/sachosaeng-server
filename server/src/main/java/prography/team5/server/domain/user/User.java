@@ -36,6 +36,7 @@ public class User extends TimeRecord {
     public User(final String email) {
         this.email = Email.from(email);
         this.nickname = RandomNicknameGenerator.generate();
+        this.userType = UserType.UNDEFINED;
     }
 
     public String getEmail() {
