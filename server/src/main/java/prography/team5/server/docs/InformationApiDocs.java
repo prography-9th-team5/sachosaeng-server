@@ -34,7 +34,7 @@ public interface InformationApiDocs {
             description = "정보 리스트를 전체 조회할 수 있습니다. 정보는 최신순으로 조회됩니다. \n\n"
                     + "cursor 값으로 마지막 informationId를 전달하면 해당 informationId 이전의 정보를 10개 조회할 수 있습니다. (cursor는 포함X) \n\n"
                     + "cursor 값을 전달하지 않으면 가장 최근에 생성된 정보 10개를 조회합니다.\n\n"
-                    + "category-id 값에 조회하고 싶은 categoryId를 넣으면 특정 카테고리의 정보들만 조회됩니다. \n\n"
+                    + "category-id 값에 조회하고 싶은 categoryId를 넣으면 해당 카테고리의 정보들만 조회됩니다. \n\n"
     )
     @ApiResponse(responseCode = "200", description = "정보 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<List<InformationResponse>>> findAll(

@@ -4,9 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.dto.VoteIdResponse;
@@ -32,4 +34,17 @@ public interface VoteApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "투표 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(@PathVariable(value = "voteId") final long voteId);
+
+    @Operation(
+            summary = "투표 카드 리스트 전체 조회 API (카테고리별로도 가능!)",
+            description = "투표 리스트를 전체 조회할 수 있습니다. 투표는 최신순으로 조회됩니다. \n\n"
+                    + "cursor 값으로 마지막 voteId를 전달하면 해당 voteId 이전의 투표를 10개 조회할 수 있습니다. (cursor는 포함X) \n\n"
+                    + "cursor 값을 전달하지 않으면 가장 최근에 생성된 투표 10개를 조회합니다.\n\n"
+                    + "category-id 값에 조회하고 싶은 categoryId를 넣으면 해당 카테고리의 투표들만 조회됩니다. \n\n"
+    )
+    @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
+    ResponseEntity<CommonApiResponse<List<VoteResponse>>> findAll(
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "category-id", required = false) final Long categoryId
+    );
 }
