@@ -28,10 +28,6 @@ public abstract class Card extends TimeRecord {
     @Column(nullable = false)
     private String title;
     @ManyToMany
-/*    @JoinTable(
-            joinColumns = @JoinColumn(name = "card_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )*/
     private List<Category> categories;
 
     protected Card(final String title, final List<Category> categories) {
