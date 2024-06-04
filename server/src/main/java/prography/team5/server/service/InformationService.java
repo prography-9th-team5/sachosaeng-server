@@ -26,14 +26,14 @@ public class InformationService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public InformationResponse findByCardId(final long cardId) {
+    public InformationResponse findByInformationId(final long cardId) {
         final InformationCard informationCard = informationCardRepository.findById(cardId)
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_INFORMATION_CARD_ID));
         return InformationResponse.from(informationCard);
     }
 
     @Transactional
-    public InformationIdResponse add(final InformationRequest informationRequest) {
+    public InformationIdResponse create(final InformationRequest informationRequest) {
         final List<Long> categoryIds = informationRequest.categoryIds();
         final List<Category> categories = categoryRepository.findAllByIdIn(categoryIds);
         final InformationCard informationCard = new InformationCard(informationRequest.title(), categories, informationRequest.content());

@@ -25,15 +25,15 @@ public class InformationController implements InformationApiDocs {
     private final InformationService informationService;
 
     @GetMapping("/{informationId}")
-    public ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(@PathVariable(value = "informationId") final long cardId) {
-        final InformationResponse response = informationService.findByCardId(cardId);
+    public ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(@PathVariable(value = "informationId") final long informationId) {
+        final InformationResponse response = informationService.findByInformationId(informationId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @PostMapping
-    public ResponseEntity<CommonApiResponse<InformationIdResponse>> add(@RequestBody final InformationRequest informationRequest) {
-        final InformationIdResponse response = informationService.add(informationRequest);
+    public ResponseEntity<CommonApiResponse<InformationIdResponse>> create(@RequestBody final InformationRequest informationRequest) {
+        final InformationIdResponse response = informationService.create(informationRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

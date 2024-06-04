@@ -16,21 +16,21 @@ import prography.team5.server.service.dto.InformationResponse;
 public interface InformationApiDocs {
 
     @Operation(
-            summary = "단일 정보 조회 API",
+            summary = "단일 정보 카드 조회 API",
             description = "정보 id로 해당 정보를 조회할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "정보 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(@PathVariable(value = "informationId") final long informationId);
 
     @Operation(
-            summary = "[Admin] 정보 추가 API",
+            summary = "[Admin] 정보 카드 추가 API",
             description = "정보를 추가할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "정보 추가 성공입니다.")
-    ResponseEntity<CommonApiResponse<InformationIdResponse>> add(final InformationRequest informationRequest);
+    ResponseEntity<CommonApiResponse<InformationIdResponse>> create(final InformationRequest informationRequest);
 
     @Operation(
-            summary = "정보 리스트 전체 조회 API",
+            summary = "정보 카드 리스트 전체 조회 API (카테고리별로도 가능!)",
             description = "정보 리스트를 전체 조회할 수 있습니다. 정보는 최신순으로 조회됩니다. \n\n"
                     + "cursor 값으로 마지막 informationId를 전달하면 해당 informationId 이전의 정보를 10개 조회할 수 있습니다. (cursor는 포함X) \n\n"
                     + "cursor 값을 전달하지 않으면 가장 최근에 생성된 정보 10개를 조회합니다.\n\n"
