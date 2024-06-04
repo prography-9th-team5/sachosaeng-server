@@ -18,7 +18,7 @@ import prography.team5.server.service.dto.CardResponse;
 
 @RequiredArgsConstructor
 @Service
-public class InformationCardService {
+public class InformationService {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
 
