@@ -20,7 +20,7 @@ import prography.team5.server.service.dto.CategoryResponse;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/bookmark-categories")
+@RequestMapping("/my-categories")
 public class MyCategoryController implements MyCategoryApiDocs {
 
     private final MyCategoryService myCategoryService;
