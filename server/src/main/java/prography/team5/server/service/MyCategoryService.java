@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import prography.team5.server.domain.card.CardRepository;
+import prography.team5.server.domain.card.InformationCardRepository;
 import prography.team5.server.domain.category.MyCategory;
 import prography.team5.server.domain.category.MyCategoryRepository;
 import prography.team5.server.domain.category.Category;
@@ -23,7 +23,7 @@ public class MyCategoryService {
 
     private final MyCategoryRepository myCategoryRepository;
     private final CategoryRepository categoryRepository;
-    private final CardRepository cardRepository;
+    private final InformationCardRepository informationCardRepository;
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAllByUserId(final long userId) {
@@ -51,8 +51,10 @@ public class MyCategoryService {
 
         final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
         if(Objects.isNull(cursor)) {
-            return CardResponse.from(cardRepository.findLatestCardsByCategoriesIdIn(categoryIds, pageRequest).getContent());
+            return CardResponse.from(
+                    informationCardRepository.findLatestCardsByCategoriesIdIn(categoryIds, pageRequest).getContent());
         }
-        return CardResponse.from(cardRepository.findByCategoriesIdInBeforeCursor(cursor, categoryIds, pageRequest).getContent());
+        return CardResponse.from(
+                informationCardRepository.findByCategoriesIdInBeforeCursor(cursor, categoryIds, pageRequest).getContent());
     }
 }

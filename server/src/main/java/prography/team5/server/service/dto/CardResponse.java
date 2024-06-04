@@ -1,20 +1,20 @@
 package prography.team5.server.service.dto;
 
 import java.util.List;
-import prography.team5.server.domain.card.Card;
+import prography.team5.server.domain.card.InformationCard;
 
 public record CardResponse(Long cardId, String title, String content, List<CategoryResponse> categories) {
 
-    public static CardResponse from(final Card card) {
+    public static CardResponse from(final InformationCard informationCard) {
         return new CardResponse(
-                card.getId(),
-                card.getTitle(),
-                card.getContent(),
-                CategoryResponse.from(card.getCategories())
+                informationCard.getId(),
+                informationCard.getTitle(),
+                informationCard.getContent(),
+                CategoryResponse.from(informationCard.getCategories())
         );
     }
 
-    public static List<CardResponse> from(final List<Card> cards) {
-        return cards.stream().map(CardResponse::from).toList();
+    public static List<CardResponse> from(final List<InformationCard> informationCards) {
+        return informationCards.stream().map(CardResponse::from).toList();
     }
 }

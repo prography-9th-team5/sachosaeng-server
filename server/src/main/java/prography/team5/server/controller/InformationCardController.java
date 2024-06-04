@@ -15,26 +15,25 @@ import prography.team5.server.docs.CardApiDocs;
 import prography.team5.server.service.dto.CardIdResponse;
 import prography.team5.server.service.dto.CardRequest;
 import prography.team5.server.service.dto.CardResponse;
-import prography.team5.server.service.CardService;
-import prography.team5.server.service.dto.CategoryResponse;
+import prography.team5.server.service.InformationCardService;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cards")
-public class CardController implements CardApiDocs {
+public class InformationCardController implements CardApiDocs {
 
-    private final CardService cardService;
+    private final InformationCardService informationCardService;
 
     @GetMapping("/{cardId}")
     public ResponseEntity<CommonApiResponse<CardResponse>> findByCardId(@PathVariable(value = "cardId") final long cardId) {
-        final CardResponse response = cardService.findByCardId(cardId);
+        final CardResponse response = informationCardService.findByCardId(cardId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @PostMapping
     public ResponseEntity<CommonApiResponse<CardIdResponse>> add(@RequestBody final CardRequest cardRequest) {
-        final CardIdResponse response = cardService.add(cardRequest);
+        final CardIdResponse response = informationCardService.add(cardRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
@@ -44,7 +43,7 @@ public class CardController implements CardApiDocs {
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "category-id", required = false) final Long categoryId
     ) {
-        final List<CardResponse> response = cardService.findAll(cursor, categoryId);
+        final List<CardResponse> response = informationCardService.findAll(cursor, categoryId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
