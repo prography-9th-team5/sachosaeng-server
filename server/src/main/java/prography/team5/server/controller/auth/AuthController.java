@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import prography.team5.server.docs.AuthApiDocs;
 import prography.team5.server.controller.dto.CommonApiResponse;
+import prography.team5.server.docs.AuthApiDocs;
 import prography.team5.server.service.auth.AuthService;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
+import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.auth.dto.EmailRequest;
 import prography.team5.server.service.auth.dto.LoginResponse;
-import prography.team5.server.service.auth.dto.Accessor;
 
 @RequiredArgsConstructor
 @RestController

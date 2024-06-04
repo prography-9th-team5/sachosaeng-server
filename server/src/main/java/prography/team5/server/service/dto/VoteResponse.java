@@ -3,7 +3,8 @@ package prography.team5.server.service.dto;
 import java.util.List;
 import prography.team5.server.domain.card.VoteCard;
 
-public record VoteResponse(Long voteId, String title, List<VoteOptionResponse> voteOptions, List<CategoryResponse> categories) {
+public record VoteResponse(Long voteId, String title, List<VoteOptionResponse> voteOptions,
+                           List<CategoryResponse> categories) {
 
     public static VoteResponse from(final VoteCard voteCard) {
         return new VoteResponse(

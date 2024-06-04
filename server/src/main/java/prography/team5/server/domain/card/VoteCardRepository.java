@@ -20,5 +20,9 @@ public interface VoteCardRepository extends JpaRepository<VoteCard, Long> {
 
     @Query("SELECT c FROM VoteCard c JOIN c.categories cat " +
             "WHERE cat.id = :categoryId AND c.id < :cursor ORDER BY c.id DESC")
-    Slice<VoteCard> findByCategoriesIdBeforeCursor(@Param("cursor") Long cursor, @Param("categoryId") long categoryId, PageRequest pageRequest);
+    Slice<VoteCard> findByCategoriesIdBeforeCursor(
+            @Param("cursor") Long cursor,
+            @Param("categoryId") long categoryId,
+            PageRequest pageRequest
+    );
 }

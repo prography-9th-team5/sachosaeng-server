@@ -9,11 +9,10 @@ import prography.team5.server.domain.user.User;
 import prography.team5.server.domain.user.UserRepository;
 import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
-import prography.team5.server.util.RandomNicknameGenerator;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
+import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.auth.dto.EmailRequest;
 import prography.team5.server.service.auth.dto.LoginResponse;
-import prography.team5.server.service.auth.dto.Accessor;
 
 @Slf4j
 @RequiredArgsConstructor

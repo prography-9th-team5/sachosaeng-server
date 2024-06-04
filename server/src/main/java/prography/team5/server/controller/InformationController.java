@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.InformationApiDocs;
+import prography.team5.server.service.InformationService;
 import prography.team5.server.service.dto.InformationIdResponse;
 import prography.team5.server.service.dto.InformationRequest;
 import prography.team5.server.service.dto.InformationResponse;
-import prography.team5.server.service.InformationService;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,14 +25,16 @@ public class InformationController implements InformationApiDocs {
     private final InformationService informationService;
 
     @GetMapping("/{informationId}")
-    public ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(@PathVariable(value = "informationId") final long informationId) {
+    public ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(
+            @PathVariable(value = "informationId") final long informationId) {
         final InformationResponse response = informationService.findByInformationId(informationId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @PostMapping
-    public ResponseEntity<CommonApiResponse<InformationIdResponse>> create(@RequestBody final InformationRequest informationRequest) {
+    public ResponseEntity<CommonApiResponse<InformationIdResponse>> create(
+            @RequestBody final InformationRequest informationRequest) {
         final InformationIdResponse response = informationService.create(informationRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));

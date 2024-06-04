@@ -8,5 +8,4 @@ public interface MyCategoryRepository extends JpaRepository<MyCategory, Long> {
     List<MyCategory> findAllByUserId(long userId);
 
     void deleteAllByUserId(long userId);
-
 }

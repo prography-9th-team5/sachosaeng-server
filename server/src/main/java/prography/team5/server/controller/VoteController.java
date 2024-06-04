@@ -15,7 +15,6 @@ import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.VoteApiDocs;
 import prography.team5.server.service.VoteService;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
 import prography.team5.server.service.dto.VoteResponse;
@@ -38,7 +37,8 @@ public class VoteController implements VoteApiDocs {
     }
 
     @GetMapping("/{voteId}")
-    public ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(@PathVariable(value = "voteId") final long voteId) {
+    public ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(
+            @PathVariable(value = "voteId") final long voteId) {
         final VoteResponse response = voteService.findByVoteId(voteId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));

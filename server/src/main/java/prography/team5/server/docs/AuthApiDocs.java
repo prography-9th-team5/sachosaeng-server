@@ -7,9 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.AccessTokenResponse;
+import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.auth.dto.EmailRequest;
 import prography.team5.server.service.auth.dto.LoginResponse;
-import prography.team5.server.service.auth.dto.Accessor;
 
 @Tag(name = "1. 인증", description = "인증 관련 기능입니다.")
 public interface AuthApiDocs {

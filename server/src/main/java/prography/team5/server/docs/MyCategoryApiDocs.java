@@ -7,12 +7,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.MyCategoryRequest;
-import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.CategoryResponse;
+import prography.team5.server.service.dto.MyCategoryRequest;
 
 @Tag(name = "4. 관심 카테고리", description = "관심 카테고리 관련 기능입니다.")
 public interface MyCategoryApiDocs {

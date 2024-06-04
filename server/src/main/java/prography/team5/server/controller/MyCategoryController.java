@@ -7,16 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.controller.auth.AuthRequired;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.MyCategoryApiDocs;
 import prography.team5.server.service.MyCategoryService;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.MyCategoryRequest;
-import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.CategoryResponse;
+import prography.team5.server.service.dto.MyCategoryRequest;
 
 @RequiredArgsConstructor
 @RestController

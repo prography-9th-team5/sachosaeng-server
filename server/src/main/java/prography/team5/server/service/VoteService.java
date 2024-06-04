@@ -8,13 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.domain.card.VoteCard;
 import prography.team5.server.domain.card.VoteCardRepository;
-import prography.team5.server.domain.card.VoteOption;
 import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
-import prography.team5.server.service.dto.CategoryResponse;
-import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
-import prography.team5.server.service.dto.VoteOptionResponse;
 import prography.team5.server.service.dto.VoteRequest;
 import prography.team5.server.service.dto.VoteResponse;
 
@@ -38,7 +34,7 @@ public class VoteService {
 
     @Transactional(readOnly = true)
     public VoteResponse findByVoteId(final long voteId) {
-        final VoteCard voteCard = voteCardRepository.findById(voteId).orElseThrow();
+        final VoteCard voteCard = voteCardRepository.findById(voteId).orElseThrow(); //todo: 예외처리
         return VoteResponse.from(voteCard);
     }
 
@@ -52,7 +48,7 @@ public class VoteService {
     }
 
     private PageRequest createPageRequest(final Integer pageSize) {
-        if(Objects.isNull(pageSize)) {
+        if (Objects.isNull(pageSize)) {
             return PageRequest.ofSize(DEFAULT_PAGE_SIZE);
         }
         return PageRequest.ofSize(pageSize);
@@ -65,9 +61,11 @@ public class VoteService {
         return VoteResponse.from(voteCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
     }
 
-    private List<VoteResponse> findAllByCategoryId(final Long cursor, final long categoryId, final PageRequest pageRequest) {
+    private List<VoteResponse> findAllByCategoryId(final Long cursor, final long categoryId,
+                                                   final PageRequest pageRequest) {
         if (Objects.isNull(cursor)) {
-            return VoteResponse.from(voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
+            return VoteResponse.from(
+                    voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
         }
         return VoteResponse.from(
                 voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());

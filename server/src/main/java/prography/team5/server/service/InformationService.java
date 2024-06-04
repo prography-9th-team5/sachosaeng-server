@@ -36,7 +36,8 @@ public class InformationService {
     public InformationIdResponse create(final InformationRequest informationRequest) {
         final List<Long> categoryIds = informationRequest.categoryIds();
         final List<Category> categories = categoryRepository.findAllByIdIn(categoryIds);
-        final InformationCard informationCard = new InformationCard(informationRequest.title(), categories, informationRequest.content());
+        final InformationCard informationCard = new InformationCard(informationRequest.title(), categories,
+                informationRequest.content());
         final Long cardId = informationCardRepository.save(informationCard).getId();
         return new InformationIdResponse(cardId);
     }
@@ -51,7 +52,7 @@ public class InformationService {
     }
 
     private PageRequest createPageRequest(final Integer pageSize) {
-        if(Objects.isNull(pageSize)) {
+        if (Objects.isNull(pageSize)) {
             return PageRequest.ofSize(DEFAULT_PAGE_SIZE);
         }
         return PageRequest.ofSize(pageSize);
@@ -64,9 +65,11 @@ public class InformationService {
         return InformationResponse.from(informationCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
     }
 
-    private List<InformationResponse> findAllByCategoryId(final Long cursor, final long categoryId, final PageRequest pageRequest) {
+    private List<InformationResponse> findAllByCategoryId(final Long cursor, final long categoryId,
+                                                          final PageRequest pageRequest) {
         if (Objects.isNull(cursor)) {
-            return InformationResponse.from(informationCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
+            return InformationResponse.from(
+                    informationCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
         }
         return InformationResponse.from(
                 informationCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());

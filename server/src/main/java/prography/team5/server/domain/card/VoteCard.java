@@ -13,7 +13,7 @@ import prography.team5.server.domain.category.Category;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class VoteCard extends Card{
+public class VoteCard extends Card {
 
     @OneToMany(mappedBy = "voteCard", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VoteOption> voteOptions = new ArrayList<>();

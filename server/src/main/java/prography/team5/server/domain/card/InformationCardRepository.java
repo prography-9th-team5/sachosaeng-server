@@ -17,7 +17,8 @@ public interface InformationCardRepository extends JpaRepository<InformationCard
 
     @Query("SELECT c FROM InformationCard c JOIN c.categories cat " +
             "WHERE cat.id = :categoryId AND c.id < :cursor ORDER BY c.id DESC")
-    Slice<InformationCard> findByCategoriesIdBeforeCursor(@Param("cursor") long cursor, @Param("categoryId") long categoryId,
+    Slice<InformationCard> findByCategoriesIdBeforeCursor(@Param("cursor") long cursor,
+                                                          @Param("categoryId") long categoryId,
                                                           PageRequest pageRequest);
 
     @Query("SELECT c FROM InformationCard c JOIN c.categories cat " +
@@ -26,7 +27,8 @@ public interface InformationCardRepository extends JpaRepository<InformationCard
 
     @Query("SELECT c FROM InformationCard c JOIN c.categories cat " +
             "WHERE cat.id IN :categoryIds ORDER BY c.id DESC")
-    Slice<InformationCard> findLatestCardsByCategoriesIdIn(@Param("categoryIds") List<Long> categoryIds, PageRequest pageRequest);
+    Slice<InformationCard> findLatestCardsByCategoriesIdIn(@Param("categoryIds") List<Long> categoryIds,
+                                                           PageRequest pageRequest);
 
     @Query("SELECT c FROM InformationCard c JOIN c.categories cat " +
             "WHERE cat.id IN :categoryIds AND c.id < :cursor ORDER BY c.id DESC")
