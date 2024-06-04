@@ -14,7 +14,7 @@ import prography.team5.server.service.dto.MyCategoryRequest;
 import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 
-@Tag(name = "5. 관심 카테고리", description = "관심 카테고리 관련 기능입니다.")
+@Tag(name = "4. 관심 카테고리", description = "관심 카테고리 관련 기능입니다.")
 public interface MyCategoryApiDocs {
 
     @Operation(

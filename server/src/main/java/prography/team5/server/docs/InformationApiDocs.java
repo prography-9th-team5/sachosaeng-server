@@ -12,7 +12,7 @@ import prography.team5.server.service.dto.InformationIdResponse;
 import prography.team5.server.service.dto.InformationRequest;
 import prography.team5.server.service.dto.InformationResponse;
 
-@Tag(name = "4. 정보 카드", description = "정보 제공 카드 관련 기능입니다.")
+@Tag(name = "6. 정보 카드", description = "정보 제공 카드 관련 기능입니다.")
 public interface InformationApiDocs {
 
     @Operation(
