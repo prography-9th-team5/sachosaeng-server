@@ -42,23 +42,29 @@ public class InformationService {
     }
 
     @Transactional(readOnly = true)
-    public List<InformationResponse> findAll(final Long cursor, final Long categoryId) {
+    public List<InformationResponse> findAll(final Long cursor, final Long categoryId, final Integer pageSize) {
+        final PageRequest pageRequest = createPageRequest(pageSize);
         if (Objects.isNull(categoryId)) {
-            return findAll(cursor);
+            return findAll(cursor, pageRequest);
         }
-        return findAllByCategoryId(cursor, categoryId);
+        return findAllByCategoryId(cursor, categoryId, pageRequest);
     }
 
-    private List<InformationResponse> findAll(final Long cursor) {
-        final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
+    private PageRequest createPageRequest(final Integer pageSize) {
+        if(Objects.isNull(pageSize)) {
+            return PageRequest.ofSize(DEFAULT_PAGE_SIZE);
+        }
+        return PageRequest.ofSize(pageSize);
+    }
+
+    private List<InformationResponse> findAll(final Long cursor, final PageRequest pageRequest) {
         if (Objects.isNull(cursor)) {
             return InformationResponse.from(informationCardRepository.findLatestCards(pageRequest).getContent());
         }
         return InformationResponse.from(informationCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
     }
 
-    private List<InformationResponse> findAllByCategoryId(final Long cursor, final long categoryId) {
-        final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
+    private List<InformationResponse> findAllByCategoryId(final Long cursor, final long categoryId, final PageRequest pageRequest) {
         if (Objects.isNull(cursor)) {
             return InformationResponse.from(informationCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
         }

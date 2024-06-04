@@ -41,9 +41,10 @@ public class InformationController implements InformationApiDocs {
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<InformationResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
-            @RequestParam(name = "category-id", required = false) final Long categoryId
+            @RequestParam(name = "category-id", required = false) final Long categoryId,
+            @RequestParam(name = "page-size", required = false) final Integer pageSize
     ) {
-        final List<InformationResponse> response = informationService.findAll(cursor, categoryId);
+        final List<InformationResponse> response = informationService.findAll(cursor, categoryId, pageSize);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

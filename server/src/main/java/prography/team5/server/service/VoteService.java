@@ -43,23 +43,29 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public List<VoteResponse> findAll(final Long cursor, final Long categoryId) {
+    public List<VoteResponse> findAll(final Long cursor, final Long categoryId, final Integer pageSize) {
+        final PageRequest pageRequest = createPageRequest(pageSize);
         if (Objects.isNull(categoryId)) {
-            return findAll(cursor);
+            return findAll(cursor, pageRequest);
         }
-        return findAllByCategoryId(cursor, categoryId);
+        return findAllByCategoryId(cursor, categoryId, pageRequest);
     }
 
-    private List<VoteResponse> findAll(final Long cursor) {
-        final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
+    private PageRequest createPageRequest(final Integer pageSize) {
+        if(Objects.isNull(pageSize)) {
+            return PageRequest.ofSize(DEFAULT_PAGE_SIZE);
+        }
+        return PageRequest.ofSize(pageSize);
+    }
+
+    private List<VoteResponse> findAll(final Long cursor, final PageRequest pageRequest) {
         if (Objects.isNull(cursor)) {
             return VoteResponse.from(voteCardRepository.findLatestCards(pageRequest).getContent());
         }
         return VoteResponse.from(voteCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
     }
 
-    private List<VoteResponse> findAllByCategoryId(final Long cursor, final long categoryId) {
-        final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
+    private List<VoteResponse> findAllByCategoryId(final Long cursor, final long categoryId, final PageRequest pageRequest) {
         if (Objects.isNull(cursor)) {
             return VoteResponse.from(voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
         }
