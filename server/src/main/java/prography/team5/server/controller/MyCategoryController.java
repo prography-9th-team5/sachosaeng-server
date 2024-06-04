@@ -15,7 +15,7 @@ import prography.team5.server.docs.MyCategoryApiDocs;
 import prography.team5.server.service.MyCategoryService;
 import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.dto.MyCategoryRequest;
-import prography.team5.server.service.dto.CardResponse;
+import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 
 @RequiredArgsConstructor
@@ -42,13 +42,13 @@ public class MyCategoryController implements MyCategoryApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
 
-    @GetMapping("/cards")
-    public ResponseEntity<CommonApiResponse<List<CardResponse>>> findAllCardsByUserId(
+/*    @GetMapping("/information")
+    public ResponseEntity<CommonApiResponse<List<InformationResponse>>> findAllInformationByUserId(
             @AuthRequired Accessor accessor,
             @RequestParam(name = "cursor", required = false) final Long cursor
     ) {
-        List<CardResponse> response = myCategoryService.findAllCardsByUserId(accessor.id(), cursor);
+        List<InformationResponse> response = myCategoryService.findAllInformationByUserId(accessor.id(), cursor);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
-    }
+    }*/
 }

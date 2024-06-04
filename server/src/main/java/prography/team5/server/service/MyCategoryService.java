@@ -1,19 +1,16 @@
 package prography.team5.server.service;
 
 import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.domain.card.InformationCardRepository;
-import prography.team5.server.domain.category.MyCategory;
-import prography.team5.server.domain.category.MyCategoryRepository;
 import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
-import prography.team5.server.service.dto.MyCategoryRequest;
-import prography.team5.server.service.dto.CardResponse;
+import prography.team5.server.domain.category.MyCategory;
+import prography.team5.server.domain.category.MyCategoryRepository;
 import prography.team5.server.service.dto.CategoryResponse;
+import prography.team5.server.service.dto.MyCategoryRequest;
 
 @RequiredArgsConstructor
 @Service
@@ -42,8 +39,8 @@ public class MyCategoryService {
         myCategoryRepository.saveAll(bookmarkCategories);
     }
 
-    @Transactional(readOnly = true)
-    public List<CardResponse> findAllCardsByUserId(final Long userId, final Long cursor) {
+/*    @Transactional(readOnly = true)
+    public List<InformationResponse> findAllInformationByUserId(final Long userId, final Long cursor) {
         final List<Long> categoryIds = myCategoryRepository.findAllByUserId(userId)
                 .stream()
                 .map(each -> each.getCategory().getId())
@@ -51,10 +48,10 @@ public class MyCategoryService {
 
         final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
         if(Objects.isNull(cursor)) {
-            return CardResponse.from(
+            return InformationResponse.from(
                     informationCardRepository.findLatestCardsByCategoriesIdIn(categoryIds, pageRequest).getContent());
         }
-        return CardResponse.from(
+        return InformationResponse.from(
                 informationCardRepository.findByCategoriesIdInBeforeCursor(cursor, categoryIds, pageRequest).getContent());
-    }
+    }*/
 }

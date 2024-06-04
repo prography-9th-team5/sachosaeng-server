@@ -1,15 +1,9 @@
 package prography.team5.server.service;
 
 import jakarta.annotation.PostConstruct;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import prography.team5.server.domain.card.InformationCard;
-import prography.team5.server.domain.card.InformationCardRepository;
-import prography.team5.server.domain.card.VoteCard;
-import prography.team5.server.domain.card.VoteCardRepository;
 import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
 

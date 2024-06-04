@@ -12,9 +12,9 @@ import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
 import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
-import prography.team5.server.service.dto.CardIdResponse;
-import prography.team5.server.service.dto.CardRequest;
-import prography.team5.server.service.dto.CardResponse;
+import prography.team5.server.service.dto.InformationIdResponse;
+import prography.team5.server.service.dto.InformationRequest;
+import prography.team5.server.service.dto.InformationResponse;
 
 @RequiredArgsConstructor
 @Service
@@ -26,43 +26,43 @@ public class InformationService {
     private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public CardResponse findByCardId(final long cardId) {
+    public InformationResponse findByCardId(final long cardId) {
         final InformationCard informationCard = informationCardRepository.findById(cardId)
-                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_CARD_ID));
-        return CardResponse.from(informationCard);
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_INFORMATION_CARD_ID));
+        return InformationResponse.from(informationCard);
     }
 
     @Transactional
-    public CardIdResponse add(final CardRequest cardRequest) {
-        final List<Long> categoryIds = cardRequest.categoryIds();
+    public InformationIdResponse add(final InformationRequest informationRequest) {
+        final List<Long> categoryIds = informationRequest.categoryIds();
         final List<Category> categories = categoryRepository.findAllByIdIn(categoryIds);
-        final InformationCard informationCard = new InformationCard(cardRequest.title(), categories, cardRequest.content());
+        final InformationCard informationCard = new InformationCard(informationRequest.title(), categories, informationRequest.content());
         final Long cardId = informationCardRepository.save(informationCard).getId();
-        return new CardIdResponse(cardId);
+        return new InformationIdResponse(cardId);
     }
 
     @Transactional(readOnly = true)
-    public List<CardResponse> findAll(final Long cursor, final Long categoryId) {
+    public List<InformationResponse> findAll(final Long cursor, final Long categoryId) {
         if (Objects.isNull(categoryId)) {
             return findAll(cursor);
         }
         return findAllByCategoryId(cursor, categoryId);
     }
 
-    private List<CardResponse> findAll(final Long cursor) {
+    private List<InformationResponse> findAll(final Long cursor) {
         final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
         if (Objects.isNull(cursor)) {
-            return CardResponse.from(informationCardRepository.findLatestCards(pageRequest).getContent());
+            return InformationResponse.from(informationCardRepository.findLatestCards(pageRequest).getContent());
         }
-        return CardResponse.from(informationCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
+        return InformationResponse.from(informationCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
     }
 
-    private List<CardResponse> findAllByCategoryId(final Long cursor, final long categoryId) {
+    private List<InformationResponse> findAllByCategoryId(final Long cursor, final long categoryId) {
         final PageRequest pageRequest = PageRequest.ofSize(DEFAULT_PAGE_SIZE);
         if (Objects.isNull(cursor)) {
-            return CardResponse.from(informationCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
+            return InformationResponse.from(informationCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
         }
-        return CardResponse.from(
+        return InformationResponse.from(
                 informationCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());
     }
 }

@@ -8,9 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.controller.dto.CommonApiResponse;
-import prography.team5.server.service.dto.CardIdResponse;
-import prography.team5.server.service.dto.CardRequest;
-import prography.team5.server.service.dto.CardResponse;
+import prography.team5.server.service.dto.InformationIdResponse;
+import prography.team5.server.service.dto.InformationRequest;
+import prography.team5.server.service.dto.InformationResponse;
 
 @Tag(name = "4. 정보 카드", description = "정보 제공 카드 관련 기능입니다.")
 public interface InformationApiDocs {
@@ -20,14 +20,14 @@ public interface InformationApiDocs {
             description = "정보 id로 해당 정보를 조회할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "정보 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<CardResponse>> findByInformationId(@PathVariable(value = "informationId") final long informationId);
+    ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(@PathVariable(value = "informationId") final long informationId);
 
     @Operation(
             summary = "[Admin] 정보 추가 API",
             description = "정보를 추가할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "정보 추가 성공입니다.")
-    ResponseEntity<CommonApiResponse<CardIdResponse>> add(final CardRequest cardRequest);
+    ResponseEntity<CommonApiResponse<InformationIdResponse>> add(final InformationRequest informationRequest);
 
     @Operation(
             summary = "정보 리스트 전체 조회 API",
@@ -37,7 +37,7 @@ public interface InformationApiDocs {
                     + "category-id 값에 조회하고 싶은 categoryId를 넣으면 특정 카테고리의 정보들만 조회됩니다. \n\n"
     )
     @ApiResponse(responseCode = "200", description = "정보 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<CardResponse>>> findAll(
+    ResponseEntity<CommonApiResponse<List<InformationResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "category-id", required = false) final Long categoryId
     );

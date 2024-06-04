@@ -10,7 +10,7 @@ import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_UNSUPPORTE
 import static prography.team5.server.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.exception.ErrorType.DUPLICATED_EMAIL;
 import static prography.team5.server.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
-import static prography.team5.server.exception.ErrorType.INVALID_CARD_ID;
+import static prography.team5.server.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.exception.ErrorType.INVALID_CATEGORY;
 import static prography.team5.server.exception.ErrorType.INVALID_EMAIL;
 import static prography.team5.server.exception.ErrorType.INVALID_EMAIL_FORMAT;
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
         errorTypeToHttpStatus.put(INVALID_CATEGORY, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_USER_ID, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_USER_TYPE, BAD_REQUEST);
-        errorTypeToHttpStatus.put(INVALID_CARD_ID, BAD_REQUEST);
+        errorTypeToHttpStatus.put(INVALID_INFORMATION_CARD_ID, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)

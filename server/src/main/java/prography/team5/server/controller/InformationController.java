@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.InformationApiDocs;
-import prography.team5.server.service.dto.CardIdResponse;
-import prography.team5.server.service.dto.CardRequest;
-import prography.team5.server.service.dto.CardResponse;
+import prography.team5.server.service.dto.InformationIdResponse;
+import prography.team5.server.service.dto.InformationRequest;
+import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.InformationService;
 
 @RequiredArgsConstructor
@@ -25,25 +25,25 @@ public class InformationController implements InformationApiDocs {
     private final InformationService informationService;
 
     @GetMapping("/{informationId}")
-    public ResponseEntity<CommonApiResponse<CardResponse>> findByInformationId(@PathVariable(value = "informationId") final long cardId) {
-        final CardResponse response = informationService.findByCardId(cardId);
+    public ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(@PathVariable(value = "informationId") final long cardId) {
+        final InformationResponse response = informationService.findByCardId(cardId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @PostMapping
-    public ResponseEntity<CommonApiResponse<CardIdResponse>> add(@RequestBody final CardRequest cardRequest) {
-        final CardIdResponse response = informationService.add(cardRequest);
+    public ResponseEntity<CommonApiResponse<InformationIdResponse>> add(@RequestBody final InformationRequest informationRequest) {
+        final InformationIdResponse response = informationService.add(informationRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @GetMapping
-    public ResponseEntity<CommonApiResponse<List<CardResponse>>> findAll(
+    public ResponseEntity<CommonApiResponse<List<InformationResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "category-id", required = false) final Long categoryId
     ) {
-        final List<CardResponse> response = informationService.findAll(cursor, categoryId);
+        final List<InformationResponse> response = informationService.findAll(cursor, categoryId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
