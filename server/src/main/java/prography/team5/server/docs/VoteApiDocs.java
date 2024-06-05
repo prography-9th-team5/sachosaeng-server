@@ -29,7 +29,7 @@ public interface VoteApiDocs {
     );
 
     @Operation(
-            summary = "단일 투표 카드 조회 API",
+            summary = "[임시] 단일 투표 카드 조회 API -> 회원의 투표 여부에 따라 다르게 보이도록?",
             description = "투표 id로 해당 투표를 조회할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "투표 조회 성공입니다.")
