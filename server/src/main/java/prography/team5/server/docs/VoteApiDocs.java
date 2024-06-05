@@ -36,7 +36,7 @@ public interface VoteApiDocs {
     ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(@PathVariable(value = "voteId") final long voteId);
 
     @Operation(
-            summary = "투표 카드 리스트 전체 조회 API (카테고리별로도 가능!)",
+            summary = "[임시] 투표 카드 리스트 전체 조회 API",
             description = "투표 리스트를 전체 조회할 수 있습니다. 투표는 최신순으로 조회됩니다. \n\n"
                     + "cursor 값으로 마지막 voteId를 전달하면 해당 voteId 이전의 투표를 10개 조회할 수 있습니다. (cursor는 포함X) \n\n"
                     + "cursor 값을 전달하지 않으면 가장 최근에 생성된 투표 10개를 조회합니다.\n\n"
