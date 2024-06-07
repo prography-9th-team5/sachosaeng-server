@@ -2,6 +2,7 @@ package prography.team5.server.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_EXPIRATION;
 import static prography.team5.server.exception.ErrorType.ACCESS_TOKEN_MALFORMED;
@@ -19,27 +20,36 @@ import static prography.team5.server.exception.ErrorType.INVALID_USER_ID;
 import static prography.team5.server.exception.ErrorType.INVALID_USER_TYPE;
 import static prography.team5.server.exception.ErrorType.NO_AUTHORIZATION_HEADER;
 import static prography.team5.server.exception.ErrorType.NO_REFRESH_TOKEN;
+import static prography.team5.server.exception.ErrorType.PAGE_NOT_FOUND;
 import static prography.team5.server.exception.ErrorType.REFRESH_TOKEN_EXPIRATION;
 import static prography.team5.server.exception.ErrorType.SERVER_ERROR;
 
 import java.util.EnumMap;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import prography.team5.server.controller.dto.CommonApiResponse;
 
 @Slf4j
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final EnumMap<ErrorType, HttpStatus> errorTypeToHttpStatus = new EnumMap<>(ErrorType.class);
 
     public GlobalExceptionHandler() {
         //500
         errorTypeToHttpStatus.put(SERVER_ERROR, INTERNAL_SERVER_ERROR);
+
+        //404
+        errorTypeToHttpStatus.put(PAGE_NOT_FOUND, NOT_FOUND);
 
         //401
         errorTypeToHttpStatus.put(NO_AUTHORIZATION_HEADER, UNAUTHORIZED);
@@ -72,6 +82,17 @@ public class GlobalExceptionHandler {
         }
         return ResponseEntity.status(httpStatus)
                 .body(new CommonApiResponse<>(e.getCode(), e.getMessage()));
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleNoHandlerFoundException(final NoHandlerFoundException ex,
+                                                                   final HttpHeaders headers,
+                                                                   final HttpStatusCode status,
+                                                                   final WebRequest request) {
+        final ErrorType errorType = PAGE_NOT_FOUND;
+        log.warn(errorType.getMessage(), ex);
+        return ResponseEntity.status(errorTypeToHttpStatus.get(errorType))
+                .body(new CommonApiResponse<>(errorType.getCode(), errorType.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)

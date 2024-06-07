@@ -31,7 +31,10 @@ public enum ErrorType {
     INVALID_USER_TYPE(-6, "존재하지 않는 유저 타입입니다."),
 
     //정보 카드 에러
-    INVALID_INFORMATION_CARD_ID(-7, "존재하지 않는 정보id입니다.");
+    INVALID_INFORMATION_CARD_ID(-7, "존재하지 않는 정보id입니다."),
+
+    //처리할 수 없는 url
+    PAGE_NOT_FOUND(-8, "해당 url을 찾을 수 없습니다.");
 
     private final int code;
     private final String message;
