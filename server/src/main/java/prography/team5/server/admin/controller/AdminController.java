@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import prography.team5.server.service.CategoryService;
+import prography.team5.server.service.InformationService;
 import prography.team5.server.service.VoteService;
 import prography.team5.server.service.dto.CategoryResponse;
+import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.VoteResponse;
 
 @RequiredArgsConstructor
@@ -18,6 +20,7 @@ public class AdminController {
 
     private final VoteService voteService;
     private final CategoryService categoryService;
+    private final InformationService informationService;
 
     @GetMapping
     public ModelAndView home(ModelAndView modelAndView) {
@@ -39,6 +42,14 @@ public class AdminController {
         final List<VoteResponse> votes = voteService.findAll(null, null, 20); //todo: 게시글 많을때도 옛날 게시글 조회되게!
         modelAndView.addObject("votes", votes);
         modelAndView.setViewName("votes");
+        return modelAndView;
+    }
+
+    @GetMapping("/information")
+    public ModelAndView information(ModelAndView modelAndView) {
+        final List<InformationResponse> information = informationService.findAll(null, null, 20);//todo: 게시글 많을때도 옛날 게시글 조회되게!
+        modelAndView.addObject("information", information);
+        modelAndView.setViewName("information");
         return modelAndView;
     }
 }

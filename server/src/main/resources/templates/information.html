@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>정보 제공 목록</title>
+    <link rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <h1>Information List</h1>
+    <div class="card-container">
+        <div class="card" th:each="information : ${information}">
+            <h2 th:text="${information.title}">Title</h2>
+            <p><strong>Categories:</strong></p>
+            <ul>
+                <li th:each="category : ${information.categories}" th:text="${category.name}">Category Name</li>
+            </ul>
+            <p><strong>Content:</strong></p>
+            <ul>
+                <li th:text="${information.content}">Content</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
