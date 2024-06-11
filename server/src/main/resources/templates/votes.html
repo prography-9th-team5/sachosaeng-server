@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>투표 토픽 목록</title>
+    <link rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <h1>Vote List</h1>
+    <div class="card-container">
+        <div class="card" th:each="vote : ${votes}">
+            <h2 th:text="${vote.title}">Title</h2>
+            <p><strong>Categories:</strong></p>
+            <ul>
+                <li th:each="category : ${vote.categories}" th:text="${category.name}">Category Name</li>
+            </ul>
+            <p><strong>Options:</strong></p>
+            <ul>
+                <li th:each="option : ${vote.voteOptions}" th:text="${option.content}">Option Content</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
