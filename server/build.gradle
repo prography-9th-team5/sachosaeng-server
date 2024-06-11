@@ -39,6 +39,9 @@ dependencies {
 
     //mysql
     implementation 'com.mysql:mysql-connector-j'
+
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {
