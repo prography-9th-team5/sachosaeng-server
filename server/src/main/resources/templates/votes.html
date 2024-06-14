@@ -21,6 +21,37 @@
 
 <div class="container">
     <h1>Vote Cards</h1>
+
+    <div class="btn-group">
+        <button class="add-btn" onclick="openAddModal()">추가</button>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddModal()">&times;</span>
+            <form id="voteForm">
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title" placeholder="투표 토픽 입력"><br>
+
+                <!-- 투표 옵션 추가 코드-->
+                <label>Options:</label><br>
+                <div id="optionsContainer">
+                    <input type="text" name="voteOptions" placeholder="투표 선택지는 최대 4개~"><br>
+                    <input type="text" name="voteOptions" placeholder="투표 선택지는 최대 4개~"><br>
+                    <input type="text" name="voteOptions" placeholder="투표 선택지는 최대 4개~"><br>
+                    <input type="text" name="voteOptions" placeholder="투표 선택지는 최대 4개~"><br>
+                </div><br>
+
+                <label>Categories:</label><br>
+                <div id="categoryCheckboxes">
+                    <!-- 카테고리 체크박스 목록이 여기에 추가됩니다 -->
+                </div><br>
+
+                <button type="submit">제출</button>
+            </form>
+        </div>
+    </div>
+
     <div class="card-container">
         <div class="card" th:each="vote : ${votes}">
             <h2 th:text="${vote.title}">Title</h2>
@@ -35,5 +66,6 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/votes.js}"></script>
 </body>
 </html>
