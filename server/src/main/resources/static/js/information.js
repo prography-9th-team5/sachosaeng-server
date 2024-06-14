@@ -46,7 +46,7 @@ document.getElementById('informationForm').addEventListener('submit', function(e
         categoryIds: categories.map(Number)
     };
 
-    fetch('/information', {
+    fetch('/information?page-size=30', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
