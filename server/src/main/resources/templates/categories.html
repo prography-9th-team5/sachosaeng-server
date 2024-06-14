@@ -5,6 +5,7 @@
     <title>Categories</title>
     <link rel="stylesheet" type="text/css">
     <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/categories.css}">
 </head>
 <body>
 <header>
@@ -19,49 +20,21 @@
 </header>
 
 <div class="container">
-    <h1>Category List</h1>
+    <h1>Categories</h1>
     <!-- 카테고리 추가 폼 -->
-    <div class="add-category">
-        <h2>새로운 카테고리 추가</h2>
-        <form id="categoryForm">
-            <label for="name">추가할 카테고리 이름:</label>
+    <div class="btn-group">
+        <form>
             <input type="text" id="name" name="name" required>
-            <button type="button" onclick="addCategory()">Add</button>
+            <button type="button" onclick="addCategory()">추가</button>
         </form>
     </div>
 
-    <script>
-        function addCategory() {
-            var name = document.getElementById("name").value;
-            var data = { "name": name };
-
-            fetch('/categories', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        location.reload(); // 성공 시 페이지 새로고침
-                    } else {
-                        throw new Error('Failed to add category');
-                    }
-                })
-                .catch(error => {
-                    alert('카테고리 추가 실패');
-                    console.error('Error adding category:', error);
-                });
-        }
-    </script>
-
     <div class="category-container">
-        <h2>기존 카테고리 조회</h2>
         <div class="category" th:each="category : ${categories}">
             <h3 th:text="${category.name}">Category Name</h3>
         </div>
     </div>
 </div>
+<script th:src="@{/js/categories.js}"></script>
 </body>
 </html>
