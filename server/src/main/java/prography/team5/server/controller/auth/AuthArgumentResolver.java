@@ -1,5 +1,6 @@
 package prography.team5.server.controller.auth;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
@@ -30,6 +31,11 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
                                   final NativeWebRequest webRequest, final WebDataBinderFactory binderFactory)
             throws Exception {
         final String authorizationHeader = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        //todo: 어드민 인증
+        final AuthRequired annotation = Objects.requireNonNull(parameter.getParameterAnnotation(AuthRequired.class));
+        if(!annotation.required() && authorizationHeader == null) {
+            return new Accessor(null);
+        }
         final String token = HeaderUtils.extractToken(authorizationHeader, TOKEN_TYPE);
         return authService.verifyUserFromToken(token);
     }

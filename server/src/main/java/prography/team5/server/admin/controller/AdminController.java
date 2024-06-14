@@ -24,7 +24,6 @@ public class AdminController {
 
     @GetMapping
     public ModelAndView home(ModelAndView modelAndView) {
-        // modelAndView.addObject("message", "Welcome to Admin Page");
         modelAndView.setViewName("index");
         return modelAndView;
     }

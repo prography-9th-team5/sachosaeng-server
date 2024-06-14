@@ -24,7 +24,8 @@ public class VoteService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public VoteIdResponse create(final VoteRequest voteRequest, final long userId) {
+    public VoteIdResponse create(final VoteRequest voteRequest, final Long userId) {
+        //todo: 존재하지 않는 카테고리 처리
         final List<Category> categories = categoryRepository.findAllByIdIn(voteRequest.categoryIds());
         final VoteCard voteCard = new VoteCard(voteRequest.title(), categories, userId);
         voteRequest.voteOptions()

@@ -24,6 +24,7 @@ public class VoteCard extends Card {
         this.writerId = writerId;
     }
 
+    //todo: 옵션 개수 제한
     public void addVoteOption(final String voteOption) {
         this.voteOptions.add(new VoteOption(this, voteOption));
     }
