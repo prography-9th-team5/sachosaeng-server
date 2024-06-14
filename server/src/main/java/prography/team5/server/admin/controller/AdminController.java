@@ -38,7 +38,7 @@ public class AdminController {
 
     @GetMapping("/votes")
     public ModelAndView votes(ModelAndView modelAndView) {
-        final List<VoteResponse> votes = voteService.findAll(null, null, 20); //todo: 게시글 많을때도 옛날 게시글 조회되게!
+        final List<VoteResponse> votes = voteService.findAll(null, null, 30); //todo: 게시글 많을때도 옛날 게시글 조회되게!
         modelAndView.addObject("votes", votes);
         modelAndView.setViewName("votes");
         return modelAndView;
@@ -46,7 +46,7 @@ public class AdminController {
 
     @GetMapping("/information")
     public ModelAndView information(ModelAndView modelAndView) {
-        final List<InformationResponse> information = informationService.findAll(null, null, 20);//todo: 게시글 많을때도 옛날 게시글 조회되게!
+        final List<InformationResponse> information = informationService.findAll(null, null, 30);//todo: 게시글 많을때도 옛날 게시글 조회되게!
         modelAndView.addObject("information", information);
         modelAndView.setViewName("information");
         return modelAndView;

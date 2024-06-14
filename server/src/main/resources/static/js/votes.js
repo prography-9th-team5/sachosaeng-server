@@ -49,7 +49,7 @@ document.getElementById('voteForm').addEventListener('submit', function(event) {
         categoryIds: categories.map(Number)
     };
 
-    fetch('/votes?page-size=30', {
+    fetch('/votes', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
