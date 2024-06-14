@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title> 사초생 관리자 페이지 </title>
-    <link rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-    <div class="container">
-        <h1>관리자 페이지에 오신 것을 환영해요!</h1>
-        <div class="nav-buttons">
-            <a href="/admin/categories" class="button">카테고리 페이지로 이동</a>
-            <a href="/admin/votes" class="button">투표 페이지로 이동</a>
-            <a href="/admin/information" class="button">정보 페이지로 이동</a>
-        </div>
-    </div>
+<header>
+    <nav>
+        <h1>관리자 페이지(공사중)</h1>
+        <ul>
+            <li><a href="/admin/categories">카테고리</a></li>
+            <li><a href="/admin/votes">투표</a></li>
+            <li><a href="/admin/information">정보</a></li>
+        </ul>
+    </nav>
+</header>
 </body>
 </html>

@@ -3,95 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>정보 제공 목록</title>
-    <link rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/information.css}">
 </head>
 <body>
+<header>
+    <nav>
+        <h1>관리자 페이지(공사중)</h1>
+        <ul>
+            <li><a href="/admin/categories">카테고리</a></li>
+            <li><a href="/admin/votes">투표</a></li>
+            <li><a href="/admin/information">정보</a></li>
+        </ul>
+    </nav>
+</header>
+
 <div class="container">
-    <h1>Information List</h1>
+    <h1>Information Cards</h1>
 
-    <div class="add-information-form">
-        <h2>새로운 정보 추가</h2>
-        <form id="informationForm">
-            <label for="title">Title:</label><br>
-            <input type="text" id="title" name="title"><br>
-
-            <label for="content">Content:</label><br>
-            <textarea id="content" name="content"></textarea><br>
-
-            <label><strong>Categories:</strong></label><br>
-            <div id="categoriesContainer">
-                <!-- 카테고리 목록이 여기에 추가됩니다 -->
-            </div><br>
-
-            <button type="submit">Submit</button>
-        </form>
+    <div class="btn-group">
+        <button class="add-btn" onclick="openAddModal()">추가</button>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch('/categories')
-                .then(response => response.json())
-                .then(data => {
-                    const categoriesContainer = document.getElementById('categoriesContainer');
-                    data.data.forEach(category => {
-                        const categoryDiv = document.createElement('div');
-                        categoryDiv.classList.add('category');
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddModal()">&times;</span>
+            <form id="informationForm">
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title"><br>
 
-                        const checkbox = document.createElement('input');
-                        checkbox.type = 'checkbox';
-                        checkbox.id = `category_${category.categoryId}`;
-                        checkbox.name = 'categories';
-                        checkbox.value = category.categoryId;
+                <label for="content">Content:</label><br>
+                <textarea type="text" id="content" name="content"></textarea><br>
 
-                        const label = document.createElement('label');
-                        label.htmlFor = `category_${category.categoryId}`;
-                        label.textContent = category.name;
+                <label>Categories:</label><br>
+                <div id="categoryCheckboxes">
+                    <!-- 카테고리 체크박스 목록이 여기에 추가됩니다 -->
+                </div><br>
 
-                        categoryDiv.appendChild(checkbox);
-                        categoryDiv.appendChild(label);
-                        categoriesContainer.appendChild(categoryDiv);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Failed to fetch categories. Please try again later.');
-                });
-        });
-    </script>
-
-    <script>
-        document.getElementById('informationForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(this);
-            const categories = Array.from(formData.getAll('categories'));
-            const requestBody = {
-                title: formData.get('title'),
-                content: formData.get('content'),
-                categoryIds: categories.map(Number)
-            };
-
-            fetch('/information', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestBody)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message); // Show success message or handle response accordingly
-                    location.reload();// Optionally, you can redirect or update the UI
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again later.');
-                });
-        });
-    </script>
-
+                <button type="submit">제출</button>
+            </form>
+        </div>
+    </div>
 
     <div class="card-container">
-        <h2>기존 정보 조회</h2>
         <div class="card" th:each="information : ${information}">
             <h2 th:text="${information.title}">Title</h2>
             <p><strong>Categories:</strong></p>
@@ -105,5 +59,6 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/information.js}"></script>
 </body>
 </html>
