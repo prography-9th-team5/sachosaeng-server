@@ -94,7 +94,6 @@ button {
 /* Form styles */
 label {
     display: block;
-    margin-bottom: 10px;
     font-weight: bold;
 }
 
@@ -109,10 +108,18 @@ input[type="text"] {
     resize: vertical;
 }
 
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
 .category {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .category label {

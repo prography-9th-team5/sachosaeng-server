@@ -92,7 +92,6 @@ button {
 /* Form styles */
 label {
     display: block;
-    margin-bottom: 10px;
     font-weight: bold;
 }
 
@@ -109,8 +108,8 @@ textarea {
 }
 
 input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     margin-right: 10px;
     border: 1px solid #cccccc;
     border-radius: 4px;
@@ -120,7 +119,6 @@ input[type="checkbox"] {
 .category {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .category label {
