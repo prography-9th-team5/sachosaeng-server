@@ -9,7 +9,7 @@ import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
 import prography.team5.server.domain.category.MyCategory;
 import prography.team5.server.domain.category.MyCategoryRepository;
-import prography.team5.server.service.dto.CategoryResponse;
+import prography.team5.server.service.dto.CategoryWithThumbnailResponse;
 import prography.team5.server.service.dto.MyCategoryRequest;
 
 @RequiredArgsConstructor
@@ -23,9 +23,9 @@ public class MyCategoryService {
     private final InformationCardRepository informationCardRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryResponse> findAllByUserId(final long userId) {
+    public List<CategoryWithThumbnailResponse> findAllByUserId(final long userId) {
         List<MyCategory> categories = myCategoryRepository.findAllByUserId(userId);
-        return CategoryResponse.from(categories.stream().map(MyCategory::getCategory).toList());
+        return CategoryWithThumbnailResponse.from(categories.stream().map(MyCategory::getCategory).toList());
     }
 
     //todo : 리팩터링
