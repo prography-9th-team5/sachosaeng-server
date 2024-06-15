@@ -1,6 +1,7 @@
 package prography.team5.server.domain.category;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,10 @@ public class Category extends TimeRecord {
     private Long id;
     @Column(nullable = false, unique = true)
     private String name;
+    @Embedded
+    private CategoryDesign categoryDesign;
+
+    //todo: 유저타입들
 
     public Category(final String name) {
         this.name = name;
