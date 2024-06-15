@@ -31,4 +31,11 @@ public class Category extends TimeRecord {
     public Category(final String name) {
         this.name = name;
     }
+
+    public CategoryDesign getCategoryDesign() {
+        if (this.categoryDesign == null) {
+            this.categoryDesign = new CategoryDesign();
+        }
+        return this.categoryDesign;
+    }
 }
