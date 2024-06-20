@@ -6,12 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import prography.team5.server.service.CategoryService;
-import prography.team5.server.service.InformationService;
-import prography.team5.server.service.VoteService;
-import prography.team5.server.service.dto.CategoryResponse;
-import prography.team5.server.service.dto.InformationResponse;
-import prography.team5.server.service.dto.VoteResponse;
+import prography.team5.server.category.service.CategoryService;
+import prography.team5.server.card.service.InformationService;
+import prography.team5.server.card.service.VoteService;
+import prography.team5.server.category.service.dto.CategoryResponse;
+import prography.team5.server.card.service.dto.InformationResponse;
+import prography.team5.server.card.service.dto.VoteResponse;
 
 @RequiredArgsConstructor
 @Controller
