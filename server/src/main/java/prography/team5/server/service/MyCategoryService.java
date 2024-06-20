@@ -25,7 +25,7 @@ public class MyCategoryService {
     @Transactional(readOnly = true)
     public List<BaseCategoryResponse> findAllByUserId(final long userId) {
         List<MyCategory> categories = myCategoryRepository.findAllByUserId(userId);
-        return BaseCategoryResponse.from(categories.stream().map(MyCategory::getCategory).toList());
+        return BaseCategoryResponse.toBaseCategoryResponseList(categories.stream().map(MyCategory::getCategory).toList());
     }
 
     //todo : 리팩터링

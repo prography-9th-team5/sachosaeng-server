@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.CategoryApiDocs;
 import prography.team5.server.service.CategoryService;
+import prography.team5.server.service.dto.BaseCategoryResponse;
 import prography.team5.server.service.dto.CategoryIdResponse;
 import prography.team5.server.service.dto.CategoryRequest;
-import prography.team5.server.service.dto.BaseCategoryResponse;
+import prography.team5.server.service.dto.CategoryResponse;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,8 +24,8 @@ public class CategoryController implements CategoryApiDocs {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<CommonApiResponse<List<BaseCategoryResponse>>> findAll() {
-        final List<BaseCategoryResponse> response = categoryService.findAll();
+    public ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findAll() {
+        final List<CategoryResponse> response = categoryService.findAll();
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

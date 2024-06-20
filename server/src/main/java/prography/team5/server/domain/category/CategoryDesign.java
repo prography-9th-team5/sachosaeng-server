@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Embeddable
 public class CategoryDesign {
 
-    private static final String DEFAULT_BACKGROUND_COLOR = "#000000";
-    private static final String DEFAULT_TEXT_COLOR = "#FFFFFF";
+    private static final String DEFAULT_BACKGROUND_COLOR = "#D8D8D8";
+    private static final String DEFAULT_TEXT_COLOR = "#000000";
 
     private String iconUrl;
     private String textColor;

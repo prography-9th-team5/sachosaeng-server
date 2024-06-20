@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.dto.CategoryIdResponse;
 import prography.team5.server.service.dto.CategoryRequest;
-import prography.team5.server.service.dto.BaseCategoryResponse;
+import prography.team5.server.service.dto.CategoryResponse;
 
 @Tag(name = "3. 카테고리", description = "카테고리 관련 기능입니다.")
 public interface CategoryApiDocs {
@@ -19,7 +19,7 @@ public interface CategoryApiDocs {
             description = "전체 카테고리를 조회 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "카테고리 전체 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<BaseCategoryResponse>>> findAll();
+    ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findAll();
 
     @Hidden
     @Operation(
