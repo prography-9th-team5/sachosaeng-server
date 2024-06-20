@@ -1,5 +1,6 @@
 package prography.team5.server.docs;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +16,7 @@ import prography.team5.server.service.dto.InformationResponse;
 @Tag(name = "6. 정보 카드", description = "정보 제공 카드 관련 기능입니다.")
 public interface InformationApiDocs {
 
+    @Hidden
     @Operation(
             summary = "단일 정보 카드 조회 API",
             description = "정보 id로 해당 정보를 조회할 수 있습니다."
@@ -22,6 +24,7 @@ public interface InformationApiDocs {
     @ApiResponse(responseCode = "200", description = "정보 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<InformationResponse>> findByInformationId(@PathVariable(value = "informationId") final long informationId);
 
+    @Hidden
     @Operation(
             summary = "[Admin] 정보 카드 추가 API",
             description = "정보를 추가할 수 있습니다."
@@ -29,6 +32,7 @@ public interface InformationApiDocs {
     @ApiResponse(responseCode = "200", description = "정보 추가 성공입니다.")
     ResponseEntity<CommonApiResponse<InformationIdResponse>> create(final InformationRequest informationRequest);
 
+    @Hidden
     @Operation(
             summary = "[임시] 정보 카드 리스트 전체 조회 API",
             description = "정보 리스트를 전체 조회할 수 있습니다. 정보는 최신순으로 조회됩니다. \n\n"

@@ -1,5 +1,6 @@
 package prography.team5.server.docs;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,6 +19,7 @@ import prography.team5.server.service.dto.VoteResponse;
 @Tag(name = "5. 투표 카드", description = "투표 카드 관련 기능입니다.")
 public interface VoteApiDocs {
 
+    @Hidden
     @Operation(
             summary = "투표 카드 추가 API",
             description = "투표를 추가할 수 있습니다."
@@ -28,6 +30,7 @@ public interface VoteApiDocs {
             @RequestBody final VoteRequest voteRequest
     );
 
+    @Hidden
     @Operation(
             summary = "[임시] 단일 투표 카드 조회 API -> 회원의 투표 여부에 따라 다르게 보이도록?",
             description = "투표 id로 해당 투표를 조회할 수 있습니다."
@@ -35,6 +38,7 @@ public interface VoteApiDocs {
     @ApiResponse(responseCode = "200", description = "투표 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(@PathVariable(value = "voteId") final long voteId);
 
+    @Hidden
     @Operation(
             summary = "[임시] 투표 카드 리스트 전체 조회 API",
             description = "투표 리스트를 전체 조회할 수 있습니다. 투표는 최신순으로 조회됩니다. \n\n"

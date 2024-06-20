@@ -1,5 +1,6 @@
 package prography.team5.server.docs;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,6 +21,7 @@ public interface CategoryApiDocs {
     @ApiResponse(responseCode = "200", description = "카테고리 전체 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<List<BaseCategoryResponse>>> findAll();
 
+    @Hidden
     @Operation(
             summary = "[Admin] 카테고리 추가 API",
             description = "카테고리를 추가할 수 있습니다."
