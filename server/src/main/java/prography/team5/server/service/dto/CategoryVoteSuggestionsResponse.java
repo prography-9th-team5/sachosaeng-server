@@ -4,10 +4,10 @@ import java.util.List;
 import prography.team5.server.domain.card.VoteCard;
 import prography.team5.server.domain.category.Category;
 
-public record CategoryVotePreviewsResponse(SimpleCategoryWithTextColorResponse category, List<SimpleVoteResponse> votes) {
+public record CategoryVoteSuggestionsResponse(SimpleCategoryWithTextColorResponse category, List<SimpleVoteResponse> votes) {
 
-    public static CategoryVotePreviewsResponse toResponse(final Category category, final List<VoteCard> votes) {
-        return new CategoryVotePreviewsResponse(
+    public static CategoryVoteSuggestionsResponse toResponse(final Category category, final List<VoteCard> votes) {
+        return new CategoryVoteSuggestionsResponse(
                 SimpleCategoryWithTextColorResponse.toResponse(category),
                 SimpleVoteResponse.toResponse(votes)
         );

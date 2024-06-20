@@ -15,7 +15,7 @@ import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.VoteApiDocs;
 import prography.team5.server.service.VoteService;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
@@ -66,10 +66,10 @@ public class VoteController implements VoteApiDocs {
     }
 
     @GetMapping("/suggestions")
-    public ResponseEntity<CommonApiResponse<List<CategoryVotePreviewsResponse>>> findSuggestions(
+    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(
             @AuthRequired Accessor accessor
     ) {
-        final List<CategoryVotePreviewsResponse> response = voteService.findSuggestions(accessor.id());
+        final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestions(accessor.id());
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

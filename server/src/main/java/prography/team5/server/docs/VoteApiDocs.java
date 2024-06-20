@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
@@ -70,7 +70,7 @@ public interface VoteApiDocs {
                     + "(현재는 최신순으로 3개 조회하는 중, 투표 노출 로직은 추후 수정 예정)"
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<CategoryVotePreviewsResponse>>> findSuggestions(
+    ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(
             @Parameter(hidden = true) Accessor accessor
     );
 }

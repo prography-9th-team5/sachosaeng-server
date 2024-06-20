@@ -13,7 +13,7 @@ import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
 import prography.team5.server.domain.category.MyCategory;
 import prography.team5.server.domain.category.MyCategoryRepository;
-import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
@@ -88,9 +88,9 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryVotePreviewsResponse> findSuggestions(final Long userId) {
+    public List<CategoryVoteSuggestionsResponse> findSuggestions(final Long userId) {
         final List<MyCategory> myCategories = myCategoryRepository.findAllByUserId(userId);
-        List<CategoryVotePreviewsResponse> response = new ArrayList<>();
+        List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
         //todo: 지금은 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
         for (MyCategory myCategory : myCategories) {
             final Category category = myCategory.getCategory();
@@ -98,7 +98,7 @@ public class VoteService {
                     category.getId(),
                     PageRequest.ofSize(3)
             ).getContent();
-            response.add(CategoryVotePreviewsResponse.toResponse(category, votes));
+            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
         }
         return response;
     }
