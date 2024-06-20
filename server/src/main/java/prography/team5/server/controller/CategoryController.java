@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.CategoryApiDocs;
 import prography.team5.server.service.CategoryService;
-import prography.team5.server.service.dto.BaseCategoryResponse;
 import prography.team5.server.service.dto.CategoryIdResponse;
 import prography.team5.server.service.dto.CategoryRequest;
 import prography.team5.server.service.dto.CategoryResponse;

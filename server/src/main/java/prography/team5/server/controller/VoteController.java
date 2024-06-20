@@ -16,6 +16,7 @@ import prography.team5.server.docs.VoteApiDocs;
 import prography.team5.server.service.VoteService;
 import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
 import prography.team5.server.service.dto.VoteResponse;
@@ -53,6 +54,13 @@ public class VoteController implements VoteApiDocs {
             @RequestParam(name = "page-size", required = false) final Integer pageSize
     ) {
         final List<VoteResponse> response = voteService.findAll(cursor, categoryId, pageSize);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/hot")
+    public ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes() {
+        HotVotePreviewsResponse response = voteService.findHotVotes();
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

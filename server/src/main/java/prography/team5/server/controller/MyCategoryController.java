@@ -13,7 +13,6 @@ import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.MyCategoryApiDocs;
 import prography.team5.server.service.MyCategoryService;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.BaseCategoryResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 import prography.team5.server.service.dto.MyCategoryRequest;
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.service.auth.dto.Accessor;
 import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
 import prography.team5.server.service.dto.VoteResponse;
@@ -54,6 +55,13 @@ public interface VoteApiDocs {
             @RequestParam(name = "category-id", required = false) final Long categoryId,
             @RequestParam(name = "page-size", required = false) final Integer pageSize
     );
+
+    @Operation(
+            summary = "홈화면의 인기 투표 3개 조회 API",
+            description = "(현재는 최신순으로 3개 조회하는 중, 인기 투표 노출 로직은 추후 수정 예정)"
+    )
+    @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
+    ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes();
 
     @Operation(
             summary = "홈화면의 카테고리별 투표 제안 3개 조회 API",

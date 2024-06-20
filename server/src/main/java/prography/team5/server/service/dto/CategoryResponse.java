@@ -5,7 +5,7 @@ import lombok.Getter;
 import prography.team5.server.domain.category.Category;
 
 @Getter
-public class CategoryResponse extends BaseCategoryResponse {
+public class CategoryResponse extends SimpleCategoryResponse {
 
     private final String iconUrl;
     private final String backgroundColor;

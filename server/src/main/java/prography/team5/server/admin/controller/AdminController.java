@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 import prography.team5.server.service.CategoryService;
 import prography.team5.server.service.InformationService;
 import prography.team5.server.service.VoteService;
-import prography.team5.server.service.dto.BaseCategoryResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.VoteResponse;

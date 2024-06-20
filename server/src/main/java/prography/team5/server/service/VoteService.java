@@ -11,6 +11,7 @@ import prography.team5.server.domain.card.VoteCardRepository;
 import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
 import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
 import prography.team5.server.service.dto.VoteResponse;
@@ -82,5 +83,14 @@ public class VoteService {
                 PageRequest.ofSize(3)
         ).getContent();
         return CategoryVotePreviewsResponse.toResponse(category, votes);
+    }
+
+    @Transactional(readOnly = true)
+    public HotVotePreviewsResponse findHotVotes() {
+        //todo: 지금 임시 땜빵중이라 인기투표 선정 로직으로 변경 요망
+        final List<VoteCard> votes = voteCardRepository.findLatestCards(
+                PageRequest.ofSize(3)
+        ).getContent();
+        return HotVotePreviewsResponse.toResponse(votes);
     }
 }
