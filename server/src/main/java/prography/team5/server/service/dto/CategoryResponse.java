@@ -24,7 +24,17 @@ public class CategoryResponse extends BaseCategoryResponse {
         this.textColor = textColor;
     }
 
-    public static List<CategoryResponse> toCategoryResponseList(final List<Category> categories) {
+    public static CategoryResponse toResponse(final Category category) {
+        return new CategoryResponse(
+                category.getId(),
+                category.getName(),
+                category.getCategoryDesign().getIconUrl(),
+                category.getCategoryDesign().getBackgroundColor(),
+                category.getCategoryDesign().getTextColor()
+        );
+    }
+
+    public static List<CategoryResponse> toResponse(final List<Category> categories) {
         return categories.stream()
                 .map(each -> new CategoryResponse(
                         each.getId(),

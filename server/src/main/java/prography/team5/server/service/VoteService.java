@@ -10,6 +10,7 @@ import prography.team5.server.domain.card.VoteCard;
 import prography.team5.server.domain.card.VoteCardRepository;
 import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
+import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
 import prography.team5.server.service.dto.VoteRequest;
 import prography.team5.server.service.dto.VoteResponse;
@@ -70,5 +71,16 @@ public class VoteService {
         }
         return VoteResponse.from(
                 voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());
+    }
+
+    @Transactional(readOnly = true)
+    public CategoryVotePreviewsResponse findSuggestionByCategory(final Long categoryId) {
+        //todo: 지금은 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
+        final Category category = categoryRepository.findById(categoryId).orElseThrow();//todo: 예외처리
+        final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
+                categoryId,
+                PageRequest.ofSize(3)
+        ).getContent();
+        return CategoryVotePreviewsResponse.toResponse(category, votes);
     }
 }

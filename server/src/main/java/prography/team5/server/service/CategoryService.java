@@ -10,7 +10,6 @@ import prography.team5.server.exception.ErrorType;
 import prography.team5.server.exception.SachosaengException;
 import prography.team5.server.service.dto.CategoryIdResponse;
 import prography.team5.server.service.dto.CategoryRequest;
-import prography.team5.server.service.dto.BaseCategoryResponse;
 import prography.team5.server.service.dto.CategoryResponse;
 
 @RequiredArgsConstructor
@@ -22,7 +21,7 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAll() {
         final List<Category> categories = categoryRepository.findAll();
-        return CategoryResponse.toCategoryResponseList(categories);
+        return CategoryResponse.toResponse(categories);
     }
 
     @Transactional
