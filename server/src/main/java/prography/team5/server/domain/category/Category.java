@@ -27,6 +27,7 @@ public class Category extends TimeRecord {
     private CategoryDesign categoryDesign;
 
     //todo: 유저타입들
+    //todo: 연관콘텐츠
 
     public Category(final String name) {
         this.name = name;

@@ -13,7 +13,7 @@ import prography.team5.server.controller.dto.CommonApiResponse;
 import prography.team5.server.docs.MyCategoryApiDocs;
 import prography.team5.server.service.MyCategoryService;
 import prography.team5.server.service.auth.dto.Accessor;
-import prography.team5.server.service.dto.CategoryWithThumbnailResponse;
+import prography.team5.server.service.dto.BaseCategoryResponse;
 import prography.team5.server.service.dto.MyCategoryRequest;
 
 @RequiredArgsConstructor
@@ -24,8 +24,8 @@ public class MyCategoryController implements MyCategoryApiDocs {
     private final MyCategoryService myCategoryService;
 
     @GetMapping
-    public ResponseEntity<CommonApiResponse<List<CategoryWithThumbnailResponse>>> findAllByUserId(@AuthRequired Accessor accessor) {
-        final List<CategoryWithThumbnailResponse> response = myCategoryService.findAllByUserId(accessor.id());
+    public ResponseEntity<CommonApiResponse<List<BaseCategoryResponse>>> findAllByUserId(@AuthRequired Accessor accessor) {
+        final List<BaseCategoryResponse> response = myCategoryService.findAllByUserId(accessor.id());
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

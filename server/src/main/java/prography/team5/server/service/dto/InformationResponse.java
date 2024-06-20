@@ -3,14 +3,14 @@ package prography.team5.server.service.dto;
 import java.util.List;
 import prography.team5.server.domain.card.InformationCard;
 
-public record InformationResponse(Long informationId, String title, String content, List<CategoryWithThumbnailResponse> categories) {
+public record InformationResponse(Long informationId, String title, String content, List<BaseCategoryResponse> categories) {
 
     public static InformationResponse from(final InformationCard informationCard) {
         return new InformationResponse(
                 informationCard.getId(),
                 informationCard.getTitle(),
                 informationCard.getContent(),
-                CategoryWithThumbnailResponse.from(informationCard.getCategories())
+                BaseCategoryResponse.from(informationCard.getCategories())
         );
     }
 

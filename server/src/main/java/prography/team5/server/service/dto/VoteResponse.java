@@ -4,7 +4,7 @@ import java.util.List;
 import prography.team5.server.domain.card.VoteCard;
 
 public record VoteResponse(Long voteId, String title, List<VoteOptionResponse> voteOptions,
-                           List<CategoryWithThumbnailResponse> categories) {
+                           List<BaseCategoryResponse> categories) {
 
     public static VoteResponse from(final VoteCard voteCard) {
         return new VoteResponse(
@@ -14,7 +14,7 @@ public record VoteResponse(Long voteId, String title, List<VoteOptionResponse> v
                         .stream()
                         .map(option -> new VoteOptionResponse(option.getId(), option.getContent()))
                         .toList(),
-                CategoryWithThumbnailResponse.from(voteCard.getCategories())
+                BaseCategoryResponse.from(voteCard.getCategories())
         );
     }
 

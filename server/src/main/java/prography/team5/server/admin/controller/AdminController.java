@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import prography.team5.server.service.CategoryService;
 import prography.team5.server.service.InformationService;
 import prography.team5.server.service.VoteService;
-import prography.team5.server.service.dto.CategoryWithThumbnailResponse;
+import prography.team5.server.service.dto.BaseCategoryResponse;
 import prography.team5.server.service.dto.InformationResponse;
 import prography.team5.server.service.dto.VoteResponse;
 
@@ -30,7 +30,7 @@ public class AdminController {
 
     @GetMapping("/categories")
     public ModelAndView categories(ModelAndView modelAndView) {
-        final List<CategoryWithThumbnailResponse> categories = categoryService.findAll();
+        final List<BaseCategoryResponse> categories = categoryService.findAll();
         modelAndView.addObject("categories", categories);
         modelAndView.setViewName("categories");
         return modelAndView;
