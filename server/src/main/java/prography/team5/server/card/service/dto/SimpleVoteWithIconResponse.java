@@ -2,15 +2,18 @@ package prography.team5.server.card.service.dto;
 
 import java.util.List;
 import prography.team5.server.card.domain.VoteCard;
+import prography.team5.server.category.domain.Category;
+import prography.team5.server.category.service.dto.CategoryResponse;
 
-public record SimpleVoteWithIconResponse(Long voteId, String title, Integer voteCount, String iconUrl) {
+public record SimpleVoteWithIconResponse(Long voteId, String title, Integer voteCount, CategoryResponse category) {
 
     public static SimpleVoteWithIconResponse toResponse(final VoteCard vote) {
+        final Category category = vote.getCategories().get(0);
         return new SimpleVoteWithIconResponse(
                 vote.getId(),
                 vote.getTitle(),
                 null,
-                vote.getCategories().get(0).getCategoryDesign().getIconUrl()
+                CategoryResponse.toResponse(category)
         );
     }
 

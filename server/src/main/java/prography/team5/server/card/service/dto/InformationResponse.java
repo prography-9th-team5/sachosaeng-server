@@ -2,7 +2,6 @@ package prography.team5.server.card.service.dto;
 
 import java.util.List;
 import prography.team5.server.card.domain.InformationCard;
-import prography.team5.server.category.service.dto.SimpleCategoryResponse;
 
 public record InformationResponse(Long informationId, String title, String content, List<SimpleCategoryResponse> categories) {
 

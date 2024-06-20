@@ -1,4 +1,4 @@
-package prography.team5.server.category.service.dto;
+package prography.team5.server.card.service.dto;
 
 import java.util.List;
 import prography.team5.server.category.domain.Category;

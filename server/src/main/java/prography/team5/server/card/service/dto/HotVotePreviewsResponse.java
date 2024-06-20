@@ -2,7 +2,6 @@ package prography.team5.server.card.service.dto;
 
 import java.util.List;
 import prography.team5.server.card.domain.VoteCard;
-import prography.team5.server.category.service.dto.SimpleCategoryWithTextColorResponse;
 
 public record HotVotePreviewsResponse(SimpleCategoryWithTextColorResponse category, List<SimpleVoteWithIconResponse> votes) {
 

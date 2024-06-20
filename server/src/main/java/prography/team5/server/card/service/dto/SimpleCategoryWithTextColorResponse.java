@@ -1,4 +1,4 @@
-package prography.team5.server.category.service.dto;
+package prography.team5.server.card.service.dto;
 
 import prography.team5.server.category.domain.Category;
 
