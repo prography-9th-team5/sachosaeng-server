@@ -10,7 +10,7 @@ public record InformationResponse(Long informationId, String title, String conte
                 informationCard.getId(),
                 informationCard.getTitle(),
                 informationCard.getContent(),
-                SimpleCategoryResponse.toSimpleCategoryResponseList(informationCard.getCategories())
+                SimpleCategoryResponse.toResponse(informationCard.getCategories())
         );
     }
 

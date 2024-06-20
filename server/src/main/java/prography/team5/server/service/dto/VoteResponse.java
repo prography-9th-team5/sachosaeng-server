@@ -14,7 +14,7 @@ public record VoteResponse(Long voteId, String title, List<VoteOptionResponse> v
                         .stream()
                         .map(option -> new VoteOptionResponse(option.getId(), option.getContent()))
                         .toList(),
-                SimpleCategoryResponse.toSimpleCategoryResponseList(voteCard.getCategories())
+                SimpleCategoryResponse.toResponse(voteCard.getCategories())
         );
     }
 
