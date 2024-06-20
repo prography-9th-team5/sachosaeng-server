@@ -1,5 +1,6 @@
 package prography.team5.server.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import prography.team5.server.domain.card.VoteCard;
 import prography.team5.server.domain.card.VoteCardRepository;
 import prography.team5.server.domain.category.Category;
 import prography.team5.server.domain.category.CategoryRepository;
+import prography.team5.server.domain.category.MyCategory;
+import prography.team5.server.domain.category.MyCategoryRepository;
 import prography.team5.server.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.service.dto.VoteIdResponse;
@@ -24,6 +27,7 @@ public class VoteService {
 
     private final VoteCardRepository voteCardRepository;
     private final CategoryRepository categoryRepository;
+    private final MyCategoryRepository myCategoryRepository;
 
     @Transactional
     public VoteIdResponse create(final VoteRequest voteRequest, final Long userId) {
@@ -75,22 +79,27 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public CategoryVotePreviewsResponse findSuggestionByCategory(final Long categoryId) {
-        //todo: 지금은 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
-        final Category category = categoryRepository.findById(categoryId).orElseThrow();//todo: 예외처리
-        final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
-                categoryId,
-                PageRequest.ofSize(3)
-        ).getContent();
-        return CategoryVotePreviewsResponse.toResponse(category, votes);
-    }
-
-    @Transactional(readOnly = true)
     public HotVotePreviewsResponse findHotVotes() {
         //todo: 지금 임시 땜빵중이라 인기투표 선정 로직으로 변경 요망
         final List<VoteCard> votes = voteCardRepository.findLatestCards(
                 PageRequest.ofSize(3)
         ).getContent();
         return HotVotePreviewsResponse.toResponse(votes);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CategoryVotePreviewsResponse> findSuggestions(final Long userId) {
+        final List<MyCategory> myCategories = myCategoryRepository.findAllByUserId(userId);
+        List<CategoryVotePreviewsResponse> response = new ArrayList<>();
+        //todo: 지금은 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
+        for (MyCategory myCategory : myCategories) {
+            final Category category = myCategory.getCategory();
+            final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
+                    category.getId(),
+                    PageRequest.ofSize(3)
+            ).getContent();
+            response.add(CategoryVotePreviewsResponse.toResponse(category, votes));
+        }
+        return response;
     }
 }

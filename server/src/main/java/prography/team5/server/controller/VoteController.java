@@ -66,9 +66,10 @@ public class VoteController implements VoteApiDocs {
     }
 
     @GetMapping("/suggestions")
-    public ResponseEntity<CommonApiResponse<CategoryVotePreviewsResponse>> findSuggestionByCategory(
-            @RequestParam(name = "category-id") final Long categoryId) {
-        final CategoryVotePreviewsResponse response = voteService.findSuggestionByCategory(categoryId);
+    public ResponseEntity<CommonApiResponse<List<CategoryVotePreviewsResponse>>> findSuggestions(
+            @AuthRequired Accessor accessor
+    ) {
+        final List<CategoryVotePreviewsResponse> response = voteService.findSuggestions(accessor.id());
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

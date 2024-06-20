@@ -19,6 +19,9 @@ public class VoteCard extends Card {
     private List<VoteOption> voteOptions = new ArrayList<>();
     private Long writerId;
 
+    //todo: 연관콘텐츠
+    //todo: 투표수
+
     public VoteCard(final String title, final List<Category> categories, final Long writerId) {
         super(title, categories);
         this.writerId = writerId;
