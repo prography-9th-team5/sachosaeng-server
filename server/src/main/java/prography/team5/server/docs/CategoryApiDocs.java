@@ -17,6 +17,7 @@ public interface CategoryApiDocs {
     @Operation(
             summary = "카테고리 전체 조회 API",
             description = "전체 카테고리를 조회 할 수 있습니다."
+                    + "\n backgroundColor와 textColor는 임시 값을 넣어둔 상태입니다."
     )
     @ApiResponse(responseCode = "200", description = "카테고리 전체 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findAll();

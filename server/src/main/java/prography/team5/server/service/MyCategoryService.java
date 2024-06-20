@@ -10,6 +10,7 @@ import prography.team5.server.domain.category.CategoryRepository;
 import prography.team5.server.domain.category.MyCategory;
 import prography.team5.server.domain.category.MyCategoryRepository;
 import prography.team5.server.service.dto.BaseCategoryResponse;
+import prography.team5.server.service.dto.CategoryResponse;
 import prography.team5.server.service.dto.MyCategoryRequest;
 
 @RequiredArgsConstructor
@@ -23,9 +24,9 @@ public class MyCategoryService {
     private final InformationCardRepository informationCardRepository;
 
     @Transactional(readOnly = true)
-    public List<BaseCategoryResponse> findAllByUserId(final long userId) {
+    public List<CategoryResponse> findAllByUserId(final long userId) {
         List<MyCategory> categories = myCategoryRepository.findAllByUserId(userId);
-        return BaseCategoryResponse.toBaseCategoryResponseList(categories.stream().map(MyCategory::getCategory).toList());
+        return CategoryResponse.toCategoryResponseList(categories.stream().map(MyCategory::getCategory).toList());
     }
 
     //todo : 리팩터링
