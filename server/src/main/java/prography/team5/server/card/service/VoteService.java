@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.domain.VoteCardRepository;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
@@ -23,8 +24,6 @@ import prography.team5.server.card.service.dto.VoteResponse;
 @RequiredArgsConstructor
 @Service
 public class VoteService {
-
-    private static final int DEFAULT_PAGE_SIZE = 10;
 
     private final VoteCardRepository voteCardRepository;
     private final CategoryRepository categoryRepository;
@@ -47,8 +46,14 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public List<SimpleVoteResponse> findAll(final Long cursor, final Long categoryId, final Integer pageSize) {
-        final PageRequest pageRequest = createPageRequest(pageSize);
+    public List<SimpleVoteResponse> findAll(
+            final Long cursor,
+            final Long categoryId,
+            final Integer pageSize,
+            final SortType sortType
+    ) {
+        //todo: 인기순/최신순 조회
+        final PageRequest pageRequest = PageRequest.ofSize(pageSize);
         if (Objects.isNull(categoryId)) {
             return SimpleVoteResponse.toResponse(findAll(cursor, pageRequest));
         }
@@ -57,18 +62,11 @@ public class VoteService {
 
     @Transactional(readOnly = true)
     public List<VoteResponse> findAllContainContents(final Long cursor, final Long categoryId, final Integer pageSize) {
-        final PageRequest pageRequest = createPageRequest(pageSize);
+        final PageRequest pageRequest = PageRequest.ofSize(pageSize);
         if (Objects.isNull(categoryId)) {
             return VoteResponse.toResponse(findAll(cursor, pageRequest));
         }
         return VoteResponse.toResponse(findAllByCategoryId(cursor, categoryId, pageRequest));
-    }
-
-    private PageRequest createPageRequest(final Integer pageSize) {
-        if (Objects.isNull(pageSize)) {
-            return PageRequest.ofSize(DEFAULT_PAGE_SIZE);
-        }
-        return PageRequest.ofSize(pageSize);
     }
 
     private List<VoteCard> findAll(final Long cursor, final PageRequest pageRequest) {

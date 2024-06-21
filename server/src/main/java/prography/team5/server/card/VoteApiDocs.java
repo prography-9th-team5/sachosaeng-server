@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
+import prography.team5.server.card.domain.SortType;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
@@ -41,6 +42,7 @@ public interface VoteApiDocs {
     @ApiResponse(responseCode = "200", description = "투표 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(@PathVariable(value = "voteId") final long voteId);
 
+    //todo: 개발중..
     @Hidden
     @Operation(
             summary = "(카테고리별) 투표 목록 조회 API",
@@ -54,7 +56,8 @@ public interface VoteApiDocs {
     ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "category-id", required = false) final Long categoryId,
-            @RequestParam(name = "page-size", required = false) final Integer pageSize
+            @RequestParam(name = "page-size", required = false, defaultValue = "10") final Integer pageSize,
+            @RequestParam(name = "sort-type", required = false, defaultValue = "LATEST") final SortType sortType
     );
 
     @Operation(
