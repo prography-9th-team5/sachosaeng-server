@@ -31,4 +31,10 @@ public class CategoryService {
         }
         return new CategoryIdResponse(categoryRepository.save(new Category(categoryRequest.name())).getId());
     }
+
+    @Transactional(readOnly = true)
+    public CategoryResponse findById(final long categoryId) {
+        final Category category = categoryRepository.findById(categoryId).orElseThrow();//todo: 예외처리
+        return CategoryResponse.toResponse(category);
+    }
 }
