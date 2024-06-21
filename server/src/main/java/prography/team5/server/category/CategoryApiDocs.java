@@ -18,7 +18,7 @@ public interface CategoryApiDocs {
 
     @Operation(
             summary = "단일 카테고리 조회 API",
-            description = "단일 카테고리에 대한 정보(카테고리 일므, 아이콘 Url, 백그라운드 컬러, 텍스트 컬러 등) 조회 할 수 있습니다."
+            description = "단일 카테고리에 대한 정보(카테고리 이름, 아이콘 Url, 백그라운드 컬러, 텍스트 컬러 등) 조회 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "단일 카테고리 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<CategoryResponse>> findById(
