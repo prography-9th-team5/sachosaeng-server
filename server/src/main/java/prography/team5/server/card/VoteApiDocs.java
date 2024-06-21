@@ -41,6 +41,7 @@ public interface VoteApiDocs {
     @ApiResponse(responseCode = "200", description = "투표 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(@PathVariable(value = "voteId") final long voteId);
 
+    @Hidden
     @Operation(
             summary = "(카테고리별) 투표 목록 조회 API",
             description = "투표 목록을 전체 조회할 수 있습니다. 투표는 최신순으로 조회됩니다. \n\n"
