@@ -2,6 +2,7 @@ package prography.team5.server.category.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.category.domain.Category;
@@ -20,7 +21,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAll() {
-        final List<Category> categories = categoryRepository.findAll();
+        final List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         return CategoryResponse.toResponse(categories);
     }
 

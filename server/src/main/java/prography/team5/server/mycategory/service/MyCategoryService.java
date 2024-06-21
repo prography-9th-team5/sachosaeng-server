@@ -16,8 +16,6 @@ import prography.team5.server.mycategory.service.dto.MyCategoryRequest;
 @Service
 public class MyCategoryService {
 
-    private static final int DEFAULT_PAGE_SIZE = 10;
-
     private final MyCategoryRepository myCategoryRepository;
     private final CategoryRepository categoryRepository;
     private final InformationCardRepository informationCardRepository;
