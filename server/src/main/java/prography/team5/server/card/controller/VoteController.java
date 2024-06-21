@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
+import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.card.VoteApiDocs;
 import prography.team5.server.card.service.VoteService;
@@ -48,6 +49,8 @@ public class VoteController implements VoteApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
+    // todo: 이건 어드민용
+/*
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<VoteResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
@@ -55,6 +58,18 @@ public class VoteController implements VoteApiDocs {
             @RequestParam(name = "page-size", required = false) final Integer pageSize
     ) {
         final List<VoteResponse> response = voteService.findAll(cursor, categoryId, pageSize);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+*/
+
+    @GetMapping
+    public ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAll(
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "category-id", required = false) final Long categoryId,
+            @RequestParam(name = "page-size", required = false) final Integer pageSize
+    ) {
+        final List<SimpleVoteResponse> response = voteService.findAll(cursor, categoryId, pageSize);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

@@ -6,7 +6,7 @@ import prography.team5.server.card.domain.VoteCard;
 public record VoteResponse(Long voteId, String title, List<VoteOptionResponse> voteOptions,
                            List<SimpleCategoryResponse> categories) {
 
-    public static VoteResponse from(final VoteCard voteCard) {
+    public static VoteResponse toResponse(final VoteCard voteCard) {
         return new VoteResponse(
                 voteCard.getId(),
                 voteCard.getTitle(),
@@ -18,9 +18,9 @@ public record VoteResponse(Long voteId, String title, List<VoteOptionResponse> v
         );
     }
 
-    public static List<VoteResponse> from(final List<VoteCard> voteCards) {
+    public static List<VoteResponse> toResponse(final List<VoteCard> voteCards) {
         return voteCards.stream()
-                .map(VoteResponse::from)
+                .map(VoteResponse::toResponse)
                 .toList();
     }
 }
