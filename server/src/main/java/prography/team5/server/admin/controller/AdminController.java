@@ -11,7 +11,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 }
