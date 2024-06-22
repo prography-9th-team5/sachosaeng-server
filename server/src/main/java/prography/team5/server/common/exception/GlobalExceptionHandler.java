@@ -10,6 +10,7 @@ import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_SIG
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_UNSUPPORTED;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_EMAIL;
+import static prography.team5.server.common.exception.ErrorType.EMPTY_ADMIN_NAME;
 import static prography.team5.server.common.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
 import static prography.team5.server.common.exception.ErrorType.INVALID_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_EMAIL;
@@ -79,6 +80,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(INVALID_VOTE_OPTION_ID, BAD_REQUEST);
         errorTypeToHttpStatus.put(VOTE_OPTION_LIMIT, BAD_REQUEST);
         errorTypeToHttpStatus.put(SAME_VOTE_OPTION, BAD_REQUEST);
+        errorTypeToHttpStatus.put(EMPTY_ADMIN_NAME, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)

@@ -41,7 +41,8 @@ public enum ErrorType {
     INVALID_VOTE_OPTION_ID(-9, "해당 투표는 해당 투표 옵션을 가지고 있지 않습니다."),
     VOTE_OPTION_LIMIT(-9, "투표 옵션은 최대 4개까지만 가능합니다."),
     SAME_VOTE_OPTION(-9, "동일 옵션에서 동일 옵션으로 변경할 수 없습니다."),
-    CATEGORY_NOT_INCLUDED_IN_VOTE(-9, "해당 투표는 해당 카테고리에 속하지 않습니다.");
+    CATEGORY_NOT_INCLUDED_IN_VOTE(-9, "해당 투표는 해당 카테고리에 속하지 않습니다."),
+    EMPTY_ADMIN_NAME(-9, "admin 이름이 필요합니다.");
 
     private final int code;
     private final String message;

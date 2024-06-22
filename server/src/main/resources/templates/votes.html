@@ -20,7 +20,7 @@
 </header>
 
 <div class="container">
-    <h1>Vote Cards</h1>
+    <h1>Vote Topics</h1>
 
     <div class="btn-group">
         <button class="add-btn" onclick="openAddModal()">추가</button>
@@ -47,24 +47,32 @@
                     <!-- 카테고리 체크박스 목록이 여기에 추가됩니다 -->
                 </div><br>
 
+                <label for="title">Writer:</label><br>
+                <input type="text" id="writer" name="writer" placeholder="작성자 이름 입력"><br>
+
                 <button type="submit">제출</button>
             </form>
         </div>
     </div>
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>투표 토픽</th>
+            <th>작성자(유저 pk)</th>
+            <th>작성자(관리자 이름)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="vote : ${votes}">
+            <td th:text="${vote.voteId}">Vote ID</td>
+            <td th:text="${vote.title}">Title</td>
+            <td th:text="${vote.userId}">User ID</td>
+            <td th:text="${vote.adminName}">Admin Name</td>
+        </tr>
+        </tbody>
+    </table>
 
-    <div class="card-container">
-        <div class="card" th:each="vote : ${votes}">
-            <h2 th:text="${vote.title}">Title</h2>
-            <p><strong>Categories:</strong></p>
-            <ul>
-                <li th:each="category : ${vote.categories}" th:text="${category.name}">Category Name</li>
-            </ul>
-            <p><strong>Options:</strong></p>
-            <ul>
-                <li th:each="option : ${vote.voteOptions}" th:text="${option.content}">Option Content</li>
-            </ul>
-        </div>
-    </div>
 </div>
 <script th:src="@{/js/votes.js}"></script>
 </body>

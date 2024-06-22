@@ -9,6 +9,7 @@ import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.common.exception.ErrorType;
 import prography.team5.server.common.exception.SachosaengException;
@@ -21,6 +22,7 @@ public class VoteCard extends Card {
     @OneToMany(mappedBy = "voteCard", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VoteOption> voteOptions = new ArrayList<>();
     private Long writerId;
+    private String adminName;
 
     //todo: 연관콘텐츠
 
@@ -29,8 +31,16 @@ public class VoteCard extends Card {
         this.writerId = writerId;
     }
 
+    public VoteCard(final String title, final List<Category> categories, final String adminName) {
+        super(title, categories);
+        if (Strings.isBlank(adminName)) {
+            throw new SachosaengException(ErrorType.EMPTY_ADMIN_NAME);
+        }
+        this.adminName = adminName;
+    }
+
     public void addVoteOption(final String voteOption) {
-        if(this.voteOptions.size() >= 4) {
+        if (this.voteOptions.size() >= 4) {
             throw new SachosaengException(ErrorType.VOTE_OPTION_LIMIT);
         }
         this.voteOptions.add(new VoteOption(this, voteOption));
@@ -45,7 +55,7 @@ public class VoteCard extends Card {
     }
 
     public void changeVoteOption(final Long fromVoteOptionId, final long ToVoteOptionId) {
-        if(fromVoteOptionId == ToVoteOptionId) {
+        if (fromVoteOptionId == ToVoteOptionId) {
             throw new SachosaengException(ErrorType.SAME_VOTE_OPTION);
         }
         final VoteOption fromVoteOption = voteOptions.stream()
@@ -63,7 +73,7 @@ public class VoteCard extends Card {
     }
 
     public void checkCategory(final Category category) {
-        if(!this.categories.contains(category)) {
+        if (!this.categories.contains(category)) {
             throw new SachosaengException(ErrorType.CATEGORY_NOT_INCLUDED_IN_VOTE);
         }
     }

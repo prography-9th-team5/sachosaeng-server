@@ -42,14 +42,16 @@ document.getElementById('voteForm').addEventListener('submit', function(event) {
     const formData = new FormData(this);
     const voteOptions = Array.from(formData.getAll('voteOptions')).filter(option => option.trim() !== '');;
     const categories = Array.from(formData.getAll('categories'));
+    const writer = formData.get('writer');
 
     const voteRequest = {
         title: formData.get('title'),
         voteOptions: voteOptions,
-        categoryIds: categories.map(Number)
+        categoryIds: categories.map(Number),
+        adminName: writer
     };
 
-    fetch('/votes', {
+    fetch('/admin/votes', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -30,10 +30,9 @@ public class VoteController implements VoteApiDocs {
 
     private final VoteService voteService;
 
-    // todo: 어드민 인증
     @PostMapping
     public ResponseEntity<CommonApiResponse<VoteIdResponse>> create(
-            @AuthRequired(required = false) Accessor accessor,
+            @AuthRequired Accessor accessor,
             @RequestBody final VoteRequest voteRequest
     ) {
         final VoteIdResponse response = voteService.create(voteRequest, accessor.id());
