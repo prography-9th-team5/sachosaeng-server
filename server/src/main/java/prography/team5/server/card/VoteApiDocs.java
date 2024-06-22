@@ -61,13 +61,6 @@ public interface VoteApiDocs {
     );
 
     @Operation(
-            summary = "[홈화면] 인기 투표 3개 조회 API",
-            description = "- 현재는 최신순으로 3개 조회하는 중, 인기 투표 노출 로직은 추후 수정 예정입니다."
-    )
-    @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes();
-
-    @Operation(
             summary = "[홈화면] 관심/유저타입 카테고리별로 투표를 3개씩 조회 API",
             description = """
                     기본적으로는 유저의 모든 관심 카테고리별로 투표를 3개씩 조회합니다. \n

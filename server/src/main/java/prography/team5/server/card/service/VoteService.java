@@ -89,15 +89,6 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public HotVotePreviewsResponse findHotVotes() {
-        //todo: 지금 임시 땜빵중이라 인기투표 선정 로직으로 변경 요망
-        final List<VoteCard> votes = voteCardRepository.findLatestCards(
-                PageRequest.ofSize(3)
-        ).getContent();
-        return HotVotePreviewsResponse.toResponse(votes);
-    }
-
-    @Transactional(readOnly = true)
     public List<CategoryVoteSuggestionsResponse> findSuggestions(final Long userId) {
         final List<MyCategory> myCategories = myCategoryRepository.findAllByUserId(userId);
         //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망

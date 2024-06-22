@@ -18,7 +18,6 @@ import prography.team5.server.card.VoteApiDocs;
 import prography.team5.server.card.service.VoteService;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
-import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.card.service.dto.VoteRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
@@ -50,35 +49,14 @@ public class VoteController implements VoteApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
-    // todo: 이건 어드민용
-/*
-    @GetMapping
-    public ResponseEntity<CommonApiResponse<List<VoteResponse>>> findAll(
-            @RequestParam(name = "cursor", required = false) final Long cursor,
-            @RequestParam(name = "category-id", required = false) final Long categoryId,
-            @RequestParam(name = "page-size", required = false) final Integer pageSize
-    ) {
-        final List<VoteResponse> response = voteService.findAll(cursor, categoryId, pageSize);
-        return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
-    }
-*/
-
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "category-id", required = false) final Long categoryId,
-            @RequestParam(name = "page-size", required = false, defaultValue = "10") final Integer pageSize,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size,
             @RequestParam(name = "sort-type", required = false, defaultValue = "LATEST") final SortType sortType
             ) {
-        final List<SimpleVoteResponse> response = voteService.findAll(cursor, categoryId, pageSize, sortType);
-        return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
-    }
-
-    @GetMapping("/hot")
-    public ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes() {
-        HotVotePreviewsResponse response = voteService.findHotVotes();
+        final List<SimpleVoteResponse> response = voteService.findAll(cursor, categoryId, size, sortType);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
