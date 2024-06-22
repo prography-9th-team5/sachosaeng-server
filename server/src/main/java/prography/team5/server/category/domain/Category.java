@@ -1,16 +1,22 @@
 package prography.team5.server.category.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import prography.team5.server.common.domian.TimeRecord;
+import prography.team5.server.user.domain.UserType;
 
 @Getter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
@@ -25,7 +31,9 @@ public class Category extends TimeRecord {
     private String name;
     @Embedded
     private CategoryDesign categoryDesign;
-    //todo: 유저타입들
+    @ElementCollection(targetClass = UserType.class)
+    @Enumerated(value = EnumType.STRING)
+    private List<UserType> userTypes = new ArrayList<>();
 
     public Category(final String name) {
         this.name = name;
@@ -36,5 +44,9 @@ public class Category extends TimeRecord {
             this.categoryDesign = new CategoryDesign();
         }
         return this.categoryDesign;
+    }
+
+    public void addUserType(final UserType userType) {
+        this.userTypes.add(userType);
     }
 }
