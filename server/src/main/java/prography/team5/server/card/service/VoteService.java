@@ -61,8 +61,11 @@ public class VoteService {
         } else {
             category = voteCard.getCategories().get(0);
         }
-        final boolean isVoted = userVoteOptionRepository.existsByUserIdAndVoteId(userId, voteId);
-        return VoteResponse.toResponse(category, isVoted, voteCard);
+        final Optional<UserVoteOption> voted = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
+        if(voted.isPresent()) {
+            return VoteResponse.toResponse(category, true, voted.get().getVoteOptionId(), voteCard);
+        }
+        return VoteResponse.toResponse(category, false, null, voteCard);
     }
 
     @Transactional(readOnly = true)

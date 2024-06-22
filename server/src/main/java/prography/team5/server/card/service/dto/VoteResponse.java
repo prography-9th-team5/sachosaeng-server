@@ -8,6 +8,7 @@ import prography.team5.server.category.service.dto.CategoryResponse;
 public record VoteResponse(
         Long voteId,
         boolean isVoted,
+        Long chosenVoteOptionId,
         CategoryResponse category,
         String title,
         Long count,
@@ -18,10 +19,11 @@ public record VoteResponse(
     //todo: 연관 콘텐츠
     //todo: 문구
 
-    public static VoteResponse toResponse(final Category category, final boolean isVoted, final VoteCard voteCard) {
+    public static VoteResponse toResponse(final Category category, final boolean isVoted, final Long voteOptionId, final VoteCard voteCard) {
         return new VoteResponse(
                 voteCard.getId(),
                 isVoted,
+                voteOptionId,
                 CategoryResponse.toResponse(category),
                 voteCard.getTitle(),
                 voteCard.getCount(),

@@ -1,5 +1,6 @@
 package prography.team5.server.admin.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ public class VoteAdminController {
         return modelAndView;
     }
 
+    @Hidden
     @PostMapping
     public ResponseEntity<CommonApiResponse<VoteIdResponse>> create(
             @RequestBody final VoteWithAdminNameRequest request
@@ -44,6 +46,7 @@ public class VoteAdminController {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
+    @Hidden
     @GetMapping("/{voteId}")
     public ResponseEntity<CommonApiResponse<VoteWithFullCategoriesResponse>> findById(
             @PathVariable(value = "voteId") final Long voteId
