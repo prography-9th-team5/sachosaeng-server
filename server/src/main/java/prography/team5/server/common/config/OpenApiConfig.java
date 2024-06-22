@@ -13,7 +13,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "사초생 API Docs", description = "사초생 API 명세서입니다. 에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs"))
+@OpenAPIDefinition(info = @Info(
+        title = "사초생 API Docs",
+        description = """
+                    사초생 API 명세서입니다. \n
+                    에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
+                    이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요.
+                    
+                    [06/22 업데이트]
+                    1. 투표 선택 api를 추가하였습니다.\n
+                    2. 사용자의 투표 여부를 포함하는 단일 투표 조회 api를 추가하였습니다. \n
+                    
+                    [기타..]
+                    1. 카테고리에서 조회되는 정보가 바뀔 수 있습니다. (backgroundColor에 대한 투명도?) \n
+                    2. 특정 투표에 대한 연관 콘텐츠 조회는 별도의 api로 빼려고 합니다. \n
+                    """
+))
 public class OpenApiConfig {
 
     @Bean
