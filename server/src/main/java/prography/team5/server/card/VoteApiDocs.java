@@ -8,8 +8,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.common.CommonApiResponse;
@@ -71,5 +73,19 @@ public interface VoteApiDocs {
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(
             @Parameter(hidden = true) Accessor accessor
+    );
+
+    @Operation(
+            summary = "투표 옵션 선택 API",
+            description = """
+                    사용자는 투표를 합니다(최초 1회). \n
+                    투표 옵션 변경에는 해당 API를 사용할 수 없습니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
+    ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
+            @Parameter(hidden=true) Accessor accessor,
+            @PathVariable(value = "voteId") final long voteId,
+            @PathVariable(value = "optionId") final long optionId
     );
 }

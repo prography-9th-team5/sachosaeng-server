@@ -8,11 +8,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.card.domain.SortType;
+import prography.team5.server.card.domain.UserVoteOption;
+import prography.team5.server.card.domain.UserVoteOptionRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.domain.VoteCardRepository;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;
+import prography.team5.server.common.exception.ErrorType;
+import prography.team5.server.common.exception.SachosaengException;
 import prography.team5.server.mycategory.domain.MyCategory;
 import prography.team5.server.mycategory.domain.MyCategoryRepository;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
@@ -32,6 +36,7 @@ public class VoteService {
     private final CategoryRepository categoryRepository;
     private final MyCategoryRepository myCategoryRepository;
     private final UserRepository userRepository;
+    private final UserVoteOptionRepository userVoteOptionRepository;
 
     @Transactional
     public VoteIdResponse create(final VoteRequest voteRequest, final Long userId) {
@@ -124,5 +129,17 @@ public class VoteService {
             response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
         }
         return response;
+    }
+
+    @Transactional
+    public void chooseVoteOption(final Long userId, final long voteId, final long voteOptionId) {
+        final VoteCard voteCard = voteCardRepository.findById(voteId)
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
+        boolean exists = userVoteOptionRepository.existsByUserIdAndVoteId(userId, voteId);
+        if(exists) {
+            throw new SachosaengException(ErrorType.ALREADY_VOTE); // 이미 투표 했음
+        }
+        voteCard.chooseVoteOption(voteOptionId);
+        userVoteOptionRepository.save(new UserVoteOption(userId, voteId, voteOptionId));
     }
 }

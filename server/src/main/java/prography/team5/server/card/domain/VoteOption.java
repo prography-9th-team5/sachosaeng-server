@@ -26,9 +26,14 @@ public class VoteOption extends TimeRecord {
     @JoinColumn
     private VoteCard voteCard;
     private String content;
+    private long count;
 
     public VoteOption(final VoteCard voteCard, final String content) {
         this.voteCard = voteCard;
         this.content = content;
+    }
+
+    public void increase() {
+        count++;
     }
 }

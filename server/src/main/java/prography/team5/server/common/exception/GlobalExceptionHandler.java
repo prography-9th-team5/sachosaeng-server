@@ -8,6 +8,7 @@ import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_EXP
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_MALFORMED;
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_SIGNATURE_FAIL;
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_UNSUPPORTED;
+import static prography.team5.server.common.exception.ErrorType.ALREADY_VOTE;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_EMAIL;
 import static prography.team5.server.common.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
@@ -18,11 +19,14 @@ import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMAT
 import static prography.team5.server.common.exception.ErrorType.INVALID_REFRESH_TOKEN;
 import static prography.team5.server.common.exception.ErrorType.INVALID_USER_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_USER_TYPE;
+import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
+import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_OPTION_ID;
 import static prography.team5.server.common.exception.ErrorType.NO_AUTHORIZATION_HEADER;
 import static prography.team5.server.common.exception.ErrorType.NO_REFRESH_TOKEN;
 import static prography.team5.server.common.exception.ErrorType.PAGE_NOT_FOUND;
 import static prography.team5.server.common.exception.ErrorType.REFRESH_TOKEN_EXPIRATION;
 import static prography.team5.server.common.exception.ErrorType.SERVER_ERROR;
+import static prography.team5.server.common.exception.ErrorType.VOTE_OPTION_LIMIT;
 
 import java.util.EnumMap;
 import java.util.Objects;
@@ -71,6 +75,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(INVALID_USER_ID, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_USER_TYPE, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_INFORMATION_CARD_ID, BAD_REQUEST);
+        errorTypeToHttpStatus.put(INVALID_VOTE_CARD_ID, BAD_REQUEST);
+        errorTypeToHttpStatus.put(INVALID_VOTE_OPTION_ID, BAD_REQUEST);
+        errorTypeToHttpStatus.put(ALREADY_VOTE, BAD_REQUEST);
+        errorTypeToHttpStatus.put(VOTE_OPTION_LIMIT, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)

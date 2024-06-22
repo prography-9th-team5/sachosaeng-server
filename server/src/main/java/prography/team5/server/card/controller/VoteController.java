@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,5 +69,16 @@ public class VoteController implements VoteApiDocs {
         final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestions(accessor.id());
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @PostMapping("/{voteId}/options/{optionId}")
+    public ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
+            @AuthRequired Accessor accessor,
+            @PathVariable(value = "voteId") final long voteId,
+            @PathVariable(value = "optionId") final long optionId
+    ) {
+        voteService.chooseVoteOption(accessor.id(), voteId, optionId);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
 }

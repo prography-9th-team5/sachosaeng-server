@@ -34,7 +34,13 @@ public enum ErrorType {
     INVALID_INFORMATION_CARD_ID(-7, "존재하지 않는 정보id입니다."),
 
     //처리할 수 없는 url
-    PAGE_NOT_FOUND(-8, "해당 url을 찾을 수 없습니다.");
+    PAGE_NOT_FOUND(-8, "해당 url을 찾을 수 없습니다."),
+
+    //투표 에러
+    INVALID_VOTE_CARD_ID(-9, "존재하지 않는 투표id입니다."),
+    INVALID_VOTE_OPTION_ID(-9, "올바르지 않은 투표 옵션id입니다."),
+    ALREADY_VOTE(-9, "이미 투표하였습니다."),
+    VOTE_OPTION_LIMIT(-9, "투표 옵션은 최대 4개까지만 가능합니다.");
 
     private final int code;
     private final String message;
