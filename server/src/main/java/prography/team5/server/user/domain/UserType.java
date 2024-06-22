@@ -11,7 +11,7 @@ public enum UserType {
     JOB_SEEKER("취준생"),
     NEW_EMPLOYEE("입사 1~3년차 직장인"),
     OTHER("기타"),
-    UNDEFINED("미정"); //todo: 없어도 될듯?
+    UNDEFINED("미정");
 
     private String description;
 
@@ -24,5 +24,9 @@ public enum UserType {
                 .filter(each -> each.name().equalsIgnoreCase(userType))
                 .findFirst()
                 .orElseThrow(() -> new SachosaengException(INVALID_USER_TYPE));
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

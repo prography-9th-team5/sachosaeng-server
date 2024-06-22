@@ -32,12 +32,4 @@ public interface CategoryApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "카테고리 전체 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findAll();
-
-    @Hidden
-    @Operation(
-            summary = "[Admin] 카테고리 추가 API",
-            description = "카테고리를 추가할 수 있습니다."
-    )
-    @ApiResponse(responseCode = "200", description = "카테고리 추가 성공입니다.")
-    ResponseEntity<CommonApiResponse<CategoryIdResponse>> add(final CategoryRequest categoryRequest);
 }

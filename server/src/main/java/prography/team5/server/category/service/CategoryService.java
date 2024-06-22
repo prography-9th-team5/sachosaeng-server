@@ -12,6 +12,7 @@ import prography.team5.server.common.exception.SachosaengException;
 import prography.team5.server.category.service.dto.CategoryIdResponse;
 import prography.team5.server.category.service.dto.CategoryRequest;
 import prography.team5.server.category.service.dto.CategoryResponse;
+import prography.team5.server.user.domain.UserType;
 
 @RequiredArgsConstructor
 @Service
@@ -23,14 +24,6 @@ public class CategoryService {
     public List<CategoryResponse> findAll() {
         final List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         return CategoryResponse.toResponse(categories);
-    }
-
-    @Transactional
-    public CategoryIdResponse add(final CategoryRequest categoryRequest) {
-        if (categoryRepository.existsByName(categoryRequest.name())) {
-            throw new SachosaengException(ErrorType.DUPLICATED_CATEGORY);
-        }
-        return new CategoryIdResponse(categoryRepository.save(new Category(categoryRequest.name())).getId());
     }
 
     @Transactional(readOnly = true)

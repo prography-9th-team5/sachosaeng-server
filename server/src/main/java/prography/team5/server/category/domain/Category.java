@@ -10,7 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,7 +35,7 @@ public class Category extends TimeRecord {
     private CategoryDesign categoryDesign;
     @ElementCollection(targetClass = UserType.class)
     @Enumerated(value = EnumType.STRING)
-    private List<UserType> userTypes = new ArrayList<>();
+    private Set<UserType> userTypes = new HashSet<>();
 
     public Category(final String name) {
         this.name = name;
@@ -48,5 +50,11 @@ public class Category extends TimeRecord {
 
     public void addUserType(final UserType userType) {
         this.userTypes.add(userType);
+    }
+
+    public void update(final String name, final List<UserType> userTypes) {
+        if(name != null && !this.name.equals(name)) this.name = name;
+        this.userTypes.retainAll(userTypes);
+        this.userTypes.addAll(userTypes);
     }
 }

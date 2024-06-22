@@ -38,13 +38,4 @@ public class CategoryController implements CategoryApiDocs {
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
-
-    //todo: 어드민 페이지
-    @PostMapping
-    public ResponseEntity<CommonApiResponse<CategoryIdResponse>> add(
-            @RequestBody final CategoryRequest categoryRequest) {
-        final CategoryIdResponse response = categoryService.add(categoryRequest);
-        return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
-    }
 }

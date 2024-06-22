@@ -29,12 +29,61 @@
         </form>
     </div>
 
-    <div class="category-container">
-        <div class="category" th:each="category : ${categories}">
-            <h3 th:text="${category.name}">Category Name</h3>
+    <!-- 카테고리 테이블 -->
+    <table>
+        <thead>
+        <tr>
+            <th>카테고리 이름</th>
+            <th>유저 타입</th>
+            <th>편집</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.name}">Category Name</td>
+            <td>
+                <span th:each="type, iterStat : ${category.userTypes}">
+                    <span th:text="${type}"></span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+            </td>
+            <td>
+                <button type="button" th:attr="data-id=${category.categoryId}, data-name=${category.name}, data-user-types=${category.userTypes}" onclick="openEditModal(this)">편집</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 편집 모달 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <form id="editForm">
+                <input type="hidden" id="editId" name="id">
+
+                <label for="editName">카테고리 이름:</label>
+                <input type="text" id="editName" name="name" required>
+
+                <br>
+                <label>유저 타입 선택:</label>
+                <input type="checkbox" id="학생" name="userTypes" value="STUDENT">
+                <label for="학생">학생</label>
+
+                <input type="checkbox" id="취준생" name="userTypes" value="JOB_SEEKER">
+                <label for="취준생">취준생</label>
+
+                <input type="checkbox" id="입사 1~3년차 직장인" name="userTypes" value="NEW_EMPLOYEE">
+                <label for="입사 1~3년차 직장인">입사 1~3년차 직장인</label>
+
+                <input type="checkbox" id="기타" name="userTypes" value="OTHER">
+                <label for="기타">기타</label>
+                <br>
+                <button type="button" onclick="saveChanges()">저장</button>
+            </form>
         </div>
     </div>
 </div>
+
 <script th:src="@{/js/categories.js}"></script>
 </body>
 </html>
