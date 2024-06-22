@@ -26,7 +26,7 @@ public abstract class Card extends TimeRecord {
     @Column(nullable = false)
     private String title;
     @ManyToMany
-    private List<Category> categories;
+    protected List<Category> categories;
 
     protected Card(final String title, final List<Category> categories) {
         this.title = title;

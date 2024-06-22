@@ -10,15 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import prography.team5.server.card.service.dto.SimpleVoteResponse;
-import prography.team5.server.card.domain.SortType;
-import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.service.dto.Accessor;
+import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
-import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
+import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.card.service.dto.VoteRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
+import prography.team5.server.common.CommonApiResponse;
 
 @Tag(name = "5. 투표 카드", description = "투표 카드 관련 기능입니다.")
 public interface VoteApiDocs {
@@ -34,13 +33,23 @@ public interface VoteApiDocs {
             @RequestBody final VoteRequest voteRequest
     );
 
-    @Hidden
     @Operation(
-            summary = "[임시] 단일 투표 카드 조회 API -> 회원의 투표 여부에 따라 다르게 보이도록?",
-            description = "투표 id로 해당 투표를 조회할 수 있습니다."
+            summary = "단일 투표 카드 조회 API",
+            description = """
+                    투표 id로 해당 투표를 조회할 수 있습니다. \n
+                    유저의 투표 여부, 옵션별 투표수, 전체 투표수를 포함하여 반환합니다. \n
+                    하나의 투표가 여러개의 카테고리에 속하는 경우가 있을 수 있으므로
+                     - 파라미터로 category-id를 넘겨주면 해당 카테고리 정보를 포함해 반환합니다. (ex. 특정 카테고리에서 진입한 경우)
+                     - category-id가 없다면 카드가 포함하는 카테고리 중 가장 첫번째 카테고리가 포함되어 반환됩니다. (ex. 전체 인기 투표를 통해 진입한 경우) \n
+                    !! 연관 콘텐츠는 아직 추가되지 않았습니다. !!
+                    """
     )
     @ApiResponse(responseCode = "200", description = "투표 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(@PathVariable(value = "voteId") final long voteId);
+    ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(
+            @Parameter(hidden = true) Accessor accessor,
+            @PathVariable(value = "voteId") final long voteId,
+            @RequestParam(value = "category-id", required = false) final Long categoryId
+    );
 
     //todo: 개발중..
     @Hidden
@@ -71,5 +80,19 @@ public interface VoteApiDocs {
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(
             @Parameter(hidden = true) Accessor accessor
+    );
+
+    @Operation(
+            summary = "투표 옵션 선택/변경 API",
+            description = """
+                    사용자는 투표를 합니다. \n
+                    이미 투표를 한 후 투표 옵션 변경에도 해당 API를 사용할 수 있습니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
+    ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
+            @Parameter(hidden = true) Accessor accessor,
+            @PathVariable(value = "voteId") final long voteId,
+            @PathVariable(value = "optionId") final long optionId
     );
 }

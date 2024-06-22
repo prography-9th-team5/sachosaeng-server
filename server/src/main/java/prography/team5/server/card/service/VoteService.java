@@ -3,16 +3,21 @@ package prography.team5.server.card.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.card.domain.SortType;
+import prography.team5.server.card.domain.UserVoteOption;
+import prography.team5.server.card.domain.UserVoteOptionRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.domain.VoteCardRepository;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;
+import prography.team5.server.common.exception.ErrorType;
+import prography.team5.server.common.exception.SachosaengException;
 import prography.team5.server.mycategory.domain.MyCategory;
 import prography.team5.server.mycategory.domain.MyCategoryRepository;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
@@ -32,6 +37,7 @@ public class VoteService {
     private final CategoryRepository categoryRepository;
     private final MyCategoryRepository myCategoryRepository;
     private final UserRepository userRepository;
+    private final UserVoteOptionRepository userVoteOptionRepository;
 
     @Transactional
     public VoteIdResponse create(final VoteRequest voteRequest, final Long userId) {
@@ -44,9 +50,19 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public VoteResponse findByVoteId(final long voteId) {
-        final VoteCard voteCard = voteCardRepository.findById(voteId).orElseThrow(); //todo: 예외처리
-        return VoteResponse.toResponse(voteCard);
+    public VoteResponse findByVoteId(final Long userId, final long voteId, final Long categoryId) {
+        final VoteCard voteCard = voteCardRepository.findById(voteId)
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
+        Category category;
+        if(categoryId != null) {
+            category = categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_CATEGORY));
+            voteCard.checkCategory(category);
+        } else {
+            category = voteCard.getCategories().get(0);
+        }
+        final boolean isVoted = userVoteOptionRepository.existsByUserIdAndVoteId(userId, voteId);
+        return VoteResponse.toResponse(category, isVoted, voteCard);
     }
 
     @Transactional(readOnly = true)
@@ -62,15 +78,6 @@ public class VoteService {
             return SimpleVoteResponse.toResponse(findAll(cursor, pageRequest));
         }
         return SimpleVoteResponse.toResponse(findAllByCategoryId(cursor, categoryId, pageRequest));
-    }
-
-    @Transactional(readOnly = true)
-    public List<VoteResponse> findAllContainContents(final Long cursor, final Long categoryId, final Integer pageSize) {
-        final PageRequest pageRequest = PageRequest.ofSize(pageSize);
-        if (Objects.isNull(categoryId)) {
-            return VoteResponse.toResponse(findAll(cursor, pageRequest));
-        }
-        return VoteResponse.toResponse(findAllByCategoryId(cursor, categoryId, pageRequest));
     }
 
     private List<VoteCard> findAll(final Long cursor, final PageRequest pageRequest) {
@@ -124,5 +131,20 @@ public class VoteService {
             response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
         }
         return response;
+    }
+
+    @Transactional
+    public void chooseVoteOption(final Long userId, final long voteId, final long voteOptionId) {
+        final VoteCard voteCard = voteCardRepository.findById(voteId)
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
+        final Optional<UserVoteOption> votedBefore = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
+        if(votedBefore.isPresent()) {
+            voteCard.changeVoteOption(votedBefore.get().getVoteOptionId(), voteOptionId);
+            userVoteOptionRepository.save(new UserVoteOption(userId, voteId, voteOptionId));
+            userVoteOptionRepository.delete(votedBefore.get());
+            return;
+        }
+        voteCard.chooseVoteOption(voteOptionId);
+        userVoteOptionRepository.save(new UserVoteOption(userId, voteId, voteOptionId));
     }
 }
