@@ -1,5 +1,6 @@
 package prography.team5.server.admin.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ public class CategoryAdminController {
         return modelAndView;
     }
 
+    @Hidden
     @PostMapping
     public ResponseEntity<CommonApiResponse<CategoryIdResponse>> create(
             @RequestBody final CategoryRequest categoryRequest
@@ -42,6 +44,7 @@ public class CategoryAdminController {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
+    @Hidden
     @PutMapping("/{categoryId}")
     public ResponseEntity<CommonApiResponse<Void>> update(
             @PathVariable(value = "categoryId") final Long categoryId,

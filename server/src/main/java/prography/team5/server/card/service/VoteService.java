@@ -20,6 +20,9 @@ import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.card.service.dto.VoteRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
+import prography.team5.server.user.domain.User;
+import prography.team5.server.user.domain.UserRepository;
+import prography.team5.server.user.domain.UserType;
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +31,7 @@ public class VoteService {
     private final VoteCardRepository voteCardRepository;
     private final CategoryRepository categoryRepository;
     private final MyCategoryRepository myCategoryRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public VoteIdResponse create(final VoteRequest voteRequest, final Long userId) {
@@ -96,8 +100,30 @@ public class VoteService {
     @Transactional(readOnly = true)
     public List<CategoryVoteSuggestionsResponse> findSuggestions(final Long userId) {
         final List<MyCategory> myCategories = myCategoryRepository.findAllByUserId(userId);
+        //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
+        if(myCategories.isEmpty()) {
+            final User user = userRepository.findById(userId).orElseThrow();
+            return suggestBasedOnUserType(user.getUserType());
+        }
+        return suggestBasedOnMyCategories(myCategories);
+    }
+
+    private List<CategoryVoteSuggestionsResponse> suggestBasedOnUserType(final UserType userType) {
+        final List<Category> categories = categoryRepository.findAllByUserType(userType);
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
-        //todo: 지금은 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
+        for (Category category : categories) {
+            final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
+                    category.getId(),
+                    PageRequest.ofSize(3)
+            ).getContent();
+            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
+        }
+        return response;
+    }
+
+    private List<CategoryVoteSuggestionsResponse> suggestBasedOnMyCategories(
+            final List<MyCategory> myCategories) {
+        List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
         for (MyCategory myCategory : myCategories) {
             final Category category = myCategory.getCategory();
             final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(

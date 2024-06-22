@@ -61,17 +61,19 @@ public interface VoteApiDocs {
     );
 
     @Operation(
-            summary = "홈화면의 인기 투표 3개 조회 API",
-            description = "(현재는 최신순으로 3개 조회하는 중, 인기 투표 노출 로직은 추후 수정 예정)"
+            summary = "[홈화면] 인기 투표 3개 조회 API",
+            description = "- 현재는 최신순으로 3개 조회하는 중, 인기 투표 노출 로직은 추후 수정 예정입니다."
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes();
 
     @Operation(
-            summary = "홈화면의 카테고리별 투표 제안 3개 조회 API",
-            description = "유저의 모든 관심 카테고리별로 3개씩 조회합니다. \n\n"
-                    + "(관심 카테고리가 없다면 유저 타입에 따른 카테고리들을 조회할 예정입니다. -> 현재는 미구현이라 관심 카테고리가 없다면 빈 리스트 반환중. 추후 구현 예정) \n\n"
-                    + "(현재는 최신순으로 3개 조회하는 중, 투표 노출 로직은 추후 수정 예정)"
+            summary = "[홈화면] 관심/유저타입 카테고리별로 투표를 3개씩 조회 API",
+            description = """
+                    기본적으로는 유저의 모든 관심 카테고리별로 투표를 3개씩 조회합니다. \n
+                    관심 카테고리가 없다면 유저 타입에 해당하는 모든 카테고리들에 대해 조회합니다. \n
+                    현재는 최신순으로 3개 조회하는 중, 투표 노출 로직은 추후 수정 예정입니다.
+                    """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(

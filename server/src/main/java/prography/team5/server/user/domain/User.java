@@ -25,11 +25,16 @@ public class User extends TimeRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     private Long id;
+
     @Embedded
     private Email email;
+
     @Getter
     private String nickname;
+
     private boolean deleted = false;
+
+    @Getter
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
 
