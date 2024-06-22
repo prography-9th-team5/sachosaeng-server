@@ -20,10 +20,9 @@ public class HotVoteController implements HotVoteApiDocs {
 
     @GetMapping
     public ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes(
-            @RequestParam(name = "category-id", required = false) final Long categoryId,
             @RequestParam(name = "size", required = false, defaultValue = "3") final Integer size
     ) {
-        HotVotePreviewsResponse response = hotVoteService.findHotVotes(categoryId, size);
+        HotVotePreviewsResponse response = hotVoteService.findHotVotes(null, size);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
