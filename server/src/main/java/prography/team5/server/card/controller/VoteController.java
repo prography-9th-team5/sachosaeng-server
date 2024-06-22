@@ -43,9 +43,11 @@ public class VoteController implements VoteApiDocs {
 
     @GetMapping("/{voteId}")
     public ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(
-            @PathVariable(value = "voteId") final long voteId
+            @AuthRequired Accessor accessor,
+            @PathVariable(value = "voteId") final long voteId,
+            @RequestParam(value = "category-id", required = false) final Long categoryId
     ) {
-        final VoteResponse response = voteService.findByVoteId(voteId);
+        final VoteResponse response = voteService.findByVoteId(accessor.id(), voteId, categoryId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

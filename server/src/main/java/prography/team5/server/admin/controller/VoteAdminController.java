@@ -1,13 +1,9 @@
 package prography.team5.server.admin.controller;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import prography.team5.server.card.service.VoteService;
-import prography.team5.server.card.service.dto.VoteResponse;
 
 @RestController
 @RequestMapping("/admin/votes")
@@ -16,12 +12,11 @@ public class VoteAdminController {
 
     private final VoteService voteService;
 
-    @GetMapping
+/*    @GetMapping
     public ModelAndView votes(ModelAndView modelAndView) {
         final List<VoteResponse> votes = voteService.findAllContainContents(null, null, 30); //todo: 게시글 많을때도 옛날 게시글 조회되게!
         modelAndView.addObject("votes", votes);
         modelAndView.setViewName("votes");
         return modelAndView;
-    }
-
+    }*/
 }

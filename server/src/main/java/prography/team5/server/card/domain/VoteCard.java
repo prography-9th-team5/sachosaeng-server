@@ -61,4 +61,10 @@ public class VoteCard extends Card {
                 .mapToLong(VoteOption::getCount)
                 .sum();
     }
+
+    public void checkCategory(final Category category) {
+        if(!this.categories.contains(category)) {
+            throw new SachosaengException(ErrorType.CATEGORY_NOT_INCLUDED_IN_VOTE);
+        }
+    }
 }

@@ -50,9 +50,19 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public VoteResponse findByVoteId(final long voteId) {
-        final VoteCard voteCard = voteCardRepository.findById(voteId).orElseThrow(); //todo: 예외처리
-        return VoteResponse.toResponse(voteCard);
+    public VoteResponse findByVoteId(final Long userId, final long voteId, final Long categoryId) {
+        final VoteCard voteCard = voteCardRepository.findById(voteId)
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
+        Category category;
+        if(categoryId != null) {
+            category = categoryRepository.findById(categoryId)
+                    .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_CATEGORY));
+            voteCard.checkCategory(category);
+        } else {
+            category = voteCard.getCategories().get(0);
+        }
+        final boolean isVoted = userVoteOptionRepository.existsByUserIdAndVoteId(userId, voteId);
+        return VoteResponse.toResponse(category, isVoted, voteCard);
     }
 
     @Transactional(readOnly = true)
@@ -68,15 +78,6 @@ public class VoteService {
             return SimpleVoteResponse.toResponse(findAll(cursor, pageRequest));
         }
         return SimpleVoteResponse.toResponse(findAllByCategoryId(cursor, categoryId, pageRequest));
-    }
-
-    @Transactional(readOnly = true)
-    public List<VoteResponse> findAllContainContents(final Long cursor, final Long categoryId, final Integer pageSize) {
-        final PageRequest pageRequest = PageRequest.ofSize(pageSize);
-        if (Objects.isNull(categoryId)) {
-            return VoteResponse.toResponse(findAll(cursor, pageRequest));
-        }
-        return VoteResponse.toResponse(findAllByCategoryId(cursor, categoryId, pageRequest));
     }
 
     private List<VoteCard> findAll(final Long cursor, final PageRequest pageRequest) {
