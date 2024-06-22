@@ -71,7 +71,7 @@ public class VoteController implements VoteApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
-    @PostMapping("/{voteId}/options/{optionId}")
+    @PutMapping("/{voteId}/options/{optionId}")
     public ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
             @AuthRequired Accessor accessor,
             @PathVariable(value = "voteId") final long voteId,

@@ -36,4 +36,8 @@ public class VoteOption extends TimeRecord {
     public void increase() {
         count++;
     }
+
+    public void decrease() {
+        count--;
+    }
 }

@@ -76,10 +76,10 @@ public interface VoteApiDocs {
     );
 
     @Operation(
-            summary = "투표 옵션 선택 API",
+            summary = "투표 옵션 선택/변경 API",
             description = """
-                    사용자는 투표를 합니다(최초 1회). \n
-                    투표 옵션 변경에는 해당 API를 사용할 수 없습니다.
+                    사용자는 투표를 합니다. \n
+                    이미 투표를 한 후 투표 옵션 변경에도 해당 API를 사용할 수 있습니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")

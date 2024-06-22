@@ -3,6 +3,7 @@ package prography.team5.server.card.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -135,9 +136,12 @@ public class VoteService {
     public void chooseVoteOption(final Long userId, final long voteId, final long voteOptionId) {
         final VoteCard voteCard = voteCardRepository.findById(voteId)
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
-        boolean exists = userVoteOptionRepository.existsByUserIdAndVoteId(userId, voteId);
-        if(exists) {
-            throw new SachosaengException(ErrorType.ALREADY_VOTE); // 이미 투표 했음
+        final Optional<UserVoteOption> votedBefore = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
+        if(votedBefore.isPresent()) {
+            voteCard.changeVoteOption(votedBefore.get().getVoteOptionId(), voteOptionId);
+            userVoteOptionRepository.save(new UserVoteOption(userId, voteId, voteOptionId));
+            userVoteOptionRepository.delete(votedBefore.get());
+            return;
         }
         voteCard.chooseVoteOption(voteOptionId);
         userVoteOptionRepository.save(new UserVoteOption(userId, voteId, voteOptionId));

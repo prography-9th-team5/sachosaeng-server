@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,18 @@ public class VoteCard extends Card {
                 .findFirst()
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
         voteOption.increase();
+    }
+
+    public void changeVoteOption(final Long fromVoteOptionId, final long ToVoteOptionId) {
+        if(fromVoteOptionId == ToVoteOptionId) {
+            throw new SachosaengException(ErrorType.SAME_VOTE_OPTION);
+        }
+        final VoteOption fromVoteOption = voteOptions.stream()
+                .filter(each -> Objects.equals(each.getId(), fromVoteOptionId))
+                .findFirst()
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
+        fromVoteOption.decrease();
+        chooseVoteOption(ToVoteOptionId);
     }
 
     public long getCount() {

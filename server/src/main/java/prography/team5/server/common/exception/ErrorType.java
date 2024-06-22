@@ -38,9 +38,9 @@ public enum ErrorType {
 
     //투표 에러
     INVALID_VOTE_CARD_ID(-9, "존재하지 않는 투표id입니다."),
-    INVALID_VOTE_OPTION_ID(-9, "올바르지 않은 투표 옵션id입니다."),
-    ALREADY_VOTE(-9, "이미 투표하였습니다."),
-    VOTE_OPTION_LIMIT(-9, "투표 옵션은 최대 4개까지만 가능합니다.");
+    INVALID_VOTE_OPTION_ID(-9, "해당 투표는 해당 투표 옵션을 가지고 있지 않습니다."),
+    VOTE_OPTION_LIMIT(-9, "투표 옵션은 최대 4개까지만 가능합니다."),
+    SAME_VOTE_OPTION(-9, "동일 옵션에서 동일 옵션으로 변경할 수 없습니다.");
 
     private final int code;
     private final String message;
