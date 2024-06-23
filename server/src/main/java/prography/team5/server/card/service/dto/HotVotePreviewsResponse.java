@@ -3,7 +3,7 @@ package prography.team5.server.card.service.dto;
 import java.util.List;
 import prography.team5.server.card.domain.VoteCard;
 
-public record HotVotePreviewsResponse(SimpleCategoryWithTextColorResponse category, List<SimpleVoteWithIconResponse> votes) {
+public record HotVotePreviewsResponse(SimpleCategoryWithTextColorResponse category, List<SimpleHotVoteResponse> votes) {
 
     public static HotVotePreviewsResponse toResponse(List<VoteCard> votes) {
         return new HotVotePreviewsResponse(
@@ -12,7 +12,7 @@ public record HotVotePreviewsResponse(SimpleCategoryWithTextColorResponse catego
                         "인기 투표",
                         "#344054"
                 ),
-                SimpleVoteWithIconResponse.toResponse(votes)
+                SimpleHotVoteResponse.toResponse(votes)
         );
     }
 }

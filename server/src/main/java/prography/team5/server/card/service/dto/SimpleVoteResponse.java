@@ -4,11 +4,11 @@ import java.util.List;
 import prography.team5.server.card.domain.VoteCard;
 
 
-public record SimpleVoteResponse(Long voteId, String title, Integer participantCount) {
+public record SimpleVoteResponse(Long voteId, String title, Long participantCount) {
 
     public static SimpleVoteResponse toResponse(final VoteCard voteCard) {
-        //todo: null 기준 판단
-        return new SimpleVoteResponse(voteCard.getId(), voteCard.getTitle(), null);
+        //todo: 투표수 아니고 참여자수
+        return new SimpleVoteResponse(voteCard.getId(), voteCard.getTitle(), voteCard.getCount());
     }
 
     public static List<SimpleVoteResponse> toResponse(final List<VoteCard> voteCards) {

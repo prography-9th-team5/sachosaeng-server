@@ -20,6 +20,7 @@ import prography.team5.server.common.exception.SachosaengException;
 public class VoteCard extends Card {
 
     private static final long CLOSING_COUNT = 100;
+    private static final long HOT_COUNT_FLOOR = 10;
 
     @OneToMany(mappedBy = "voteCard", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VoteOption> voteOptions = new ArrayList<>();
@@ -74,6 +75,16 @@ public class VoteCard extends Card {
         return voteOptions.stream()
                 .mapToLong(VoteOption::getCount)
                 .sum();
+    }
+
+    public Long getHotCount() {
+        final long sum = voteOptions.stream()
+                .mapToLong(VoteOption::getCount)
+                .sum();
+        if(sum >= HOT_COUNT_FLOOR) {
+            return sum;
+        }
+        return null;
     }
 
     public boolean isClosed() {

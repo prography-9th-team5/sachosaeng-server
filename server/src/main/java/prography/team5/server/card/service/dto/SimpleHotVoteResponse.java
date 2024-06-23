@@ -5,21 +5,21 @@ import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.service.dto.CategoryResponse;
 
-public record SimpleVoteWithIconResponse(Long voteId, String title, Integer participantCount, CategoryResponse category) {
+public record SimpleHotVoteResponse(Long voteId, String title, Long participantCount, CategoryResponse category) {
 
-    public static SimpleVoteWithIconResponse toResponse(final VoteCard vote) {
+    public static SimpleHotVoteResponse toResponse(final VoteCard vote) {
         final Category category = vote.getCategories().get(0);
-        return new SimpleVoteWithIconResponse(
+        return new SimpleHotVoteResponse(
                 vote.getId(),
                 vote.getTitle(),
-                null,
+                vote.getHotCount(),
                 CategoryResponse.toResponse(category)
         );
     }
 
-    public static List<SimpleVoteWithIconResponse> toResponse(final List<VoteCard> votes) {
+    public static List<SimpleHotVoteResponse> toResponse(final List<VoteCard> votes) {
         return votes.stream()
-                .map(SimpleVoteWithIconResponse::toResponse)
+                .map(SimpleHotVoteResponse::toResponse)
                 .toList();
     }
 }
