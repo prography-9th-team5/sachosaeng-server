@@ -21,11 +21,14 @@ public class VoteCard extends Card {
 
     private static final long CLOSING_COUNT = 100;
     private static final long HOT_COUNT_FLOOR = 10;
+    private static final int MIN_OPTION_COUNT = 2;
+    private static final int MAX_OPTION_COUNT = 4;
 
     @OneToMany(mappedBy = "voteCard", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VoteOption> voteOptions = new ArrayList<>();
     private Long writerId;
     private String adminName;
+    private boolean multipleChoiceAllowed;
 
     //todo: 연관콘텐츠
 
