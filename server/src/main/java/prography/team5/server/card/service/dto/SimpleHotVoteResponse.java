@@ -12,7 +12,7 @@ public record SimpleHotVoteResponse(Long voteId, String title, Long participantC
         return new SimpleHotVoteResponse(
                 vote.getId(),
                 vote.getTitle(),
-                vote.getHotCount(),
+                vote.getHotParticipantCount(),
                 CategoryResponse.toResponse(category)
         );
     }

@@ -28,7 +28,7 @@ public record VoteResponse(
                 voteOptionId,
                 CategoryResponse.toResponse(category),
                 voteCard.getTitle(),
-                voteCard.getCount(),
+                voteCard.getParticipantCount(),
                 voteCard.getVoteOptions()
                         .stream()
                         .map(option -> new VoteOptionResponse(option.getId(), option.getContent(), option.getCount()))

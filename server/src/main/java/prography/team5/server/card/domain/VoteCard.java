@@ -30,6 +30,7 @@ public class VoteCard extends Card {
     private Long writerId;
     private String adminName;
     private boolean isMultipleChoiceAllowed;
+    private long participantCount;
 
     private VoteCard(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final String adminName) {
         super(title, categories);
@@ -61,7 +62,7 @@ public class VoteCard extends Card {
         this.voteOptions = options;
     }
 
-    //todo: 투표 마감 확인 + 복수 선택
+    //todo: 투표 마감 확인
     public void chooseVoteOption(final List<Long> voteOptionIds) {
         if(voteOptionIds.size() > 1 && !isMultipleChoiceAllowed) {
             throw new SachosaengException(ErrorType.MULTIPLE_CHOICE_NOT_ALLOWED);
@@ -73,6 +74,7 @@ public class VoteCard extends Card {
                     .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
             voteOption.increase();
         }
+        participantCount++;
     }
 
     public void changeVoteOption(final List<Long> fromVoteOptionIds, final List<Long> ToVoteOptionIds) {
@@ -86,24 +88,15 @@ public class VoteCard extends Card {
         chooseVoteOption(ToVoteOptionIds);
     }
 
-    public long getCount() {
-        return voteOptions.stream()
-                .mapToLong(VoteOption::getCount)
-                .sum();
-    }
-
-    public Long getHotCount() {
-        final long sum = voteOptions.stream()
-                .mapToLong(VoteOption::getCount)
-                .sum();
-        if(sum >= HOT_COUNT_FLOOR) {
-            return sum;
+    public Long getHotParticipantCount() {
+        if(participantCount >= HOT_COUNT_FLOOR) {
+            return participantCount;
         }
         return null;
     }
 
     public boolean isClosed() {
-        return getCount() >= CLOSING_COUNT;
+        return participantCount >= CLOSING_COUNT;
     }
 
     public void checkCategory(final Category category) {

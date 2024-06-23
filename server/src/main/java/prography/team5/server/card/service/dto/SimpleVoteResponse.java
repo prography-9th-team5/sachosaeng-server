@@ -8,7 +8,7 @@ public record SimpleVoteResponse(Long voteId, String title, Long participantCoun
 
     public static SimpleVoteResponse toResponse(final VoteCard voteCard) {
         //todo: 투표수 아니고 참여자수
-        return new SimpleVoteResponse(voteCard.getId(), voteCard.getTitle(), voteCard.getCount());
+        return new SimpleVoteResponse(voteCard.getId(), voteCard.getTitle(), voteCard.getParticipantCount());
     }
 
     public static List<SimpleVoteResponse> toResponse(final List<VoteCard> voteCards) {
