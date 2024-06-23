@@ -41,6 +41,7 @@ public class VoteCard extends Card {
         this.adminName = adminName;
     }
 
+    //todo: 옵션은 2개 이상 4개 이하
     public void addVoteOption(final String voteOption) {
         if (this.voteOptions.size() >= 4) {
             throw new SachosaengException(ErrorType.VOTE_OPTION_LIMIT);
@@ -48,6 +49,7 @@ public class VoteCard extends Card {
         this.voteOptions.add(new VoteOption(this, voteOption));
     }
 
+    //todo: 투표 마감?
     public void chooseVoteOption(final long voteOptionId) {
         final VoteOption voteOption = voteOptions.stream()
                 .filter(each -> each.getId() == voteOptionId)

@@ -4,7 +4,7 @@ import java.util.List;
 import prography.team5.server.card.domain.VoteCard;
 
 
-public record SimpleVoteResponse(Long voteId, String title, Integer voteCount) {
+public record SimpleVoteResponse(Long voteId, String title, Integer participantCount) {
 
     public static SimpleVoteResponse toResponse(final VoteCard voteCard) {
         //todo: null 기준 판단

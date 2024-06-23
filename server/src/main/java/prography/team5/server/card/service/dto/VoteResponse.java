@@ -12,7 +12,7 @@ public record VoteResponse(
         Long chosenVoteOptionId,
         CategoryResponse category,
         String title,
-        Long count,
+        Long participantCount,
         List<VoteOptionResponse> voteOptions,
         String description
 ) {
