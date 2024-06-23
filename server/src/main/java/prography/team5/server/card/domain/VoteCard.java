@@ -42,11 +42,14 @@ public class VoteCard extends Card {
     }
 
     public static VoteCard of(final String title, final List<Category> categories, final String adminName) {
-        if (isBlank(adminName)) {
-            throw new SachosaengException(ErrorType.EMPTY_ADMIN_NAME);
+        if(title.isEmpty()) {
+            throw new SachosaengException(ErrorType.EMPTY_TITLE);
         }
         if (categories.isEmpty()) {
             throw new SachosaengException(ErrorType.EMPTY_CATEGORY);
+        }
+        if (isBlank(adminName)) {
+            throw new SachosaengException(ErrorType.EMPTY_ADMIN_NAME);
         }
         return new VoteCard(title, categories, adminName);
     }

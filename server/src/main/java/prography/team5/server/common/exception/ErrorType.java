@@ -43,7 +43,8 @@ public enum ErrorType {
     SAME_VOTE_OPTION(-9, "동일 옵션에서 동일 옵션으로 변경할 수 없습니다."),
     CATEGORY_NOT_INCLUDED_IN_VOTE(-9, "해당 투표는 해당 카테고리에 속하지 않습니다."),
     EMPTY_ADMIN_NAME(-9, "투표 생성 시 admin 이름이 필요합니다."),
-    EMPTY_CATEGORY(-9, "투표 생성 시 카테고리가 필요합니다.");
+    EMPTY_CATEGORY(-9, "투표 생성 시 카테고리가 필요합니다."),
+    EMPTY_TITLE(-9, "투표 생성 시 투표 주제가 필요합니다.");
 
     private final int code;
     private final String message;
