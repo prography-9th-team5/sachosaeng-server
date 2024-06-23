@@ -30,16 +30,6 @@ public class VoteController implements VoteApiDocs {
 
     private final VoteService voteService;
 
-    @PostMapping
-    public ResponseEntity<CommonApiResponse<VoteIdResponse>> create(
-            @AuthRequired Accessor accessor,
-            @RequestBody final VoteRequest voteRequest
-    ) {
-        final VoteIdResponse response = voteService.create(voteRequest, accessor.id());
-        return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
-    }
-
     @GetMapping("/{voteId}")
     public ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(
             @AuthRequired Accessor accessor,

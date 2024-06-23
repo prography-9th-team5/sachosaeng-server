@@ -39,16 +39,6 @@ public class VoteService {
     private final UserRepository userRepository;
     private final UserVoteOptionRepository userVoteOptionRepository;
 
-    @Transactional
-    public VoteIdResponse create(final VoteRequest voteRequest, final Long userId) {
-        //todo: 존재하지 않는 카테고리 처리
-        final List<Category> categories = categoryRepository.findAllByIdIn(voteRequest.categoryIds());
-        final VoteCard voteCard = new VoteCard(voteRequest.title(), categories, userId);
-        voteRequest.voteOptions()
-                .forEach(voteCard::addVoteOption);
-        return new VoteIdResponse(voteCardRepository.save(voteCard).getId());
-    }
-
     @Transactional(readOnly = true)
     public VoteResponse findByVoteId(final Long userId, final long voteId, final Long categoryId) {
         final VoteCard voteCard = voteCardRepository.findById(voteId)

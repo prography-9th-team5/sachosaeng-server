@@ -8,30 +8,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
-import prography.team5.server.card.service.dto.VoteIdResponse;
-import prography.team5.server.card.service.dto.VoteRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
 import prography.team5.server.common.CommonApiResponse;
 
 @Tag(name = "5. 투표 카드", description = "투표 카드 관련 기능입니다.")
 public interface VoteApiDocs {
-
-    @Hidden
-    @Operation(
-            summary = "투표 카드 추가 API",
-            description = "투표를 추가할 수 있습니다."
-    )
-    @ApiResponse(responseCode = "200", description = "투표 추가 성공입니다.")
-    ResponseEntity<CommonApiResponse<VoteIdResponse>> create(
-            @Parameter(hidden = true) Accessor accessor,
-            @RequestBody final VoteRequest voteRequest
-    );
 
     @Operation(
             summary = "단일 투표 카드 조회 API",

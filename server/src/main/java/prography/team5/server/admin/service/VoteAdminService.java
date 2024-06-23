@@ -27,9 +27,8 @@ public class VoteAdminService {
     @Transactional
     public VoteIdResponse create(final VoteWithAdminNameRequest request) {
         final List<Category> categories = categoryRepository.findAllByIdIn(request.categoryIds());
-        final VoteCard voteCard = new VoteCard(request.title(), categories, request.adminName());
-        request.voteOptions()
-                .forEach(voteCard::addVoteOption);
+        final VoteCard voteCard = VoteCard.of(request.title(), categories, request.adminName());
+        voteCard.updateVoteOptions(request.voteOptions());
         return new VoteIdResponse(voteCardRepository.save(voteCard).getId());
     }
 
