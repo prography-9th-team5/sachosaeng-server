@@ -48,6 +48,7 @@ document.getElementById('voteForm').addEventListener('submit', function(event) {
         title: formData.get('title'),
         voteOptions: voteOptions,
         categoryIds: categories.map(Number),
+        isMultipleChoiceAllowed: formData.get('isMultipleChoiceAllowed') === 'on',
         adminName: writer
     };
 

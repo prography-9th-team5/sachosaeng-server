@@ -31,17 +31,13 @@ public class VoteCard extends Card {
     private String adminName;
     private boolean isMultipleChoiceAllowed;
 
-    private VoteCard(final String title, final List<Category> categories, final Long writerId) {
+    private VoteCard(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final String adminName) {
         super(title, categories);
-        this.writerId = writerId;
-    }
-
-    private VoteCard(final String title, final List<Category> categories, final String adminName) {
-        super(title, categories);
+        this.isMultipleChoiceAllowed = isMultipleChoiceAllowed;
         this.adminName = adminName;
     }
 
-    public static VoteCard of(final String title, final List<Category> categories, final String adminName) {
+    public static VoteCard of(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final String adminName) {
         if(title.isEmpty()) {
             throw new SachosaengException(ErrorType.EMPTY_TITLE);
         }
@@ -51,7 +47,7 @@ public class VoteCard extends Card {
         if (isBlank(adminName)) {
             throw new SachosaengException(ErrorType.EMPTY_ADMIN_NAME);
         }
-        return new VoteCard(title, categories, adminName);
+        return new VoteCard(title, categories, isMultipleChoiceAllowed, adminName);
     }
 
     public void updateVoteOptions(final List<String> voteOptionTexts) {
