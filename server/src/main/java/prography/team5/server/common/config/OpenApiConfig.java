@@ -22,14 +22,14 @@ import org.springframework.context.annotation.Configuration;
                     
                     [06/23 업데이트]
                     1. 단일 투표 조회시 투표 마감 여부를 나타내는 isClosed 변수를 추가하였습니다.
+                    2. 백그라운드 컬러, 텍스트 컬러, 카테고리 아이콘에 대한 정보들을 모두 업데이트 완료했습니다.
                     
                     [06/22 업데이트]
                     1. 투표 선택 api를 추가하였습니다.\n
                     2. 사용자의 투표 여부를 포함하는 단일 투표 조회 api를 추가하였습니다. \n
                     
                     [기타..]
-                    1. 카테고리에서 조회되는 정보가 바뀔 수 있습니다. (backgroundColor에 대한 투명도?) \n
-                    2. 특정 투표에 대한 연관 콘텐츠 조회는 별도의 api로 빼려고 합니다. \n
+                    1. 특정 투표에 대한 연관 콘텐츠 조회는 별도의 api로 빼려고 합니다. \n
                     """
 ))
 public class OpenApiConfig {
