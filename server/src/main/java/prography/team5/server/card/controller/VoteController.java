@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.domain.SortType;
+import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.card.VoteApiDocs;
 import prography.team5.server.card.service.VoteService;
@@ -62,13 +63,13 @@ public class VoteController implements VoteApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
-    @PutMapping("/{voteId}/options/{optionId}")
+    @PutMapping("/{voteId}/choices")
     public ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
             @AuthRequired Accessor accessor,
             @PathVariable(value = "voteId") final long voteId,
-            @PathVariable(value = "optionId") final long optionId
+            @RequestBody final VoteOptionChoiceRequest request
     ) {
-        voteService.chooseVoteOption(accessor.id(), voteId, optionId);
+        voteService.chooseVoteOption(accessor.id(), voteId, request);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }

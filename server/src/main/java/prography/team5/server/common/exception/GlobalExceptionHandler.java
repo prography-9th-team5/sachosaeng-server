@@ -11,6 +11,8 @@ import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_UNS
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_EMAIL;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_ADMIN_NAME;
+import static prography.team5.server.common.exception.ErrorType.EMPTY_CATEGORY;
+import static prography.team5.server.common.exception.ErrorType.EMPTY_TITLE;
 import static prography.team5.server.common.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
 import static prography.team5.server.common.exception.ErrorType.INVALID_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_EMAIL;
@@ -21,6 +23,7 @@ import static prography.team5.server.common.exception.ErrorType.INVALID_USER_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_USER_TYPE;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_OPTION_ID;
+import static prography.team5.server.common.exception.ErrorType.MULTIPLE_CHOICE_NOT_ALLOWED;
 import static prography.team5.server.common.exception.ErrorType.NO_AUTHORIZATION_HEADER;
 import static prography.team5.server.common.exception.ErrorType.NO_REFRESH_TOKEN;
 import static prography.team5.server.common.exception.ErrorType.PAGE_NOT_FOUND;
@@ -81,6 +84,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(VOTE_OPTION_LIMIT, BAD_REQUEST);
         errorTypeToHttpStatus.put(SAME_VOTE_OPTION, BAD_REQUEST);
         errorTypeToHttpStatus.put(EMPTY_ADMIN_NAME, BAD_REQUEST);
+        errorTypeToHttpStatus.put(EMPTY_CATEGORY, BAD_REQUEST);
+        errorTypeToHttpStatus.put(EMPTY_TITLE, BAD_REQUEST);
+        errorTypeToHttpStatus.put(MULTIPLE_CHOICE_NOT_ALLOWED, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)

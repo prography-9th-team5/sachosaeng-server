@@ -9,7 +9,7 @@ public record VoteResponse(
         Long voteId,
         boolean isClosed,
         boolean isVoted,
-        Long chosenVoteOptionId,
+        List<Long> chosenVoteOptionId,
         CategoryResponse category,
         String title,
         Long participantCount,
@@ -20,7 +20,7 @@ public record VoteResponse(
     //todo: 연관 콘텐츠
     //todo: 문구
 
-    public static VoteResponse toResponse(final Category category, final boolean isVoted, final Long voteOptionId, final VoteCard voteCard) {
+    public static VoteResponse toResponse(final Category category, final boolean isVoted, final List<Long> voteOptionId, final VoteCard voteCard) {
         return new VoteResponse(
                 voteCard.getId(),
                 voteCard.isClosed(),

@@ -1,5 +1,6 @@
 package prography.team5.server.card.domain;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -7,5 +8,5 @@ public interface UserVoteOptionRepository extends JpaRepository<UserVoteOption, 
 
     boolean existsByUserIdAndVoteId(Long userId, long voteId);
 
-    Optional<UserVoteOption> findByUserIdAndVoteId(Long userId, long voteId);
+    List<UserVoteOption> findByUserIdAndVoteId(Long userId, long voteId);
 }

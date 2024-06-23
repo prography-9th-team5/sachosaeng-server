@@ -8,11 +8,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
+import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
 import prography.team5.server.common.CommonApiResponse;
 
@@ -71,14 +74,15 @@ public interface VoteApiDocs {
     @Operation(
             summary = "투표 옵션 선택/변경 API",
             description = """
-                    사용자는 투표를 합니다. \n
+                    선택된 투표 옵션들의 id를 모두 담아 보내 투표를 합니다. \n
                     이미 투표를 한 후 투표 옵션 변경에도 해당 API를 사용할 수 있습니다.
+                    변경시 변경 후에 선택되어있는 모든 id를 담아 보내야하며, 이전 투표내역 전체를 대체합니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
             @Parameter(hidden = true) Accessor accessor,
             @PathVariable(value = "voteId") final long voteId,
-            @PathVariable(value = "optionId") final long optionId
+            @RequestBody final VoteOptionChoiceRequest request
     );
 }

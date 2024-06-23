@@ -29,7 +29,7 @@ public class VoteCard extends Card {
     private List<VoteOption> voteOptions = new ArrayList<>();
     private Long writerId;
     private String adminName;
-    private boolean multipleChoiceAllowed;
+    private boolean isMultipleChoiceAllowed;
 
     private VoteCard(final String title, final List<Category> categories, final Long writerId) {
         super(title, categories);
@@ -66,24 +66,28 @@ public class VoteCard extends Card {
     }
 
     //todo: 투표 마감 확인 + 복수 선택
-    public void chooseVoteOption(final long voteOptionId) {
-        final VoteOption voteOption = voteOptions.stream()
-                .filter(each -> each.getId() == voteOptionId)
-                .findFirst()
-                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
-        voteOption.increase();
+    public void chooseVoteOption(final List<Long> voteOptionIds) {
+        if(voteOptionIds.size() > 1 && !isMultipleChoiceAllowed) {
+            throw new SachosaengException(ErrorType.MULTIPLE_CHOICE_NOT_ALLOWED);
+        }
+        for (Long voteOptionId : voteOptionIds) {
+            final VoteOption voteOption = voteOptions.stream()
+                    .filter(each -> each.getId() == voteOptionId)
+                    .findFirst()
+                    .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
+            voteOption.increase();
+        }
     }
 
-    public void changeVoteOption(final Long fromVoteOptionId, final long ToVoteOptionId) {
-        if (fromVoteOptionId == ToVoteOptionId) {
-            throw new SachosaengException(ErrorType.SAME_VOTE_OPTION);
+    public void changeVoteOption(final List<Long> fromVoteOptionIds, final List<Long> ToVoteOptionIds) {
+        for (Long fromVoteOptionId : fromVoteOptionIds) {
+            final VoteOption fromVoteOption = voteOptions.stream()
+                    .filter(each -> Objects.equals(each.getId(), fromVoteOptionId))
+                    .findFirst()
+                    .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
+            fromVoteOption.decrease();
         }
-        final VoteOption fromVoteOption = voteOptions.stream()
-                .filter(each -> Objects.equals(each.getId(), fromVoteOptionId))
-                .findFirst()
-                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
-        fromVoteOption.decrease();
-        chooseVoteOption(ToVoteOptionId);
+        chooseVoteOption(ToVoteOptionIds);
     }
 
     public long getCount() {

@@ -1,6 +1,7 @@
 package prography.team5.server.card.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import prography.team5.server.card.domain.UserVoteOptionRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.domain.VoteCardRepository;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
+import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;
 import prography.team5.server.common.exception.ErrorType;
@@ -51,11 +53,12 @@ public class VoteService {
         } else {
             category = voteCard.getCategories().get(0);
         }
-        final Optional<UserVoteOption> voted = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
-        if(voted.isPresent()) {
-            return VoteResponse.toResponse(category, true, voted.get().getVoteOptionId(), voteCard);
+        final List<UserVoteOption> voted = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
+        if(!voted.isEmpty()) {
+            final List<Long> voteOptionIds = voted.stream().map(UserVoteOption::getVoteOptionId).toList();
+            return VoteResponse.toResponse(category, true, voteOptionIds, voteCard);
         }
-        return VoteResponse.toResponse(category, false, null, voteCard);
+        return VoteResponse.toResponse(category, false, Collections.emptyList(), voteCard);
     }
 
     @Transactional(readOnly = true)
@@ -127,17 +130,21 @@ public class VoteService {
     }
 
     @Transactional
-    public void chooseVoteOption(final Long userId, final long voteId, final long voteOptionId) {
+    public void chooseVoteOption(final Long userId, final long voteId, final VoteOptionChoiceRequest request) {
         final VoteCard voteCard = voteCardRepository.findById(voteId)
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
-        final Optional<UserVoteOption> votedBefore = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
-        if(votedBefore.isPresent()) {
-            voteCard.changeVoteOption(votedBefore.get().getVoteOptionId(), voteOptionId);
-            userVoteOptionRepository.save(new UserVoteOption(userId, voteId, voteOptionId));
-            userVoteOptionRepository.delete(votedBefore.get());
+        final List<UserVoteOption> votedBefore = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
+        final List<Long> voteOptionIdsNew = request.chosenVoteOptionIds();
+        final List<UserVoteOption> votedNow = voteOptionIdsNew.stream()
+                .map(each -> new UserVoteOption(userId, voteId, each)).toList();
+        if(votedBefore.isEmpty()) {
+            voteCard.chooseVoteOption(voteOptionIdsNew);
+            userVoteOptionRepository.saveAll(votedNow);
             return;
         }
-        voteCard.chooseVoteOption(voteOptionId);
-        userVoteOptionRepository.save(new UserVoteOption(userId, voteId, voteOptionId));
+        final List<Long> voteOptionIdesBefore = votedBefore.stream().map(UserVoteOption::getVoteOptionId).toList();
+        voteCard.changeVoteOption(voteOptionIdesBefore, voteOptionIdsNew);
+        userVoteOptionRepository.saveAll(votedNow);
+        userVoteOptionRepository.deleteAll(votedBefore);
     }
 }
