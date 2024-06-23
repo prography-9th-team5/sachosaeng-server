@@ -7,6 +7,7 @@ import prography.team5.server.category.service.dto.CategoryResponse;
 
 public record VoteResponse(
         Long voteId,
+        boolean isClosed,
         boolean isVoted,
         Long chosenVoteOptionId,
         CategoryResponse category,
@@ -22,6 +23,7 @@ public record VoteResponse(
     public static VoteResponse toResponse(final Category category, final boolean isVoted, final Long voteOptionId, final VoteCard voteCard) {
         return new VoteResponse(
                 voteCard.getId(),
+                voteCard.isClosed(),
                 isVoted,
                 voteOptionId,
                 CategoryResponse.toResponse(category),
@@ -35,23 +37,4 @@ public record VoteResponse(
 
         );
     }
-
-/*    public static VoteResponse toResponse(final VoteCard voteCard) {
-        return new VoteResponse(
-                CategoryResponse.toResponse(voteCard.getCategories().get(0)),
-                voteCard.getId(),
-                voteCard.getTitle(),
-                voteCard.getVoteOptions()
-                        .stream()
-                        .map(option -> new VoteOptionResponse(option.getId(), option.getContent()))
-                        .toList(),
-                SimpleCategoryResponse.toResponse(voteCard.getCategories())
-        );
-    }
-
-    public static List<VoteResponse> toResponse(final List<VoteCard> voteCards) {
-        return voteCards.stream()
-                .map(VoteResponse::toResponse)
-                .toList();
-    }*/
 }

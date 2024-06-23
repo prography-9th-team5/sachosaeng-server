@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요.
                     
+                    [06/23 업데이트]
+                    1. 단일 투표 조회시 투표 마감 여부를 나타내는 isClosed 변수를 추가하였습니다.
+                    
                     [06/22 업데이트]
                     1. 투표 선택 api를 추가하였습니다.\n
                     2. 사용자의 투표 여부를 포함하는 단일 투표 조회 api를 추가하였습니다. \n

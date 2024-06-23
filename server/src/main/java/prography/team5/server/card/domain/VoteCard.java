@@ -19,6 +19,8 @@ import prography.team5.server.common.exception.SachosaengException;
 @Entity
 public class VoteCard extends Card {
 
+    private static final long CLOSING_COUNT = 100;
+
     @OneToMany(mappedBy = "voteCard", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VoteOption> voteOptions = new ArrayList<>();
     private Long writerId;
@@ -70,6 +72,10 @@ public class VoteCard extends Card {
         return voteOptions.stream()
                 .mapToLong(VoteOption::getCount)
                 .sum();
+    }
+
+    public boolean isClosed() {
+        return getCount() >= CLOSING_COUNT;
     }
 
     public void checkCategory(final Category category) {
