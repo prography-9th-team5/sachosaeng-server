@@ -18,7 +18,7 @@ function openDetailModal(element) {
                 <h2>투표 상세보기</h2>
                 <p><strong>투표 토픽:</strong> ${vote.title}</p>
                 <p><strong>카테고리:</strong> ${vote.categories.map(category => category.name).join(', ')}</p>
-                <p><strong>복수선택: ${vote.isMultipleChoiceAllowed}</strong></p>
+                <p><strong>복수선택:</strong> ${vote.isMultipleChoiceAllowed}</p>
                 <p><strong>투표 옵션:</strong></p>
                 <ul>
                     ${vote.voteOptions.map(option => `<li>${option.content}</li>`).join('')}
