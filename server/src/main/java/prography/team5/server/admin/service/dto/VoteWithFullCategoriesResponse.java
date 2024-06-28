@@ -9,7 +9,9 @@ public record VoteWithFullCategoriesResponse(
         Long voteId,
         List<SimpleCategoryResponse> categories,
         String title,
+        Boolean isMultipleChoiceAllowed,
         List<VoteOptionResponse> voteOptions
+
 ) {
 
     public static VoteWithFullCategoriesResponse toResponse(final VoteCard voteCard) {
@@ -17,6 +19,7 @@ public record VoteWithFullCategoriesResponse(
                 voteCard.getId(),
                 SimpleCategoryResponse.toResponse(voteCard.getCategories()),
                 voteCard.getTitle(),
+                voteCard.isMultipleChoiceAllowed(),
                 VoteOptionResponse.toResponse(voteCard.getVoteOptions())
         );
     }

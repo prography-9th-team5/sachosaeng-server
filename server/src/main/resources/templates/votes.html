@@ -57,6 +57,17 @@
             </form>
         </div>
     </div>
+
+    <!-- 상세 정보 모달 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDetailModal()">&times;</span>
+            <div id="detailContent">
+                <!-- 상세 정보 내용이 여기에 추가됩니다 -->
+            </div>
+        </div>
+    </div>
+
     <table>
         <thead>
         <tr>
@@ -69,7 +80,7 @@
         <tbody>
         <tr th:each="vote : ${votes}">
             <td th:text="${vote.voteId}">Vote ID</td>
-            <td th:text="${vote.title}">Title</td>
+            <td th:text="${vote.title}" class="clickable" th:attr="data-id=${vote.voteId}" onclick="openDetailModal(this)">Title</td>
             <td th:text="${vote.userId}">User ID</td>
             <td th:text="${vote.adminName}">Admin Name</td>
         </tr>

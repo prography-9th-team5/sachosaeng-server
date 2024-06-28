@@ -6,6 +6,38 @@ function closeAddModal() {
     document.getElementById("modal").style.display = "none";
 }
 
+
+function openDetailModal(element) {
+    fetch(`/admin/votes/${element.getAttribute('data-id')}`)
+        .then(response => response.json())
+        .then(data => {
+            const detailContent = document.getElementById('detailContent');
+            const vote = data.data;
+
+            let htmlContent = `
+                <h2>투표 상세보기</h2>
+                <p><strong>투표 토픽:</strong> ${vote.title}</p>
+                <p><strong>카테고리:</strong> ${vote.categories.map(category => category.name).join(', ')}</p>
+                <p><strong>복수선택: ${vote.isMultipleChoiceAllowed}</strong></p>
+                <p><strong>투표 옵션:</strong></p>
+                <ul>
+                    ${vote.voteOptions.map(option => `<li>${option.content}</li>`).join('')}
+                </ul>
+            `;
+            detailContent.innerHTML = htmlContent;
+
+            document.getElementById("detailModal").style.display = "block";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch vote details. Please try again later.');
+        });
+}
+
+function closeDetailModal() {
+    document.getElementById("detailModal").style.display = "none";
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     fetch('/categories')
         .then(response => response.json())
