@@ -104,4 +104,8 @@ public class VoteCard extends Card {
             throw new SachosaengException(ErrorType.CATEGORY_NOT_INCLUDED_IN_VOTE);
         }
     }
+
+    public static long getClosingCount() {
+        return CLOSING_COUNT;
+    }
 }

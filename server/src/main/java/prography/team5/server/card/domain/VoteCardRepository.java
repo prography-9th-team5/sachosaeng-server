@@ -1,5 +1,6 @@
 package prography.team5.server.card.domain;
 
+import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +26,7 @@ public interface VoteCardRepository extends JpaRepository<VoteCard, Long> {
             @Param("categoryId") long categoryId,
             PageRequest pageRequest
     );
+
+    @Query("SELECT c FROM VoteCard c ORDER BY c.participantCount ASC, c.id ASC")
+    List<VoteCard> findWithFewestParticipants(PageRequest pageRequest);
 }

@@ -1,9 +1,12 @@
 package prography.team5.server.card.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,19 +17,16 @@ import prography.team5.server.common.domian.TimeRecord;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity
-public class UserVoteOption extends TimeRecord {
+public class DailyVoteCard extends TimeRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private VoteCard voteCard;
 
-    private Long userId;
-    private Long voteId;
-    private Long voteOptionId;
-
-    public UserVoteOption(final Long userId, final Long voteId, final Long voteOptionId) {
-        this.userId = userId;
-        this.voteId = voteId;
-        this.voteOptionId = voteOptionId;
+    public DailyVoteCard(final VoteCard voteCard) {
+        this.voteCard = voteCard;
     }
 }

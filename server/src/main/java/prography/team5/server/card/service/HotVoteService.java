@@ -14,12 +14,10 @@ import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
 @Service
 public class HotVoteService {
 
-    private final VoteCardRepository voteCardRepository;
     private final HotVoteRepository hotVoteRepository;
 
     @Transactional(readOnly = true)
     public HotVotePreviewsResponse findHotVotes(final Long categoryId, final int size) {
-        //todo: 지금 임시 땜빵중이라 인기투표 선정 로직으로 변경 요망
         if(Objects.isNull(categoryId)) {
             List<VoteCard> votes = hotVoteRepository.findHotVotesOfAllCategory(size);
             return HotVotePreviewsResponse.toResponse(votes);
