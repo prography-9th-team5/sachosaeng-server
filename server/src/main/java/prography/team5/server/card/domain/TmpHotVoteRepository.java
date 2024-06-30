@@ -11,7 +11,7 @@ public class TmpHotVoteRepository implements HotVoteRepository {
 
     private final VoteCardRepository voteCardRepository;
     @Override
-    public List<VoteCard> findHotVotesOfAllCategory(final int size) {
+    public List<VoteCard> findHotVotes(final int size) {
         return voteCardRepository.findLatestCards(
                 PageRequest.ofSize(size)
         ).getContent();
