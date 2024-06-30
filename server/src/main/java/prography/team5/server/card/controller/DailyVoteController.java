@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import prography.team5.server.card.DailyVoteApiDocs;
 import prography.team5.server.card.service.DailyVoteService;
 import prography.team5.server.card.service.dto.DailyVoteResponse;
 import prography.team5.server.common.CommonApiResponse;
@@ -12,7 +13,7 @@ import prography.team5.server.common.CommonApiResponse;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/votes/daily")
-public class TodayVoteController {
+public class DailyVoteController implements DailyVoteApiDocs {
 
     private final DailyVoteService dailyVoteService;
 
