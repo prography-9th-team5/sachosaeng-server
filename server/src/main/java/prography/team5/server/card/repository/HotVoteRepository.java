@@ -1,6 +1,7 @@
-package prography.team5.server.card.domain;
+package prography.team5.server.card.repository;
 
 import java.util.List;
+import prography.team5.server.card.domain.VoteCard;
 
 public interface HotVoteRepository {
 

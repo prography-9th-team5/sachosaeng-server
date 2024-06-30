@@ -1,9 +1,12 @@
-package prography.team5.server.card.domain;
+package prography.team5.server.card.repository;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import prography.team5.server.card.domain.VoteCard;
+import prography.team5.server.card.repository.HotVoteRepository;
+import prography.team5.server.card.repository.VoteCardRepository;
 
 @Component
 @RequiredArgsConstructor

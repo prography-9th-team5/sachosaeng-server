@@ -5,7 +5,7 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import prography.team5.server.card.domain.HotVoteRepository;
+import prography.team5.server.card.repository.HotVoteRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
 

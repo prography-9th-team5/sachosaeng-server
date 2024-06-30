@@ -12,7 +12,7 @@ import prography.team5.server.admin.service.dto.SimpleVoteWithWriterResponse;
 import prography.team5.server.admin.service.dto.VoteWithAdminNameRequest;
 import prography.team5.server.admin.service.dto.VoteWithFullCategoriesResponse;
 import prography.team5.server.card.domain.VoteCard;
-import prography.team5.server.card.domain.VoteCardRepository;
+import prography.team5.server.card.repository.VoteCardRepository;
 import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;

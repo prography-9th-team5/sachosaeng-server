@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.card.domain.InformationCard;
-import prography.team5.server.card.domain.InformationCardRepository;
+import prography.team5.server.card.repository.InformationCardRepository;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;
 import prography.team5.server.common.exception.ErrorType;

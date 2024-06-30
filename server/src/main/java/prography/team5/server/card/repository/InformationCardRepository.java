@@ -1,4 +1,4 @@
-package prography.team5.server.card.domain;
+package prography.team5.server.card.repository;
 
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
@@ -6,6 +6,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import prography.team5.server.card.domain.InformationCard;
 
 public interface InformationCardRepository extends JpaRepository<InformationCard, Long> {
 

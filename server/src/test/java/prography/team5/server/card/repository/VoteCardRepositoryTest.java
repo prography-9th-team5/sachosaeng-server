@@ -1,4 +1,4 @@
-package prography.team5.server.card.domain;
+package prography.team5.server.card.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
+import prography.team5.server.card.domain.VoteCard;
+import prography.team5.server.card.repository.VoteCardRepository;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;
 

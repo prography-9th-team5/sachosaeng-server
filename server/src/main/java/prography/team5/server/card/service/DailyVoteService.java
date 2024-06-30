@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import prography.team5.server.card.domain.DailyVoteCard;
-import prography.team5.server.card.domain.DailyVoteCardRepository;
+import prography.team5.server.card.repository.DailyVoteCardRepository;
 import prography.team5.server.card.domain.VoteCard;
-import prography.team5.server.card.domain.VoteCardRepository;
+import prography.team5.server.card.repository.VoteCardRepository;
 import prography.team5.server.card.service.dto.DailyVoteResponse;
 
 @RequiredArgsConstructor
