@@ -22,7 +22,7 @@ public class HotVoteController implements HotVoteApiDocs {
     public ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes(
             @RequestParam(name = "size", required = false, defaultValue = "3") final Integer size
     ) {
-        HotVotePreviewsResponse response = hotVoteService.findHotVotes(null, size);
+        HotVotePreviewsResponse response = hotVoteService.findHotVotes(size);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

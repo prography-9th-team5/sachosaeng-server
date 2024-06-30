@@ -14,8 +14,8 @@ public interface HotVoteApiDocs {
     @Operation(
             summary = "[홈화면] 인기 투표 3개 조회 API",
             description = """
-                        전체 카테고리를 통틀어 인기투표 3개를 조회합니다. \n
-                        현재는 최신순으로 3개 조회하는 중, 인기 투표 노출 로직은 추후 수정 예정입니다.
+                        전체 카테고리를 통틀어 인기투표 3개를 조회합니다. \n\n
+                        투표 참여자수가 10보다 작을 경 participantCount는 null로 반환됩니다.
                         """
     )
     @ApiResponse(responseCode = "200", description = "인기 투표 목록 조회 성공입니다.")

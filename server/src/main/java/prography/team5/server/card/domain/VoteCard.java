@@ -105,7 +105,7 @@ public class VoteCard extends Card {
         }
     }
 
-    public static long getClosingCount() {
-        return CLOSING_COUNT;
+    public static long getHotCountFloor() {
+        return HOT_COUNT_FLOOR;
     }
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.card.domain.DailyVoteCard;
 import prography.team5.server.card.repository.DailyVoteCardRepository;
 import prography.team5.server.card.domain.VoteCard;
@@ -20,6 +21,7 @@ public class DailyVoteService {
     private final VoteCardRepository voteCardRepository;
 
     //todo: 오늘의 투표 선정 정책은? 일단은 가장 투표수 낮은거 하나 내보냄.
+    @Transactional
     public DailyVoteResponse getTodayVote() {
         final LocalDate today = LocalDate.now();
         final Optional<DailyVoteCard> dailyVoteCard = dailyVoteCardRepository.findByDate(today);
