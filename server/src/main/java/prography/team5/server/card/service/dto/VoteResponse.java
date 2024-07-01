@@ -26,7 +26,7 @@ public record VoteResponse(
                 voteCard.isClosed(),
                 isVoted,
                 voteOptionId,
-                CategoryResponse.toResponse(category),
+                CategoryResponse.toResponseWith32px(category),
                 voteCard.getTitle(),
                 voteCard.getParticipantCount(),
                 voteCard.getVoteOptions()

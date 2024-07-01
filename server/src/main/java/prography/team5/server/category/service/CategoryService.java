@@ -23,12 +23,12 @@ public class CategoryService {
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAll() {
         final List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
-        return CategoryResponse.toResponse(categories);
+        return CategoryResponse.toResponseWith32px(categories);
     }
 
     @Transactional(readOnly = true)
     public CategoryResponse findById(final long categoryId) {
         final Category category = categoryRepository.findById(categoryId).orElseThrow();//todo: 예외처리
-        return CategoryResponse.toResponse(category);
+        return CategoryResponse.toResponseWith32px(category);
     }
 }

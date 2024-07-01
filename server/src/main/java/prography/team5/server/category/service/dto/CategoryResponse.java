@@ -30,4 +30,20 @@ public record CategoryResponse(Long categoryId, String name, String iconUrl, Str
                 category.getCategoryDesign().getTextColor()
         );
     }
+
+    public static CategoryResponse toResponseWith32px(final Category category) {
+        return new CategoryResponse(
+                category.getId(),
+                category.getName(),
+                category.getCategoryDesign().getIconUrl32px(),
+                category.getCategoryDesign().getBackgroundColor(),
+                category.getCategoryDesign().getTextColor()
+        );
+    }
+
+    public static List<CategoryResponse> toResponseWith32px(final List<Category> categories) {
+        return categories.stream()
+                .map(CategoryResponse::toResponseWith32px)
+                .toList();
+    }
 }

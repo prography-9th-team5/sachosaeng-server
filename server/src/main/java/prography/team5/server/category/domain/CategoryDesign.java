@@ -27,7 +27,7 @@ public class CategoryDesign {
         return iconUrl.replace(DEFAULT_PX, "18px");
     }
 
-    public String getIconUrl32Px() {
+    public String getIconUrl32px() {
         if(iconUrl == null) return null;
         return iconUrl.replace(DEFAULT_PX, "32px");
     }
