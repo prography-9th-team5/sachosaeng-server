@@ -51,22 +51,7 @@ public class HotVoteRepository {
                 .map(Map.Entry::getKey)
                 .toList();
 
-        if (topVoteIds.size() == size) {
-            final Long lastRankId = topVoteIds.get(size - 1);
-            if (voteIdAndUniqueUserCount.get(lastRankId) >= VoteCard.getHotCountFloor()) {
-                return voteCardRepository.findAllById(topVoteIds);
-            }
-        }
-
-        // 투표를 랜덤으로 뽑아서 보여주기
-        final List<VoteCard> votes = voteCardRepository.findLatestCards(
-                PageRequest.ofSize(size * 10)
-        ).getContent();
-        final ArrayList<VoteCard> forShuffle = new ArrayList<>(votes);
-        Collections.shuffle(forShuffle);
-        return forShuffle.stream()
-                .limit(size)
-                .toList();
+        return voteCardRepository.findAllById(topVoteIds);
     }
 
     // 나중에..
