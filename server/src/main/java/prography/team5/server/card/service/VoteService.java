@@ -52,9 +52,9 @@ public class VoteService {
         final List<UserVoteOption> voted = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
         if(!voted.isEmpty()) {
             final List<Long> voteOptionIds = voted.stream().map(UserVoteOption::getVoteOptionId).toList();
-            return VoteResponse.toResponse(category, true, voteOptionIds, voteCard);
+            return VoteResponse.toResponseWith32px(category, true, voteOptionIds, voteCard);
         }
-        return VoteResponse.toResponse(category, false, Collections.emptyList(), voteCard);
+        return VoteResponse.toResponseWith32px(category, false, Collections.emptyList(), voteCard);
     }
 
     @Transactional(readOnly = true)

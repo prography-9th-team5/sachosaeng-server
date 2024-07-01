@@ -20,7 +20,7 @@ public record VoteResponse(
     //todo: 연관 콘텐츠
     //todo: 문구
 
-    public static VoteResponse toResponse(final Category category, final boolean isVoted, final List<Long> voteOptionId, final VoteCard voteCard) {
+    public static VoteResponse toResponseWith32px(final Category category, final boolean isVoted, final List<Long> voteOptionId, final VoteCard voteCard) {
         return new VoteResponse(
                 voteCard.getId(),
                 voteCard.isClosed(),
