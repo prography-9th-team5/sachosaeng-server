@@ -20,7 +20,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserResponse find(final long userId) {
         final User user = findUserById(userId);
-        return new UserResponse(user.getId(), user.getNickname());
+        return UserResponse.from(user);
     }
 
     private User findUserById(final long userId) {
