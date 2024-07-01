@@ -88,6 +88,21 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
+    public List<CategoryVoteSuggestionsResponse> findSuggestionsOfAllCategories() {
+        //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
+        final List<Category> categories = categoryRepository.findAll();
+        List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
+        for (Category category : categories) {
+            final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
+                    category.getId(),
+                    PageRequest.ofSize(3)
+            ).getContent();
+            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
+        }
+        return response;
+    }
+
+    @Transactional(readOnly = true)
     public List<CategoryVoteSuggestionsResponse> findSuggestions(final Long userId) {
         final List<MyCategory> myCategories = myCategoryRepository.findAllByUserId(userId);
         //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망

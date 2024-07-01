@@ -54,7 +54,14 @@ public class VoteController implements VoteApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
-    @GetMapping("/suggestions")
+    @GetMapping("/suggestions/all")
+    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfAllCategories() {
+        final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestionsOfAllCategories();
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/suggestions/my")
     public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(
             @AuthRequired Accessor accessor
     ) {
