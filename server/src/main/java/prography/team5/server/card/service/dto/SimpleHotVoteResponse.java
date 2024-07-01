@@ -5,7 +5,7 @@ import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.service.dto.CategoryResponse;
 
-public record SimpleHotVoteResponse(Long voteId, String title, Long participantCount, CategoryResponse category) {
+public record SimpleHotVoteResponse(Long voteId, String title, Long participantCount, boolean isVoted, CategoryResponse category) {
 
     public static SimpleHotVoteResponse toResponse(final VoteCard vote) {
         final Category category = vote.getCategories().get(0);
@@ -13,6 +13,7 @@ public record SimpleHotVoteResponse(Long voteId, String title, Long participantC
                 vote.getId(),
                 vote.getTitle(),
                 vote.getHotParticipantCount(),
+                false, // todo: 일단은 하드코딩!
                 CategoryResponse.toResponse(category)
         );
     }
