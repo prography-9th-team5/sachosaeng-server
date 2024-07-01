@@ -23,7 +23,7 @@ public class MyCategoryService {
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAllByUserId(final long userId) {
         List<MyCategory> categories = myCategoryRepository.findAllByUserId(userId);
-        return CategoryResponse.toResponse(categories.stream().map(MyCategory::getCategory).toList());
+        return CategoryResponse.toResponseWith32px(categories.stream().map(MyCategory::getCategory).toList());
     }
 
     //todo : 리팩터링
