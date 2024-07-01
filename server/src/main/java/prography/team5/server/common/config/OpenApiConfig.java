@@ -18,9 +18,11 @@ import org.springframework.context.annotation.Configuration;
         description = """
                     사초생 API 명세서입니다. \n
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
-                    이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요.
+                    이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
+                    
                     [07/01 업데이트]
                     1. /users/{userId} 조회시 userType도 조회되도록 추가하였습니다. \n
+                    2. /votes/hot과 /votes/suggestions에 iconUrl 정보를 포함하고, 각각의 투표 토픽에 유저의 투표 여부(isVoted) 컬럼도 추가했습니다.
                     
                     [06/30 업데이트]
                     1. 홈화면에 노출되는 오늘의 투표 조회 api를 추가하였습니다. (구체적인 오늘의 투표 선정 정책은 모르겠어서 일단 투표수 젤 낮은거로 땜빵)
