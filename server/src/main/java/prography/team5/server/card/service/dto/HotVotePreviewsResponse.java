@@ -16,7 +16,7 @@ public record HotVotePreviewsResponse(CategoryResponse category, List<SimpleHotV
                         null,
                         hotVotesDesign.getTextColor()
                 ),
-                SimpleHotVoteResponse.toResponse(votes)
+                SimpleHotVoteResponse.toResponseWith18px(votes)
         );
     }
 }

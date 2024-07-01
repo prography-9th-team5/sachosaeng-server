@@ -20,4 +20,14 @@ public record CategoryResponse(Long categoryId, String name, String iconUrl, Str
                 .map(CategoryResponse::toResponse)
                 .toList();
     }
+
+    public static CategoryResponse toResponseWith18px(final Category category) {
+        return new CategoryResponse(
+                category.getId(),
+                category.getName(),
+                category.getCategoryDesign().getIconUrl18px(),
+                category.getCategoryDesign().getBackgroundColor(),
+                category.getCategoryDesign().getTextColor()
+        );
+    }
 }

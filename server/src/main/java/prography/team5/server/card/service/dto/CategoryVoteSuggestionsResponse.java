@@ -9,7 +9,7 @@ public record CategoryVoteSuggestionsResponse(CategoryResponse category, List<Si
 
     public static CategoryVoteSuggestionsResponse toResponse(final Category category, final List<VoteCard> votes) {
         return new CategoryVoteSuggestionsResponse(
-                CategoryResponse.toResponse(category),
+                CategoryResponse.toResponseWith18px(category),
                 SimpleVoteResponse.toResponse(votes)
         );
     }

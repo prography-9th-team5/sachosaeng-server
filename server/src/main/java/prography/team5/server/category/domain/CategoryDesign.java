@@ -12,6 +12,7 @@ public class CategoryDesign {
 
     private static final String DEFAULT_BACKGROUND_COLOR = "#D8D8D8";
     private static final String DEFAULT_TEXT_COLOR = "#000000";
+    private static final String DEFAULT_PX = "40px";
 
     private String iconUrl;
     private String textColor;
@@ -19,6 +20,16 @@ public class CategoryDesign {
 
     public String getIconUrl() {
         return iconUrl;
+    }
+
+    public String getIconUrl18px() {
+        if(iconUrl == null) return null;
+        return iconUrl.replace(DEFAULT_PX, "18px");
+    }
+
+    public String getIconUrl32Px() {
+        if(iconUrl == null) return null;
+        return iconUrl.replace(DEFAULT_PX, "32px");
     }
 
     public String getTextColor() {
