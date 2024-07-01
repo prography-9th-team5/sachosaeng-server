@@ -8,3 +8,9 @@ auth:
     access-token-expiration-minutes: 30
   refresh-token:
     expiration-days: 14
+
+design:
+  hot-vote:
+    name: "인기 투표"
+    icon-url: "http://localhost:8080/icon/hot-1x.png"
+    text-color: "#344054"
