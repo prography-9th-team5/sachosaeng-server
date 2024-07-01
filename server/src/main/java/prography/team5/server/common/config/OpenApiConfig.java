@@ -25,7 +25,8 @@ import org.springframework.context.annotation.Configuration;
                     2. /votes/hot과 /votes/suggestions에 iconUrl 정보를 포함하고, 각각의 투표 토픽에 유저의 투표 여부(isVoted) 컬럼도 추가했습니다.\n
                     3. /votes/suggestions -> /votes/suggestions/my로 변경되었습니다.\n
                     4. 소연님이 부탁하신 토큰없이 홈화면에서 전체 조회할때 쓰는 api는 /votes/suggestions/all로 만들었습니다. +인기투표조회(/votes/hot), 카테고리전체조회(/categories)도 토큰없이 가능해요. \n
-                    5. 카테고리별 아이콘은 피그마에 나와있는 거 참고해서 18px(홈), 32px(카테고리조회, 투표 상세) 적용했는데 이상한점 있으면 이야기해주세요.
+                    5. 카테고리별 아이콘은 피그마에 나와있는 거 참고해서 18px(홈), 32px(카테고리조회, 투표 상세) 적용했는데 이상한점 있으면 이야기해주세요. \n
+                    6. 오늘의 투표 api도 인기투표랑 같은 데이터들을 반환하도록 수정하였습니다.
                     
                     [06/30 업데이트]
                     1. 홈화면에 노출되는 오늘의 투표 조회 api를 추가하였습니다. (구체적인 오늘의 투표 선정 정책은 모르겠어서 일단 투표수 젤 낮은거로 땜빵)
