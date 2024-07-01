@@ -5,7 +5,7 @@ import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.category.domain.HotVotesDesign;
 import prography.team5.server.category.service.dto.CategoryResponse;
 
-public record HotVotePreviewsResponse(CategoryResponse category, List<SimpleHotVoteResponse> votes) {
+public record HotVotePreviewsResponse(CategoryResponse category, List<SimpleVoteWithCategoryResponse> votes) {
 
     public static HotVotePreviewsResponse toResponse(List<VoteCard> votes, HotVotesDesign hotVotesDesign) {
         return new HotVotePreviewsResponse(
@@ -16,7 +16,7 @@ public record HotVotePreviewsResponse(CategoryResponse category, List<SimpleHotV
                         null,
                         hotVotesDesign.getTextColor()
                 ),
-                SimpleHotVoteResponse.toResponseWith18px(votes)
+                SimpleVoteWithCategoryResponse.toHotVoteResponse(votes)
         );
     }
 }

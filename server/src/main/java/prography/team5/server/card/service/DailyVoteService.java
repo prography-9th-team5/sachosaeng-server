@@ -11,7 +11,7 @@ import prography.team5.server.card.domain.DailyVoteCard;
 import prography.team5.server.card.repository.DailyVoteCardRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.VoteCardRepository;
-import prography.team5.server.card.service.dto.DailyVoteResponse;
+import prography.team5.server.card.service.dto.SimpleVoteWithCategoryResponse;
 
 @RequiredArgsConstructor
 @Service
@@ -22,17 +22,17 @@ public class DailyVoteService {
 
     //todo: 오늘의 투표 선정 정책은? 일단은 가장 투표수 낮은거 하나 내보냄.
     @Transactional
-    public DailyVoteResponse getTodayVote() {
+    public SimpleVoteWithCategoryResponse getTodayVote() {
         final LocalDate today = LocalDate.now();
         final Optional<DailyVoteCard> dailyVoteCard = dailyVoteCardRepository.findByDate(today);
         if(dailyVoteCard.isPresent()) {
-            return DailyVoteResponse.toResponse(dailyVoteCard.get().getVoteCard());
+            return SimpleVoteWithCategoryResponse.toResponseWith18px(dailyVoteCard.get().getVoteCard());
         }
         final List<VoteCard> withFewestParticipants = voteCardRepository.findWithFewestParticipants(
                 PageRequest.ofSize(1)
         );
         final VoteCard voteCard = withFewestParticipants.get(0);
         dailyVoteCardRepository.save(new DailyVoteCard(voteCard));
-        return DailyVoteResponse.toResponse(voteCard);
+        return SimpleVoteWithCategoryResponse.toResponseWith18px(voteCard);
     }
 }
