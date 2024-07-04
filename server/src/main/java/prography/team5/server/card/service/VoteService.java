@@ -57,6 +57,7 @@ public class VoteService {
         return VoteResponse.toResponseWith32px(category, false, Collections.emptyList(), voteCard);
     }
 
+    //todo: 리팩터링 필
     @Transactional(readOnly = true)
     public List<SimpleVoteResponse> findAll(
             final Long cursor,
@@ -64,12 +65,11 @@ public class VoteService {
             final Integer pageSize,
             final SortType sortType
     ) {
-        //todo: 인기순/최신순 조회
         final PageRequest pageRequest = PageRequest.ofSize(pageSize);
         if (Objects.isNull(categoryId)) {
             return SimpleVoteResponse.toResponse(findAll(cursor, pageRequest));
         }
-        return SimpleVoteResponse.toResponse(findAllByCategoryId(cursor, categoryId, pageRequest));
+        return findAllByCategoryId(cursor, categoryId, pageSize);
     }
 
     private List<VoteCard> findAll(final Long cursor, final PageRequest pageRequest) {
@@ -79,12 +79,17 @@ public class VoteService {
         return voteCardRepository.findBeforeCursor(cursor, pageRequest).getContent();
     }
 
-    private List<VoteCard> findAllByCategoryId(final Long cursor, final long categoryId,
-                                                   final PageRequest pageRequest) {
+    @Transactional(readOnly = true)
+    public List<SimpleVoteResponse> findAllByCategoryId(
+            final Long cursor,
+            final long categoryId,
+            final Integer size
+    ) {
+        final PageRequest pageRequest = PageRequest.ofSize(size);
         if (Objects.isNull(cursor)) {
-            return voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent();
+            return SimpleVoteResponse.toResponse(voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
         }
-        return voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent();
+        return SimpleVoteResponse.toResponse(voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());
     }
 
     @Transactional(readOnly = true)

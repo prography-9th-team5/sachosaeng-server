@@ -40,17 +40,23 @@ public interface VoteApiDocs {
             @RequestParam(value = "category-id", required = false) final Long categoryId
     );
 
-    //todo: 개발중..
-    @Hidden
     @Operation(
-            summary = "(카테고리별) 투표 목록 조회 API",
-            description = "투표 목록을 전체 조회할 수 있습니다. 투표는 최신순으로 조회됩니다. \n\n"
-                    + "category-id 값에 조회하고 싶은 categoryId를 넣으면 해당 카테고리의 투표들만 조회됩니다. \n\n"
-                    + "cursor 값으로 마지막 voteId를 전달하면 해당 voteId 이전의 투표를 10개 조회할 수 있습니다. (cursor는 포함X) \n\n"
+            summary = "카테고리별 투표 목록 조회 API",
+            description = "해당 카테고리의 투표 목록을 최신순으로 조회할 수 있습니다. \n\n"
+                    + "categoryId 값에 조회하고 싶은 categoryId를 넣으면 해당 카테고리의 투표들만 조회됩니다. \n\n"
+                    + "cursor 값으로 마지막 voteId를 전달하면 해당 voteId 다음의 투표를 10개 조회할 수 있습니다. (즉, cursor는 포함되지 않고 새로 10개가 조회됩니다.) \n\n"
                     + "cursor 값을 전달하지 않으면 가장 최근에 생성된 투표 10개를 조회합니다.\n\n"
-                    + "page-size 값에 조회하고 싶은 투표의 개수를 적으면 해당 개수만큼의 투표들이 조회됩니다. (default 10)"
+                    + "size 값에 조회하고 싶은 투표의 개수를 적으면 해당 개수만큼의 투표들이 조회됩니다. (default 10)"
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
+    ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAllByCategoryId(
+            @PathVariable(name = "categoryId") final Long categoryId,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
+    );
+
+
+    @Hidden
     ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "category-id", required = false) final Long categoryId,

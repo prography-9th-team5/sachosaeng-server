@@ -42,6 +42,17 @@ public class VoteController implements VoteApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
+    //todo: 투표여부
+    @GetMapping("/categories/{categoryId}")
+    public ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAllByCategoryId(
+            @PathVariable(name = "categoryId") final Long categoryId,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10")  final Integer size) {
+        List<SimpleVoteResponse> response = voteService.findAllByCategoryId(cursor, categoryId, size);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
