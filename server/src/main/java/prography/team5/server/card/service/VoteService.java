@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.card.domain.SortType;
@@ -13,6 +14,7 @@ import prography.team5.server.card.domain.UserVoteOption;
 import prography.team5.server.card.repository.UserVoteOptionRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.VoteCardRepository;
+import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.category.domain.Category;
@@ -69,7 +71,10 @@ public class VoteService {
         if (Objects.isNull(categoryId)) {
             return SimpleVoteResponse.toResponse(findAll(cursor, pageRequest));
         }
-        return findAllByCategoryId(cursor, categoryId, pageSize);
+        if (Objects.isNull(cursor)) {
+            return SimpleVoteResponse.toResponse(voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
+        }
+        return SimpleVoteResponse.toResponse(voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());
     }
 
     private List<VoteCard> findAll(final Long cursor, final PageRequest pageRequest) {
@@ -80,16 +85,22 @@ public class VoteService {
     }
 
     @Transactional(readOnly = true)
-    public List<SimpleVoteResponse> findAllByCategoryId(
+    public CategoryVotePreviewsResponse findAllByCategoryId(
             final Long cursor,
             final long categoryId,
             final Integer size
     ) {
         final PageRequest pageRequest = PageRequest.ofSize(size);
         if (Objects.isNull(cursor)) {
-            return SimpleVoteResponse.toResponse(voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
+            final Slice<VoteCard> slice = voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest);
+            final List<VoteCard> votes = slice.getContent();
+            final Long nextCursor = votes.getLast().getId();
+            return CategoryVotePreviewsResponse.toResponse(votes, slice.hasNext(), nextCursor);
         }
-        return SimpleVoteResponse.toResponse(voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());
+        final Slice<VoteCard> slice = voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest);
+        final List<VoteCard> votes = slice.getContent();
+        final Long nextCursor = votes.getLast().getId();
+        return CategoryVotePreviewsResponse.toResponse(votes, slice.hasNext(), nextCursor);
     }
 
     @Transactional(readOnly = true)

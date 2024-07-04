@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.domain.SortType;
+import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
@@ -40,17 +41,17 @@ public interface VoteApiDocs {
             @RequestParam(value = "category-id", required = false) final Long categoryId
     );
 
-    @Hidden //todo: 마지막 id
     @Operation(
             summary = "카테고리별 투표 목록 조회 API",
             description = "해당 카테고리의 투표 목록을 최신순으로 조회할 수 있습니다. \n\n"
                     + "categoryId 값에 조회하고 싶은 categoryId를 넣으면 해당 카테고리의 투표들만 조회됩니다. \n\n"
-                    + "cursor 값으로 마지막 voteId를 전달하면 해당 voteId 다음의 투표를 10개 조회할 수 있습니다. (즉, cursor는 포함되지 않고 새로 10개가 조회됩니다.) \n\n"
-                    + "cursor 값을 전달하지 않으면 가장 최근에 생성된 투표 10개를 조회합니다.\n\n"
-                    + "size 값에 조회하고 싶은 투표의 개수를 적으면 해당 개수만큼의 투표들이 조회됩니다. (default 10)"
+                    + "size 값에 조회하고 싶은 투표의 개수를 적으면 해당 개수만큼의 투표들이 조회됩니다. (default=10) \n\n"
+                    + "(첫 조회시) cursor 값을 전달하지 않으면 가장 최근에 생성된 투표 10개를 조회합니다.\n\n"
+                    + "응답에는 다음 조회할 투표들이 남아 있는지 여부(hasNext)와, 다음 조회시에 사용할 커서(nextCursor)가 포함되어 있습니다. \n\n"
+                    + "(두번째 이후 조회시) cursor 값으로 이전 응답의 nextCursor를 전달하면 다음 투표를 10개 조회할 수 있습니다. (즉, cursor는 포함되지 않고 새로 10개가 조회됩니다.) \n\n"
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAllByCategoryId(
+    ResponseEntity<CommonApiResponse<CategoryVotePreviewsResponse>> findAllByCategoryId(
             @PathVariable(name = "categoryId") final Long categoryId,
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
+import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
@@ -44,11 +45,11 @@ public class VoteController implements VoteApiDocs {
 
     //todo: 투표여부
     @GetMapping("/categories/{categoryId}")
-    public ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAllByCategoryId(
+    public ResponseEntity<CommonApiResponse<CategoryVotePreviewsResponse>> findAllByCategoryId(
             @PathVariable(name = "categoryId") final Long categoryId,
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "size", required = false, defaultValue = "10")  final Integer size) {
-        List<SimpleVoteResponse> response = voteService.findAllByCategoryId(cursor, categoryId, size);
+        CategoryVotePreviewsResponse response = voteService.findAllByCategoryId(cursor, categoryId, size);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
