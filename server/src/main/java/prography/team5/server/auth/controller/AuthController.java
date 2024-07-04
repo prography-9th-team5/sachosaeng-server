@@ -18,7 +18,7 @@ import prography.team5.server.auth.service.dto.LoginResponse;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController implements AuthApiDocs {
 
     private final AuthService authService;

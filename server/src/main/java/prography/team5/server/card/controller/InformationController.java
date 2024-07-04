@@ -19,7 +19,7 @@ import prography.team5.server.card.service.dto.InformationResponse;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/information")
+@RequestMapping("/api/v1/information")
 public class InformationController implements InformationApiDocs {
 
     private final InformationService informationService;

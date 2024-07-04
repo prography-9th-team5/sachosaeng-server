@@ -12,7 +12,7 @@ import prography.team5.server.common.CommonApiResponse;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/votes/daily")
+@RequestMapping("/api/v1/votes/daily")
 public class DailyVoteController implements DailyVoteApiDocs {
 
     private final DailyVoteService dailyVoteService;

@@ -26,7 +26,7 @@ import prography.team5.server.card.service.dto.VoteResponse;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/votes")
+@RequestMapping("/api/v1/votes")
 public class VoteController implements VoteApiDocs {
 
     private final VoteService voteService;

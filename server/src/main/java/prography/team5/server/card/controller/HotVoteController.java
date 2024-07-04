@@ -13,7 +13,7 @@ import prography.team5.server.common.CommonApiResponse;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/votes/hot")
+@RequestMapping("/api/v1/votes/hot")
 public class HotVoteController implements HotVoteApiDocs {
 
     private final HotVoteService hotVoteService;

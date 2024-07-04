@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [07/04 업데이트]
+                    1. 지금까지의 모든 api url 앞에 /api/v1을 추가하였습니다. \n
+                    
                     [07/01 업데이트]
                     1. /users/{userId} 조회시 userType도 조회되도록 추가하였습니다. \n
                     2. /votes/hot과 /votes/suggestions에 iconUrl 정보를 포함하고, 각각의 투표 토픽에 유저의 투표 여부(isVoted) 컬럼도 추가했습니다.\n

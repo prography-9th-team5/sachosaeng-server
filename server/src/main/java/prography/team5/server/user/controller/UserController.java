@@ -19,7 +19,7 @@ import prography.team5.server.user.service.dto.UserTypeRequest;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController implements UserApiDocs {
 
     private final UserService userService;

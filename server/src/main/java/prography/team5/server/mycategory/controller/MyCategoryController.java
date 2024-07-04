@@ -18,7 +18,7 @@ import prography.team5.server.mycategory.service.dto.MyCategoryRequest;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/my-categories")
+@RequestMapping("/api/v1/my-categories")
 public class MyCategoryController implements MyCategoryApiDocs {
 
     private final MyCategoryService myCategoryService;
