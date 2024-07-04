@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
                     
                     [07/04 업데이트]
                     1. 지금까지의 모든 api url 앞에 /api/v1을 추가하였습니다. \n
-                    2. 카테고리별 투표 최신순 조회 api를 추가하였습니다. \n
+                    2. 카테고리별 투표 최신순 조회 api를 추가하였습니다. (isVoted는 false로 하드코딩 되어있음)\n
                     
                     [07/01 업데이트]
                     1. /users/{userId} 조회시 userType도 조회되도록 추가하였습니다. \n
