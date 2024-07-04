@@ -47,8 +47,9 @@ public interface VoteApiDocs {
                     + "categoryId 값에 조회하고 싶은 categoryId를 넣으면 해당 카테고리의 투표들만 조회됩니다. \n\n"
                     + "size 값에 조회하고 싶은 투표의 개수를 적으면 해당 개수만큼의 투표들이 조회됩니다. (default=10) \n\n"
                     + "(첫 조회시) cursor 값을 전달하지 않으면 가장 최근에 생성된 투표 10개를 조회합니다.\n\n"
-                    + "응답에는 다음 조회할 투표들이 남아 있는지 여부(hasNext)와, 다음 조회시에 사용할 커서(nextCursor)가 포함되어 있습니다. \n\n"
-                    + "(두번째 이후 조회시) cursor 값으로 이전 응답의 nextCursor를 전달하면 다음 투표를 10개 조회할 수 있습니다. (즉, cursor는 포함되지 않고 새로 10개가 조회됩니다.) \n\n"
+                    + "응답에는 다음 조회할 투표들이 남아 있는지 여부(hasNext)와, 다음 조회시에 사용할 커서(nextCursor)가 포함되어 있습니다. 여기서 nextCursor는 현재 응답의 마지막 voteId입니다. \n\n"
+                    + "(두번째 이후 조회시) cursor 값으로 이전 응답의 nextCursor를 전달하면 cursor 다음의 투표를 10개 조회할 수 있습니다. \n\n"
+                    + "즉, cursor는 포함되지 않고 새로 10개가 조회됩니다. \n\n"
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<CategoryVotePreviewsResponse>> findAllByCategoryId(
