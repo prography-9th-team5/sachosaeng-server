@@ -39,7 +39,7 @@ function closeDetailModal() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('/categories')
+    fetch('/api/v1/categories')
         .then(response => response.json())
         .then(data => {
             const categoryCheckboxes = document.getElementById('categoryCheckboxes');

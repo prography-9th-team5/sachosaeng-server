@@ -7,7 +7,7 @@ function closeAddModal() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('/categories')
+    fetch('/api/v1/categories')
         .then(response => response.json())
         .then(data => {
             const categoryCheckboxes = document.getElementById('categoryCheckboxes');
@@ -46,7 +46,7 @@ document.getElementById('informationForm').addEventListener('submit', function(e
         categoryIds: categories.map(Number)
     };
 
-    fetch('/information', {
+    fetch('/api/v1/information', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
