@@ -94,12 +94,18 @@ public class VoteService {
         if (Objects.isNull(cursor)) {
             final Slice<VoteCard> slice = voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest);
             final List<VoteCard> votes = slice.getContent();
-            final Long nextCursor = votes.getLast().getId();
+            Long nextCursor = null;
+            if(!votes.isEmpty()) {
+                nextCursor = votes.getLast().getId();
+            }
             return CategoryVotePreviewsResponse.toResponse(votes, slice.hasNext(), nextCursor);
         }
         final Slice<VoteCard> slice = voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest);
         final List<VoteCard> votes = slice.getContent();
-        final Long nextCursor = votes.getLast().getId();
+        Long nextCursor = null;
+        if(!votes.isEmpty()) {
+            nextCursor = votes.getLast().getId();
+        }
         return CategoryVotePreviewsResponse.toResponse(votes, slice.hasNext(), nextCursor);
     }
 
