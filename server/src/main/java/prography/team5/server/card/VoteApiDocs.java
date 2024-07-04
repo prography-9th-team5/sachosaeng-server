@@ -40,6 +40,7 @@ public interface VoteApiDocs {
             @RequestParam(value = "category-id", required = false) final Long categoryId
     );
 
+    @Hidden //todo: 마지막 id
     @Operation(
             summary = "카테고리별 투표 목록 조회 API",
             description = "해당 카테고리의 투표 목록을 최신순으로 조회할 수 있습니다. \n\n"
