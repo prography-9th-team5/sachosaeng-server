@@ -55,10 +55,30 @@ public class HotVoteRepository {
         return voteCardRepository.findAllById(topVoteIds);
     }
 
-    // 나중에..
-    public List<VoteCard> findHotVotesOfCategory(final int size, final Long categoryId) {
-        return voteCardRepository.findLatestCardsByCategoriesId(categoryId,
-                PageRequest.ofSize(size)
-        ).getContent();
+    // todo: 리팩터링...
+    public List<VoteCard> findHotVotesOfCategory(final int size, final Long categoryId, final LocalDate startDate, final LocalDate endDate) {
+        final List<UserVoteOption> history = userVoteOptionRepository.findVotesByCategoryIdAndDateRange(categoryId, startDate, endDate);
+        final Map<Long, Set<Long>> voteIdAndUserSet = history.stream()
+                .collect(Collectors.groupingBy(
+                        UserVoteOption::getVoteId,
+                        Collectors.mapping(UserVoteOption::getUserId, Collectors.toSet())
+                ));
+
+        final Map<Long, Long> voteIdAndUniqueUserCount = voteIdAndUserSet.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> (long) entry.getValue().size()
+                ));
+
+        // 가장 인기 있는 voteId 리스트를 size만큼 추출
+        List<Long> topVoteIds = voteIdAndUniqueUserCount.entrySet()
+                .stream()
+                .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+                .limit(size)
+                .map(Map.Entry::getKey)
+                .toList();
+
+        return voteCardRepository.findAllById(topVoteIds);
     }
 }

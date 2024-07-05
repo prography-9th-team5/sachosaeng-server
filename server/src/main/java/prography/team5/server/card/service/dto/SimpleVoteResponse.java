@@ -16,4 +16,15 @@ public record SimpleVoteResponse(Long voteId, String title, Long participantCoun
                 .map(SimpleVoteResponse::toResponse)
                 .toList();
     }
+
+    public static SimpleVoteResponse toHotVoteResponse(final VoteCard voteCard) {
+        // todo: 투표 여부를 일단은 하드코딩!
+        return new SimpleVoteResponse(voteCard.getId(), voteCard.getTitle(), voteCard.getHotParticipantCount(), false);
+    }
+
+    public static List<SimpleVoteResponse> toHotVoteResponse(final List<VoteCard> votes) {
+        return votes.stream()
+                .map(SimpleVoteResponse::toHotVoteResponse)
+                .toList();
+    }
 }
