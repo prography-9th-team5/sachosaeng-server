@@ -20,6 +20,13 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [기타..]
+                    1. 특정 투표에 대한 연관 콘텐츠 조회는 별도의 api로 빼려고 합니다. \n
+                    2. 투표 상세보기가 아닌, 투표 목록보기에서 유저의 투표 여부(isVoted)는 현재 false로 하드코딩되있는 점 참고해주세여
+                    
+                    [07/05 업데이트]
+                    1. 카테고리별 인기투표 조회 api를 추가하였습니다. \n
+                    
                     [07/04 업데이트]
                     1. 지금까지의 모든 api url 앞에 /api/v1을 추가하였습니다. \n
                     2. 카테고리별 투표 최신순 조회 api를 추가하였습니다. (isVoted는 false로 하드코딩 되어있음)\n
@@ -45,8 +52,6 @@ import org.springframework.context.annotation.Configuration;
                     1. 투표 선택 api를 추가하였습니다.\n
                     2. 사용자의 투표 여부를 포함하는 단일 투표 조회 api를 추가하였습니다. \n
                     
-                    [기타..]
-                    1. 특정 투표에 대한 연관 콘텐츠 조회는 별도의 api로 빼려고 합니다. \n
                     """
 ))
 public class OpenApiConfig {
