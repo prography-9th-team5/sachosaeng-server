@@ -38,6 +38,7 @@ public class VoteService {
     private final MyCategoryRepository myCategoryRepository;
     private final UserRepository userRepository;
     private final UserVoteOptionRepository userVoteOptionRepository;
+    private final UserVotingAnalysis userVotingAnalysis;
 
     @Transactional(readOnly = true)
     public VoteResponse findByVoteId(final Long userId, final long voteId, final Long categoryId) {
@@ -52,11 +53,12 @@ public class VoteService {
             category = voteCard.getCategories().get(0);
         }
         final List<UserVoteOption> voted = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
+        String analysis = userVotingAnalysis.analyze(voteId, userId);
         if(!voted.isEmpty()) {
             final List<Long> voteOptionIds = voted.stream().map(UserVoteOption::getVoteOptionId).toList();
-            return VoteResponse.toResponseWith32px(category, true, voteOptionIds, voteCard);
+            return VoteResponse.toResponseWith32px(category, true, voteOptionIds, voteCard, analysis);
         }
-        return VoteResponse.toResponseWith32px(category, false, Collections.emptyList(), voteCard);
+        return VoteResponse.toResponseWith32px(category, false, Collections.emptyList(), voteCard, analysis);
     }
 
     //todo: 리팩터링 필

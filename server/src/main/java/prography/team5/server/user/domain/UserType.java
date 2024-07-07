@@ -9,7 +9,7 @@ public enum UserType {
 
     STUDENT("학생"),
     JOB_SEEKER("취준생"),
-    NEW_EMPLOYEE("입사 1~3년차 직장인"),
+    NEW_EMPLOYEE("1~3년차 직장인"),
     OTHER("기타"),
     UNDEFINED("알수 없음");
 

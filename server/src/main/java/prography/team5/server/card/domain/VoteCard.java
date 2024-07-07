@@ -108,4 +108,12 @@ public class VoteCard extends Card {
     public static long getHotCountFloor() {
         return HOT_COUNT_FLOOR;
     }
+
+    public String findVoteOption(final Long voteOptionId) {
+        final VoteOption voteOption = voteOptions.stream()
+                .filter(each -> Objects.equals(each.getId(), voteOptionId))
+                .findFirst()
+                .orElseThrow();
+        return voteOption.getContent();
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import prography.team5.server.card.domain.UserVoteOption;
+import prography.team5.server.user.domain.UserType;
 
 public interface UserVoteOptionRepository extends JpaRepository<UserVoteOption, Long> {
 
@@ -29,4 +30,7 @@ public interface UserVoteOptionRepository extends JpaRepository<UserVoteOption, 
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
     );
+
+    @Query("SELECT uvo FROM UserVoteOption uvo JOIN User u ON uvo.userId = u.id WHERE uvo.voteId = :voteId AND u.userType = :userType")
+    List<UserVoteOption> findByVoteIdAndUserType(@Param("voteId") Long voteId, @Param("userType") UserType userType);
 }
