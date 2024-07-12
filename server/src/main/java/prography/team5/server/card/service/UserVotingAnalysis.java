@@ -3,6 +3,7 @@ package prography.team5.server.card.service;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class UserVotingAnalysis {
         notVotedFormat.put(UserType.OTHER, "나와 같은 유저는\n아직 투표하지 않았어요!");
     }
 
-    public String analyze(final long voteId, final Long userId) {
+    public String analyzeResult(final long voteId, final Long userId) {
         final User user = userRepository.findById(userId).orElseThrow();
         final UserType userType = user.getUserType();
 
@@ -62,5 +63,21 @@ public class UserVotingAnalysis {
 
         // 포맷에 따라 문장을 만들어 반환한다.
         return String.format(votedFormat.get(userType), voteOption);
+    }
+
+    public Map<Long, Boolean> analyzeIsVoted(final List<Long> voteIds, final Long userId) {
+        //userId가 null이라면 모든 voteId에 대해 false를 저장
+        if (userId == null) {
+            return voteIds.stream()
+                    .collect(Collectors.toMap(voteId -> voteId, voteId -> false));
+        }
+
+        List<UserVoteOption> userVoteOptions = userVoteOptionRepository.findByUserIdAndVoteIdIn(userId, voteIds);
+        Set<Long> voteIdsThatUserAlreadyVoted = userVoteOptions.stream()
+                .map(UserVoteOption::getVoteId)
+                .collect(Collectors.toSet());
+
+        return voteIds.stream()
+                .collect(Collectors.toMap(voteId -> voteId, voteIdsThatUserAlreadyVoted::contains));
     }
 }

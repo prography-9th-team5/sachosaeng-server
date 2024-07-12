@@ -14,6 +14,8 @@ public interface UserVoteOptionRepository extends JpaRepository<UserVoteOption, 
 
     List<UserVoteOption> findByUserIdAndVoteId(Long userId, long voteId);
 
+    List<UserVoteOption> findByUserIdAndVoteIdIn(Long userId, List<Long> voteIds);
+
     @Query("SELECT uvo FROM UserVoteOption as uvo WHERE Date(uvo.createdAt) BETWEEN :startDate AND :endDate")
     List<UserVoteOption> findVotesByDateRange(
             @Param("startDate") LocalDate startDate,

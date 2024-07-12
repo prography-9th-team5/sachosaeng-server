@@ -53,7 +53,7 @@ public class VoteService {
             category = voteCard.getCategories().get(0);
         }
         final List<UserVoteOption> voted = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
-        String analysis = userVotingAnalysis.analyze(voteId, userId);
+        String analysis = userVotingAnalysis.analyzeResult(voteId, userId);
         if(!voted.isEmpty()) {
             final List<Long> voteOptionIds = voted.stream().map(UserVoteOption::getVoteOptionId).toList();
             return VoteResponse.toResponseWith32px(category, true, voteOptionIds, voteCard, analysis);
@@ -61,7 +61,7 @@ public class VoteService {
         return VoteResponse.toResponseWith32px(category, false, Collections.emptyList(), voteCard, analysis);
     }
 
-    //todo: 리팩터링 필
+    //todo: 리팩터링 필 -> 관리자 페이지에서 사용함
     @Transactional(readOnly = true)
     public List<SimpleVoteResponse> findAll(
             final Long cursor,
