@@ -1,11 +1,14 @@
 package prography.team5.server.card;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import prography.team5.server.auth.controller.AuthRequired;
+import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.service.dto.CategoryHotVotePreviewsResponse;
 import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.common.CommonApiResponse;
@@ -23,6 +26,7 @@ public interface HotVoteApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "인기 투표 목록 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<HotVotePreviewsResponse>> findHotVotes(
+            @Parameter(hidden = true) Accessor accessor,
             @RequestParam(name = "size", required = false, defaultValue = "3") final Integer size
     );
 
@@ -36,6 +40,7 @@ public interface HotVoteApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "인기 투표 목록 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<CategoryHotVotePreviewsResponse>> findHotVotesByCategoryId(
+            @Parameter(hidden = true) Accessor accessor,
             @PathVariable(name = "categoryId") final Long categoryId,
             @RequestParam(name = "size", required = false, defaultValue = "3") final Integer size
     );

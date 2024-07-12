@@ -34,7 +34,7 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
         //todo: 어드민 인증
         final AuthRequired annotation = Objects.requireNonNull(parameter.getParameterAnnotation(AuthRequired.class));
         if(!annotation.required() && authorizationHeader == null) {
-            return new Accessor(null);
+            return Accessor.createAnonymousAccessor();
         }
         final String token = HeaderUtils.extractToken(authorizationHeader, TOKEN_TYPE);
         return authService.verifyUserFromToken(token);

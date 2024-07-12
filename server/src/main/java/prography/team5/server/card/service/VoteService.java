@@ -2,13 +2,17 @@ package prography.team5.server.card.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import prography.team5.server.auth.service.dto.Accessor;
+import prography.team5.server.card.domain.Card;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.domain.UserVoteOption;
 import prography.team5.server.card.repository.UserVoteOptionRepository;
@@ -61,7 +65,7 @@ public class VoteService {
         return VoteResponse.toResponseWith32px(category, false, Collections.emptyList(), voteCard, analysis);
     }
 
-    //todo: 리팩터링 필 -> 관리자 페이지에서 사용함
+    //todo: 리팩터링 완전 필요 -> 관리자 페이지에서 사용함
     @Transactional(readOnly = true)
     public List<SimpleVoteResponse> findAll(
             final Long cursor,
@@ -70,13 +74,14 @@ public class VoteService {
             final SortType sortType
     ) {
         final PageRequest pageRequest = PageRequest.ofSize(pageSize);
+        Map<Long, Boolean> tmp = new HashMap<>();
         if (Objects.isNull(categoryId)) {
-            return SimpleVoteResponse.toResponse(findAll(cursor, pageRequest));
+            return SimpleVoteResponse.toResponse(findAll(cursor, pageRequest), tmp);
         }
         if (Objects.isNull(cursor)) {
-            return SimpleVoteResponse.toResponse(voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent());
+            return SimpleVoteResponse.toResponse(voteCardRepository.findLatestCardsByCategoriesId(categoryId, pageRequest).getContent(), tmp);
         }
-        return SimpleVoteResponse.toResponse(voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent());
+        return SimpleVoteResponse.toResponse(voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest).getContent(), tmp);
     }
 
     private List<VoteCard> findAll(final Long cursor, final PageRequest pageRequest) {
@@ -86,8 +91,10 @@ public class VoteService {
         return voteCardRepository.findBeforeCursor(cursor, pageRequest).getContent();
     }
 
+    //todo: accessor를 어떻게 잘 활용해볼수 없을까?
     @Transactional(readOnly = true)
     public CategoryVotePreviewsResponse findAllByCategoryId(
+            final Accessor accessor,
             final Long cursor,
             final long categoryId,
             final Integer size
@@ -100,7 +107,11 @@ public class VoteService {
             if(!votes.isEmpty()) {
                 nextCursor = votes.getLast().getId();
             }
-            return CategoryVotePreviewsResponse.toResponse(votes, slice.hasNext(), nextCursor);
+            final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
+                    votes.stream().map(Card::getId).toList(),
+                    accessor.id()
+            );
+            return CategoryVotePreviewsResponse.toResponse(votes, isVotedAnalysis, slice.hasNext(), nextCursor);
         }
         final Slice<VoteCard> slice = voteCardRepository.findByCategoriesIdBeforeCursor(cursor, categoryId, pageRequest);
         final List<VoteCard> votes = slice.getContent();
@@ -108,11 +119,15 @@ public class VoteService {
         if(!votes.isEmpty()) {
             nextCursor = votes.getLast().getId();
         }
-        return CategoryVotePreviewsResponse.toResponse(votes, slice.hasNext(), nextCursor);
+        final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
+                votes.stream().map(Card::getId).toList(),
+                accessor.id()
+        );
+        return CategoryVotePreviewsResponse.toResponse(votes, isVotedAnalysis, slice.hasNext(), nextCursor);
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryVoteSuggestionsResponse> findSuggestionsOfAllCategories() {
+    public List<CategoryVoteSuggestionsResponse> findSuggestionsOfAllCategories(final Accessor accessor) {
         //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
         final List<Category> categories = categoryRepository.findAll();
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
@@ -121,23 +136,27 @@ public class VoteService {
                     category.getId(),
                     PageRequest.ofSize(3)
             ).getContent();
-            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
+            final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
+                    votes.stream().map(Card::getId).toList(),
+                    accessor.id()
+            );
+            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes, isVotedAnalysis));
         }
         return response;
     }
 
     @Transactional(readOnly = true)
-    public List<CategoryVoteSuggestionsResponse> findSuggestions(final Long userId) {
+    public List<CategoryVoteSuggestionsResponse> findSuggestionsOfMy(final Long userId) {
         final List<MyCategory> myCategories = myCategoryRepository.findAllByUserId(userId);
         //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
         if(myCategories.isEmpty()) {
             final User user = userRepository.findById(userId).orElseThrow();
-            return suggestBasedOnUserType(user.getUserType());
+            return suggestBasedOnUserType(user.getUserType(), userId);
         }
-        return suggestBasedOnMyCategories(myCategories);
+        return suggestBasedOnMyCategories(myCategories, userId);
     }
 
-    private List<CategoryVoteSuggestionsResponse> suggestBasedOnUserType(final UserType userType) {
+    private List<CategoryVoteSuggestionsResponse> suggestBasedOnUserType(final UserType userType, final long userId) {
         final List<Category> categories = categoryRepository.findAllByUserType(userType);
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
         for (Category category : categories) {
@@ -145,13 +164,19 @@ public class VoteService {
                     category.getId(),
                     PageRequest.ofSize(3)
             ).getContent();
-            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
+            final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
+                    votes.stream().map(Card::getId).toList(),
+                    userId
+            );
+            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes, isVotedAnalysis));
         }
         return response;
     }
 
     private List<CategoryVoteSuggestionsResponse> suggestBasedOnMyCategories(
-            final List<MyCategory> myCategories) {
+            final List<MyCategory> myCategories,
+            final long userId
+    ) {
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
         for (MyCategory myCategory : myCategories) {
             final Category category = myCategory.getCategory();
@@ -159,7 +184,11 @@ public class VoteService {
                     category.getId(),
                     PageRequest.ofSize(3)
             ).getContent();
-            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes));
+            final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
+                    votes.stream().map(Card::getId).toList(),
+                    userId
+            );
+            response.add(CategoryVoteSuggestionsResponse.toResponse(category, votes, isVotedAnalysis));
         }
         return response;
     }

@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +20,6 @@ import prography.team5.server.card.VoteApiDocs;
 import prography.team5.server.card.service.VoteService;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
-import prography.team5.server.card.service.dto.VoteIdResponse;
-import prography.team5.server.card.service.dto.VoteRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
 
 @RequiredArgsConstructor
@@ -32,6 +29,7 @@ public class VoteController implements VoteApiDocs {
 
     private final VoteService voteService;
 
+    //todo: 이거는 로그인 안하면 못봄
     @GetMapping("/{voteId}")
     public ResponseEntity<CommonApiResponse<VoteResponse>> findByVoteId(
             @AuthRequired Accessor accessor,
@@ -43,17 +41,18 @@ public class VoteController implements VoteApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
-    //todo: 투표여부
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<CommonApiResponse<CategoryVotePreviewsResponse>> findAllByCategoryId(
+            @AuthRequired(required = false) Accessor accessor,
             @PathVariable(name = "categoryId") final Long categoryId,
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "size", required = false, defaultValue = "10")  final Integer size) {
-        CategoryVotePreviewsResponse response = voteService.findAllByCategoryId(cursor, categoryId, size);
+        CategoryVotePreviewsResponse response = voteService.findAllByCategoryId(accessor, cursor, categoryId, size);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
+    // todo: 레거시
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<SimpleVoteResponse>>> findAll(
             @RequestParam(name = "cursor", required = false) final Long cursor,
@@ -67,17 +66,19 @@ public class VoteController implements VoteApiDocs {
     }
 
     @GetMapping("/suggestions/all")
-    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfAllCategories() {
-        final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestionsOfAllCategories();
+    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfAllCategories(
+            @AuthRequired(required = false) Accessor accessor
+    ) {
+        final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestionsOfAllCategories(accessor);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @GetMapping("/suggestions/my")
-    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(
+    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfMy(
             @AuthRequired Accessor accessor
     ) {
-        final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestions(accessor.id());
+        final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestionsOfMy(accessor.id());
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

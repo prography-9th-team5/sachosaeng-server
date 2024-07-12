@@ -3,6 +3,7 @@ package prography.team5.server.card.service.dto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.service.dto.CategoryResponse;
@@ -14,12 +15,13 @@ public record CategoryHotVotePreviewsResponse(CategoryResponse category, String 
             final Category category,
             final LocalDate startDate,
             final LocalDate endDate,
-            final List<VoteCard> votes
+            final List<VoteCard> votes,
+            final Map<Long, Boolean> isVotedAnalysis
     ) {
         return new CategoryHotVotePreviewsResponse(
                 CategoryResponse.toResponseWith32px(category),
                 formatDateRange(startDate, endDate),
-                SimpleVoteResponse.toHotVoteResponse(votes)
+                SimpleVoteResponse.toHotVoteResponse(votes, isVotedAnalysis)
         );
     }
 

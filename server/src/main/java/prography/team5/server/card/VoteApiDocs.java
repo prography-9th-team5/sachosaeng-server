@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
@@ -53,6 +52,7 @@ public interface VoteApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
     ResponseEntity<CommonApiResponse<CategoryVotePreviewsResponse>> findAllByCategoryId(
+            @Parameter(hidden = true) Accessor accessor,
             @PathVariable(name = "categoryId") final Long categoryId,
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
@@ -74,7 +74,9 @@ public interface VoteApiDocs {
                     """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfAllCategories();
+    ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfAllCategories(
+            @Parameter(hidden = true) Accessor accessor
+    );
 
     @Operation(
             summary = "[홈화면] 관심/유저타입 카테고리별로 투표를 3개씩 조회 API",
@@ -85,7 +87,7 @@ public interface VoteApiDocs {
                     """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestions(
+    ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfMy(
             @Parameter(hidden = true) Accessor accessor
     );
 

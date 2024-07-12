@@ -80,4 +80,12 @@ public class UserVotingAnalysis {
         return voteIds.stream()
                 .collect(Collectors.toMap(voteId -> voteId, voteIdsThatUserAlreadyVoted::contains));
     }
+
+    public boolean analyzeIsVoted(final long voteId, final Long userId) {
+        if (userId == null) {
+            return false;
+        }
+        final boolean exists = userVoteOptionRepository.existsByUserIdAndVoteId(voteId, userId);
+        return exists;
+    }
 }
