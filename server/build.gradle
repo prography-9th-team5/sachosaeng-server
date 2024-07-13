@@ -42,6 +42,15 @@ dependencies {
 
     //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //vector db
+    //implementation "io.pinecone:pinecone-client:1.2.2"
+    implementation platform("org.springframework.ai:spring-ai-bom:1.0.0-SNAPSHOT")
+    // Replace the following with the starter dependencies of specific modules you wish to use
+    //implementation 'org.springframework.ai:spring-ai-openai'
+
+    implementation 'org.springframework.ai:spring-ai-pinecone-store-spring-boot-starter'
+    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
 }
 
 tasks.named('test') {
@@ -54,4 +63,10 @@ tasks.register('copySecret', Copy) {
     from './server-secret'
     include "application*.yml"
     into 'src/main/resources'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
 }
