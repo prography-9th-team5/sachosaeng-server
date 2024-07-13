@@ -24,7 +24,8 @@ import org.springframework.context.annotation.Configuration;
                     1. 아직 단일 정보 콘텐츠 내용을 조회하는 api는 없어요
                     
                     [07/13 업데이트]
-                    1. voteId와 categoryId를 통해 연관 콘텐츠 3개를 조회하는 api를 만들었습니다. 정보 콘텐츠는 현재 더미데이터가 들어가 있는점 참고해주세여
+                    1. voteId와 categoryId를 통해 연관 콘텐츠 3개를 조회하는 api를 만들었습니다. 정보 콘텐츠는 현재 더미데이터가 들어가 있는점 참고해주세여 \n
+                    2. all 아이콘 -> https://sachosaeng.store/icon/all-2x.png
                     
                     [07/12 업데이트]
                     1. isVoted에 기존 하드코딩 되어 있던 부분을 유저의 투표 여부를 반영하도록 업데이트 하였습니다. 이제 true도 반환됩니다. \n
