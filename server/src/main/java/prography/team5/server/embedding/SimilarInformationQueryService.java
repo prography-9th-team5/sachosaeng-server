@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.VoteCardRepository;
@@ -18,12 +19,14 @@ public class SimilarInformationQueryService {
     private final VectorStore vectorStore;
     private final VoteCardRepository voteCardRepository;
 
-    //todo: 캐시 도입하기
     //트랜잭션X
+    @Cacheable(value = "similarInformationCache", key = "#voteId + '-' + #categoryId + '-' + #topSize")
     public List<SimilarInformationResponse> querySimilarInformation(final long voteId, final long categoryId,
                                                                     final int topSize) {
         final VoteCard voteCard = voteCardRepository.findById(voteId).orElseThrow();
         String query = voteCard.getTitle();
+
+        System.out.println("캐시 안됨!");
 
         List<Document> results = vectorStore.similaritySearch(
                 SearchRequest.defaults()
