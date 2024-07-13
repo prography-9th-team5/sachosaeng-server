@@ -12,7 +12,7 @@ import prography.team5.server.common.CommonApiResponse;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/similar-information")
-public class SimilarInformationQueryController {
+public class SimilarInformationQueryController implements SimilarInformationApiDocs{
 
     private final SimilarInformationQueryService similarInformationQueryService;
 
