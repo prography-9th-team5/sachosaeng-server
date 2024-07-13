@@ -29,7 +29,7 @@ public class CategoryDesign {
 
     public String getIconUrl32px() {
         if(iconUrl == null) return null;
-        return iconUrl.replace(DEFAULT_PX, "32px");
+        return iconUrl.replace(DEFAULT_PX, "32px").replace("1x", "2x");
     }
 
     public String getTextColor() {
