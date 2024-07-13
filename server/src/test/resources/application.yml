@@ -2,6 +2,17 @@ spring:
   jpa:
     open-in-view: false
 
+  ai:
+    openai:
+      api-key: "tmp"
+      embedding.options.model: "tmp"
+    vectorstore:
+      pinecone:
+        api-key: tmp
+        project-id: tmp
+        index-name: tmp
+        environment: tmp
+
 auth:
   jwt:
     secret-key: fightingscs-awesomescs-fantasticscs-scsisthebest-thisiswrittenby59
