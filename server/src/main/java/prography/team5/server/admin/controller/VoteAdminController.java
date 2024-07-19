@@ -30,7 +30,7 @@ public class VoteAdminController {
 
     @GetMapping
     public ModelAndView votes(ModelAndView modelAndView) {
-        final List<SimpleVoteWithWriterResponse> votes = voteAdminService.findAll(0, 30);
+        final List<SimpleVoteWithWriterResponse> votes = voteAdminService.findAll(0, 200);
         modelAndView.addObject("votes", votes);
         modelAndView.setViewName("votes");
         return modelAndView;
