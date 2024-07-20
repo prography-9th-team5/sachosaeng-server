@@ -69,7 +69,7 @@ public class VoteCard extends Card {
         }
         for (Long voteOptionId : voteOptionIds) {
             final VoteOption voteOption = voteOptions.stream()
-                    .filter(each -> each.getId() == voteOptionId)
+                    .filter(each -> Objects.equals(each.getId(), voteOptionId))
                     .findFirst()
                     .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
             voteOption.increase();
@@ -85,7 +85,16 @@ public class VoteCard extends Card {
                     .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
             fromVoteOption.decrease();
         }
-        chooseVoteOption(ToVoteOptionIds);
+        if(ToVoteOptionIds.size() > 1 && !isMultipleChoiceAllowed) {
+            throw new SachosaengException(ErrorType.MULTIPLE_CHOICE_NOT_ALLOWED);
+        }
+        for (Long voteOptionId : ToVoteOptionIds) {
+            final VoteOption voteOption = voteOptions.stream()
+                    .filter(each -> Objects.equals(each.getId(), voteOptionId))
+                    .findFirst()
+                    .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
+            voteOption.increase();
+        }
     }
 
     public Long getHotParticipantCount() {
