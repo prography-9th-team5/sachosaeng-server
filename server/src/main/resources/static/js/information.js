@@ -42,7 +42,7 @@ document.getElementById('informationForm').addEventListener('submit', function(e
     const categories = Array.from(formData.getAll('categories'));
     const requestBody = {
         title: formData.get('title'),
-        content: formData.get('content'),
+        content: formData.get('content').replace(/\r?\n/g, '\\n'),
         categoryIds: categories.map(Number),
         referenceName: formData.get('referenceName'),
         referenceUrl: formData.get('referenceUrl')

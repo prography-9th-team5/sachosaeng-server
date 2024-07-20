@@ -95,8 +95,19 @@ label {
     font-weight: bold;
 }
 
-input[type="text"],
 textarea {
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    width: 80%;
+    margin-bottom: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+    resize: vertical;
+    height: 200px; /* 기본 세로 길이를 200px로 설정 */
+}
+
+input[type="text"] {
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #cccccc;
