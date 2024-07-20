@@ -16,10 +16,21 @@ public class InformationCard extends Card {
     @Column(nullable = false, columnDefinition = "longtext")
     private String content;
 
-    //private String imageUrl; //todo: 이미지 등록 가능
+    private String referenceName;
 
-    public InformationCard(final String title, final List<Category> categories, final String content) {
+    @Column(nullable = false, columnDefinition = "longtext")
+    private String referenceUrl;
+
+    public InformationCard(
+            final String title,
+            final List<Category> categories,
+            final String content,
+            final String referenceName,
+            final String referenceUrl
+    ) {
         super(title, categories);
         this.content = content;
+        this.referenceName = referenceName;
+        this.referenceUrl = referenceUrl;
     }
 }

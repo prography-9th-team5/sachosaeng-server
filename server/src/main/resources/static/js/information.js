@@ -43,10 +43,12 @@ document.getElementById('informationForm').addEventListener('submit', function(e
     const requestBody = {
         title: formData.get('title'),
         content: formData.get('content'),
-        categoryIds: categories.map(Number)
+        categoryIds: categories.map(Number),
+        referenceName: formData.get('referenceName'),
+        referenceUrl: formData.get('referenceUrl')
     };
 
-    fetch('/api/v1/information', {
+    fetch('/admin/information', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

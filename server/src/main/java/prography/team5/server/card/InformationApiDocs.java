@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.card.service.dto.InformationIdResponse;
-import prography.team5.server.card.service.dto.InformationRequest;
+import prography.team5.server.admin.service.dto.InformationCreationRequest;
 import prography.team5.server.card.service.dto.InformationResponse;
 
 @Tag(name = "6. 정보 카드", description = "정보 제공 카드 관련 기능입니다.")
@@ -30,7 +30,7 @@ public interface InformationApiDocs {
             description = "정보를 추가할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "정보 추가 성공입니다.")
-    ResponseEntity<CommonApiResponse<InformationIdResponse>> create(final InformationRequest informationRequest);
+    ResponseEntity<CommonApiResponse<InformationIdResponse>> create(final InformationCreationRequest informationCreationRequest);
 
     @Hidden
     @Operation(

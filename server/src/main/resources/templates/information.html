@@ -30,7 +30,7 @@
             <span class="close" onclick="closeAddModal()">&times;</span>
             <form id="informationForm">
                 <label for="title">Title:</label><br>
-                <input type="text" id="title" name="title" placeholder="정보 주제 입력"><br>
+                <input type="text" id="title" name="title" placeholder="콘텐츠 제목 입력"><br>
 
                 <label for="content">Content:</label><br>
                 <textarea type="text" id="content" name="content" placeholder="콘텐츠 내용 입력"></textarea><br>
@@ -39,6 +39,12 @@
                 <div id="categoryCheckboxes">
                     <!-- 카테고리 체크박스 목록이 여기에 추가됩니다 -->
                 </div><br>
+
+                <label for="content">Reference Name:</label><br>
+                <input type="text" id="referenceName" name="referenceName" placeholder="콘텐츠 출처를 간략히 입력(사용자에게 노출될 출처 이름입니다.)"><br>
+
+                <label for="content">Reference Url:</label><br>
+                <textarea type="text" id="referenceUrl" name="referenceUrl" placeholder="위에 적은 출처의 url을 입력"></textarea><br>
 
                 <button type="submit">제출</button>
             </form>
