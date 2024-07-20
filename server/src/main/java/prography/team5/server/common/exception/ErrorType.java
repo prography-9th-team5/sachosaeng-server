@@ -45,7 +45,10 @@ public enum ErrorType {
     EMPTY_ADMIN_NAME(-9, "투표 생성 시 admin 이름이 필요합니다."),
     EMPTY_CATEGORY(-9, "투표 생성 시 카테고리가 필요합니다."),
     EMPTY_TITLE(-9, "투표 생성 시 투표 주제가 필요합니다."),
-    MULTIPLE_CHOICE_NOT_ALLOWED(-9, "복수 선택이 허용되지 않은 투표입니다.");
+    MULTIPLE_CHOICE_NOT_ALLOWED(-9, "복수 선택이 허용되지 않은 투표입니다."),
+
+    //정보 에러
+    CATEGORY_NOT_INCLUDED_IN_INFORMATION(-10, "해당 콘텐츠는 해당 카테고리에 속하지 않습니다.");
 
     private final int code;
     private final String message;

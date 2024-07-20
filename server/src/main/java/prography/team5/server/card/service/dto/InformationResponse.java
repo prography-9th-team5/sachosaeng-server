@@ -1,21 +1,24 @@
 package prography.team5.server.card.service.dto;
 
-import java.util.List;
 import prography.team5.server.card.domain.InformationCard;
+import prography.team5.server.category.domain.Category;
+import prography.team5.server.category.service.dto.CategoryResponse;
 
-public record InformationResponse(Long informationId, String title, String content, List<SimpleCategoryResponse> categories, String referenceName) {
+public record InformationResponse(
+        Long informationId,
+        String title,
+        String content,
+        CategoryResponse category,
+        String referenceName
+) {
 
-    public static InformationResponse from(final InformationCard informationCard) {
+    public static InformationResponse from(final InformationCard informationCard, final Category category) {
         return new InformationResponse(
                 informationCard.getId(),
                 informationCard.getTitle(),
                 informationCard.getContent(),
-                SimpleCategoryResponse.toResponse(informationCard.getCategories()),
+                CategoryResponse.toResponse(category),
                 informationCard.getReferenceName()
         );
-    }
-
-    public static List<InformationResponse> from(final List<InformationCard> informationCards) {
-        return informationCards.stream().map(InformationResponse::from).toList();
     }
 }

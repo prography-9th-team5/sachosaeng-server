@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import prography.team5.server.category.domain.Category;
+import prography.team5.server.common.exception.ErrorType;
+import prography.team5.server.common.exception.SachosaengException;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,5 +34,11 @@ public class InformationCard extends Card {
         this.content = content;
         this.referenceName = referenceName;
         this.referenceUrl = referenceUrl;
+    }
+
+    public void checkCategory(final Category category) {
+        if(!this.categories.contains(category)) {
+            throw new SachosaengException(ErrorType.CATEGORY_NOT_INCLUDED_IN_INFORMATION);
+        }
     }
 }
