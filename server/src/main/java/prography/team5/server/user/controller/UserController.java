@@ -24,9 +24,11 @@ public class UserController implements UserApiDocs {
 
     private final UserService userService;
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<CommonApiResponse<UserResponse>> findById(@PathVariable(value = "userId") final long userId) {
-        final UserResponse response = userService.find(userId);
+    @GetMapping()
+    public ResponseEntity<CommonApiResponse<UserResponse>> findById(
+            @AuthRequired Accessor accessor
+    ) {
+        final UserResponse response = userService.find(accessor.id());
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

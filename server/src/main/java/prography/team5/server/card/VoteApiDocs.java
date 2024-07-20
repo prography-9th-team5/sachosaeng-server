@@ -23,7 +23,7 @@ import prography.team5.server.common.CommonApiResponse;
 public interface VoteApiDocs {
 
     @Operation(
-            summary = "단일 투표 카드 조회 API",
+            summary = "[인증 토큰 필요] 단일 투표 카드 조회 API",
             description = """
                     투표 id로 해당 투표를 조회할 수 있습니다. \n
                     유저의 투표 여부, 옵션별 투표수, 전체 투표수를 포함하여 반환합니다. \n
@@ -79,7 +79,7 @@ public interface VoteApiDocs {
     );
 
     @Operation(
-            summary = "[홈화면] 관심/유저타입 카테고리별로 투표를 3개씩 조회 API",
+            summary = "[인증 토큰 필요][홈화면] 관심/유저타입 카테고리별로 투표를 3개씩 조회 API",
             description = """
                     기본적으로는 유저의 모든 관심 카테고리별로 투표를 3개씩 조회합니다. \n
                     관심 카테고리가 없다면 유저 타입에 해당하는 모든 카테고리들에 대해 조회합니다. \n
@@ -92,7 +92,7 @@ public interface VoteApiDocs {
     );
 
     @Operation(
-            summary = "투표 옵션 선택/변경 API",
+            summary = "[인증 토큰 필요] 투표 옵션 선택/변경 API",
             description = """
                     선택된 투표 옵션들의 id를 모두 담아 보내 투표를 합니다. \n
                     이미 투표를 한 후 투표 옵션 변경에도 해당 API를 사용할 수 있습니다.

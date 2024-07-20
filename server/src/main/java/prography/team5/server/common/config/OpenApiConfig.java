@@ -23,6 +23,9 @@ import org.springframework.context.annotation.Configuration;
                     [기타..]
                     1. 아직 단일 정보 콘텐츠 내용을 조회하는 api는 없어요
                     
+                    [07/20 업데이트]
+                    1. 유저 정보를 조회하는 api가 userId를 몰라도 조회할수 있도록 변경하였으니 꼭 확인해주세요. (변경전: /api/v1/users/{userId}) -> (변경후: /api/v1/users, authorization 헤더 토큰 필요}
+                    
                     [07/13 업데이트]
                     1. voteId와 categoryId를 통해 연관 콘텐츠 3개를 조회하는 api를 만들었습니다. 정보 콘텐츠는 현재 더미데이터가 들어가 있는점 참고해주세여 \n
                     2. all 아이콘 -> https://sachosaeng.store/icon/all-2x.png

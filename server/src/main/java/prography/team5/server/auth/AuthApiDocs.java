@@ -1,5 +1,6 @@
 package prography.team5.server.auth;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,6 +29,7 @@ public interface AuthApiDocs {
     @ApiResponse(responseCode = "200", description = "로그인 성공입니다.")
     ResponseEntity<CommonApiResponse<LoginResponse>> login(final EmailRequest emailRequest);
 
+    @Hidden
     @Operation(
             summary = "엑세스 토큰 재발급 API -> 스웨거에서 작동 안됨ㅜ",
             description = "Cookie에 Refresh={리프레시 토큰}을 담아 보내면 엑세스 토큰을 재발급 할 수 있습니다."
@@ -38,7 +40,7 @@ public interface AuthApiDocs {
     );
 
     @Operation(
-            summary = "인증 테스트 API",
+            summary = "[인증 토큰 필요] 인증 테스트 API",
             description = "Authorization 헤더에 Bearer {엑세스 토큰}을 담아 보냈을 때 응답이 성공하는지 테스트 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "인증 성공입니다.")
