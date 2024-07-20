@@ -40,9 +40,10 @@ document.getElementById('informationForm').addEventListener('submit', function(e
     event.preventDefault();
     const formData = new FormData(this);
     const categories = Array.from(formData.getAll('categories'));
+
     const requestBody = {
         title: formData.get('title'),
-        content: formData.get('content').replace(/\r?\n/g, '\\n'),
+        content: formData.get('content'),
         categoryIds: categories.map(Number),
         referenceName: formData.get('referenceName'),
         referenceUrl: formData.get('referenceUrl')
@@ -65,3 +66,34 @@ document.getElementById('informationForm').addEventListener('submit', function(e
             alert('An error occurred. Please try again later.');
         });
 });
+
+
+function openDetailModal(element) {
+    fetch(`/admin/information/${element.getAttribute('data-id')}`)
+        .then(response => response.json())
+        .then(data => {
+            const detailContent = document.getElementById('detailContent');
+            const information = data.data;
+            const formattedContent = information.content.replace(/\n/g, '<br>');
+
+            let htmlContent = `
+                <h2>콘텐츠 상세보기</h2>
+                <p><strong>제목:</strong> ${information.title}</p>
+                <p><strong>카테고리:</strong> ${information.categories.map(category => category.name).join(', ')}</p>
+                <p><strong>콘텐츠 내용:</strong> ${formattedContent}</p>
+                <p><strong>출처:</strong> ${information.referenceName} </p>
+                <p><strong>출처 url:</strong> ${information.referenceUrl} </p>
+            `;
+            detailContent.innerHTML = htmlContent;
+
+            document.getElementById("detailModal").style.display = "block";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch vote details. Please try again later.');
+        });
+}
+
+function closeDetailModal() {
+    document.getElementById("detailModal").style.display = "none";
+}

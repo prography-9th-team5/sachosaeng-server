@@ -4,7 +4,7 @@ import java.util.List;
 import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.service.dto.SimpleCategoryResponse;
 
-public record FullInformationResponse(Long informationId, String title, String content, List<SimpleCategoryResponse> categories, String referenceName) {
+public record FullInformationResponse(Long informationId, String title, String content, List<SimpleCategoryResponse> categories, String referenceName, String referenceUrl) {
 
     public static FullInformationResponse from(final InformationCard informationCard) {
         return new FullInformationResponse(
@@ -12,7 +12,8 @@ public record FullInformationResponse(Long informationId, String title, String c
                 informationCard.getTitle(),
                 informationCard.getContent(),
                 SimpleCategoryResponse.toResponse(informationCard.getCategories()),
-                informationCard.getReferenceName()
+                informationCard.getReferenceName(),
+                informationCard.getReferenceUrl()
         );
     }
 

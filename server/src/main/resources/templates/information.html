@@ -51,19 +51,32 @@
         </div>
     </div>
 
-    <div class="card-container">
-        <div class="card" th:each="information : ${information}">
-            <h2 th:text="${information.title}">Title</h2>
-            <p><strong>Categories:</strong></p>
-            <ul>
-                <li th:each="category : ${information.categories}" th:text="${category.name}">Category Name</li>
-            </ul>
-            <p><strong>Content:</strong></p>
-            <ul>
-                <li th:text="${information.content}">Content</li>
-            </ul>
+    <!-- 상세 정보 모달 -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeDetailModal()">&times;</span>
+            <div id="detailContent">
+                <!-- 상세 정보 내용이 여기에 추가됩니다 -->
+            </div>
         </div>
     </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>콘텐츠 제목</th>
+            <th>출처</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="information : ${information}">
+            <td th:text="${information.informationId}">Information Id</td>
+            <td th:text="${information.title}" class="clickable" th:attr="data-id=${information.informationId}" onclick="openDetailModal(this)">Title</td>
+            <td th:text="${information.referenceName}">Reference Name</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <script th:src="@{/js/information.js}"></script>
 </body>
