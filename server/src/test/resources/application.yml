@@ -25,3 +25,6 @@ design:
     name: "인기 투표"
     icon-url: "http://localhost:8080/icon/hot-1x.png"
     text-color: "#344054"
+  all-icon:
+    icon-url: "http://localhost:8080/icon/all-2x.png"
+    background-color: "#E4E7EC"
