@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import prography.team5.server.category.service.IconData;
+import prography.team5.server.category.service.dto.IconResponse;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.category.CategoryApiDocs;
 import prography.team5.server.category.service.CategoryService;
@@ -22,6 +24,8 @@ import prography.team5.server.category.service.dto.CategoryResponse;
 public class CategoryController implements CategoryApiDocs {
 
     private final CategoryService categoryService;
+    private final IconData iconData;
+
 
     @GetMapping("/{categoryId}")
     public ResponseEntity<CommonApiResponse<CategoryResponse>> findById(
@@ -35,6 +39,16 @@ public class CategoryController implements CategoryApiDocs {
     @GetMapping
     public ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findAll() {
         final List<CategoryResponse> response = categoryService.findAll();
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/icon-data/all")
+    public ResponseEntity<CommonApiResponse<IconResponse>> findAllIconData() {
+        IconResponse response = new IconResponse(
+                iconData.getAllIconUrl(),
+                iconData.getAllIconBackgroundColor()
+        );
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
