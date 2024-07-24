@@ -72,6 +72,10 @@
         <div class="modal-content">
             <span class="close" onclick="closeEditModal()">&times;</span>
             <form id="editVoteForm">
+                <div id="editWarningMessage" style="color: red; display: none;">
+                    투표에 참여한 사람이 존재하기 때문에 투표 내용을 수정할 수 없습니다.
+                </div>
+
                 <input type="hidden" id="editVoteId" name="voteId">
 
                 <label for="editTitle">Title:</label><br>

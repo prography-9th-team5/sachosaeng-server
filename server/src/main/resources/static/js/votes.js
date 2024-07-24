@@ -160,6 +160,21 @@ function openEditModal(element) {
                     alert('Failed to fetch categories. Please try again later.');
                 });
 
+            // 참여자 수에 따른 경고 메시지 표시 및 입력 필드 비활성화
+            const editWarningMessage = document.getElementById('editWarningMessage');
+            const editVoteForm = document.getElementById('editVoteForm');
+            if (vote.participantCount > 0) {
+                editWarningMessage.style.display = 'block';
+                Array.from(editVoteForm.elements).forEach(element => {
+                    element.disabled = true;
+                });
+            } else {
+                editWarningMessage.style.display = 'none';
+                Array.from(editVoteForm.elements).forEach(element => {
+                    element.disabled = false;
+                });
+            }
+
             document.getElementById("editModal").style.display = "block";
         })
         .catch(error => {
