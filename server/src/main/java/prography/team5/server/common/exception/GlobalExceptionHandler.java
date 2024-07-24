@@ -32,6 +32,7 @@ import static prography.team5.server.common.exception.ErrorType.REFRESH_TOKEN_EX
 import static prography.team5.server.common.exception.ErrorType.SAME_VOTE_OPTION;
 import static prography.team5.server.common.exception.ErrorType.SERVER_ERROR;
 import static prography.team5.server.common.exception.ErrorType.VOTE_OPTION_LIMIT;
+import static prography.team5.server.common.exception.ErrorType.WITHDRAW_EMAIL;
 
 import java.util.EnumMap;
 import java.util.Objects;
@@ -89,6 +90,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(EMPTY_TITLE, BAD_REQUEST);
         errorTypeToHttpStatus.put(MULTIPLE_CHOICE_NOT_ALLOWED, BAD_REQUEST);
         errorTypeToHttpStatus.put(CATEGORY_NOT_INCLUDED_IN_INFORMATION, BAD_REQUEST);
+        errorTypeToHttpStatus.put(WITHDRAW_EMAIL, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)

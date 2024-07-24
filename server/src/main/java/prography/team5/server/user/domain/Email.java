@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import prography.team5.server.auth.service.EmailEncryptor;
 import prography.team5.server.common.exception.ErrorType;
 import prography.team5.server.common.exception.SachosaengException;
 
@@ -35,5 +36,9 @@ public class Email {
         if (Strings.isBlank(email) || !Pattern.matches(EMAIL_PATTERN, email)) {
             throw new SachosaengException(ErrorType.INVALID_EMAIL_FORMAT);
         }
+    }
+
+    public void encrypt() {
+        this.value = EmailEncryptor.encrypt(this.value);
     }
 }

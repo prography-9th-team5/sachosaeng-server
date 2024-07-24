@@ -6,6 +6,10 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import prography.team5.server.auth.controller.AuthRequired;
+import prography.team5.server.auth.service.dto.WithdrawRequest;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.service.dto.AccessTokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
@@ -37,6 +41,16 @@ public interface AuthApiDocs {
     @ApiResponse(responseCode = "200", description = "엑세스 토큰 재발급 성공입니다.")
     ResponseEntity<CommonApiResponse<AccessTokenResponse>> refreshAccessToken(
             @Parameter(hidden = true) final String refreshToken
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 회원 탈퇴 API",
+            description = "회원 탈퇴를 할 수 있습니다. 회원 탈퇴 성공시 refresh token은 서버에서 무효화 됩니다. access token은 삭제해주세요."
+    )
+    @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공입니다.")
+    ResponseEntity<CommonApiResponse<Void>> withdraw(
+            @Parameter(hidden = true) final Accessor accessor,
+            @RequestBody final WithdrawRequest withdrawRequest
     );
 
     @Operation(

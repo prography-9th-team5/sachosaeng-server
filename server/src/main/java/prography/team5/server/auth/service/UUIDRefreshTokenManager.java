@@ -31,6 +31,11 @@ public class UUIDRefreshTokenManager implements RefreshTokenManager {
         return refreshToken.getUserId();
     }
 
+    @Override
+    public void invalidateRefreshToken(final long userId) {
+        refreshTokenRepository.deleteByUserId(userId);
+    }
+
     private void checkExpiration(final RefreshToken refreshToken) {
         if (refreshToken.isExpired()) {
             refreshTokenRepository.deleteByToken(refreshToken.getToken());

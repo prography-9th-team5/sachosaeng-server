@@ -5,4 +5,6 @@ public interface RefreshTokenManager {
     String provide(final long userId);
 
     long extractUserId(String token);
+
+    void invalidateRefreshToken(final long userId);
 }

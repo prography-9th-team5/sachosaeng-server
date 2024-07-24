@@ -12,12 +12,14 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 import prography.team5.server.common.domian.TimeRecord;
 import prography.team5.server.util.RandomNicknameGenerator;
 
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
+@Where(clause = "deleted = false")
 @Entity
 public class User extends TimeRecord {
 
@@ -54,5 +56,12 @@ public class User extends TimeRecord {
 
     public void updateUserType(final String userType) {
         this.userType = UserType.convert(userType);
+    }
+
+    public void withdraw() {
+        this.email.encrypt();
+        this.nickname = null;
+        this.userType = UserType.UNDEFINED;
+        this.deleted = true;
     }
 }
