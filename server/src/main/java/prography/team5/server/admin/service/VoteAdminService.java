@@ -49,4 +49,17 @@ public class VoteAdminService {
         final VoteCard voteCard = voteCardRepository.findById(voteId).orElseThrow();
         return VoteWithFullCategoriesResponse.toResponse(voteCard);
     }
+
+    @Transactional
+    public void modifyById(final Long voteId, final VoteWithAdminNameRequest request) {
+        final VoteCard voteCard = voteCardRepository.findById(voteId).orElseThrow();
+        final List<Category> categories = categoryRepository.findAllByIdIn(request.categoryIds());
+        voteCard.updateAll(
+                request.title(),
+                categories,
+                request.voteOptions(),
+                request.isMultipleChoiceAllowed(),
+                request.adminName()
+        );
+    }
 }

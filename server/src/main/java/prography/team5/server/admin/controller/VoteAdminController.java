@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,5 +55,16 @@ public class VoteAdminController {
         final VoteWithFullCategoriesResponse response = voteAdminService.findById(voteId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @Hidden
+    @PutMapping("/{voteId}")
+    public ResponseEntity<CommonApiResponse<VoteWithFullCategoriesResponse>> modifyById(
+            @PathVariable(value = "voteId") final Long voteId,
+            @RequestBody final VoteWithAdminNameRequest request
+    ) {
+        voteAdminService.modifyById(voteId, request);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
 }

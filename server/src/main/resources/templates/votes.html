@@ -68,6 +68,36 @@
         </div>
     </div>
 
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <form id="editVoteForm">
+                <input type="hidden" id="editVoteId" name="voteId">
+
+                <label for="editTitle">Title:</label><br>
+                <input type="text" id="editTitle" name="title" placeholder="투표 토픽 입력"><br>
+
+                <label for="editIsMultipleChoiceAllowed">복수 선택 허용:</label>
+                <input type="checkbox" id="editIsMultipleChoiceAllowed" name="isMultipleChoiceAllowed"><br>
+
+                <label>Options:</label><br>
+                <div id="editOptionsContainer">
+                    <!-- 옵션이 여기에 추가됩니다 -->
+                </div><br>
+
+                <label>Categories:</label><br>
+                <div id="editCategoryCheckboxes">
+                    <!-- 카테고리 체크박스 목록이 여기에 추가됩니다 -->
+                </div><br>
+
+                <label for="editWriter">Writer:</label><br>
+                <input type="text" id="editWriter" name="writer" placeholder="작성자 이름 입력"><br>
+
+                <button type="submit">수정</button>
+            </form>
+        </div>
+    </div>
+
     <table>
         <thead>
         <tr>
@@ -75,6 +105,7 @@
             <th>투표 토픽</th>
             <th>작성자(유저 pk)</th>
             <th>작성자(관리자 이름)</th>
+            <th>수정</th> <!-- 추가된 부분 -->
         </tr>
         </thead>
         <tbody>
@@ -83,6 +114,7 @@
             <td th:text="${vote.title}" class="clickable" th:attr="data-id=${vote.voteId}" onclick="openDetailModal(this)">Title</td>
             <td th:text="${vote.userId}">User ID</td>
             <td th:text="${vote.adminName}">Admin Name</td>
+            <td><button class="edit-btn" onclick="openEditModal(this)" th:attr="data-id=${vote.voteId}">수정</button></td>
         </tr>
         </tbody>
     </table>

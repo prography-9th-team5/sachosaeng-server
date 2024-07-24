@@ -24,7 +24,7 @@ public abstract class Card extends TimeRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String title;
+    protected String title;
     @ManyToMany
     protected List<Category> categories;
 
