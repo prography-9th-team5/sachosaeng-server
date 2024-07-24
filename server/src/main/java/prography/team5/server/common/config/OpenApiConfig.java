@@ -19,6 +19,10 @@ import org.springframework.context.annotation.Configuration;
                     사초생 API 명세서입니다. \n
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
+                    
+                    [07/25 업데이트]
+                    1. 회원탈퇴 api를 추가하였습니다.
+                    
                     [07/24 업데이트]
                     1. "전체" 아이콘 조회 요청시 GET /api/v1/categories/icon-data/all 보내면 iconUrl과 backgroundColor를 확인할 수 있습니다.
                     
