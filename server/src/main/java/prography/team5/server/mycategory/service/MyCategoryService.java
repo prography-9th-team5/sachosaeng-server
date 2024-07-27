@@ -22,7 +22,7 @@ public class MyCategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAllByUserId(final long userId) {
-        List<MyCategory> categories = myCategoryRepository.findAllByUserId(userId);
+        List<MyCategory> categories = myCategoryRepository.findAllByUserIdOrderByCategoryPriorityAsc(userId);
         return CategoryResponse.toResponseWith32px(categories.stream().map(MyCategory::getCategory).toList());
     }
 
