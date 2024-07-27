@@ -36,6 +36,7 @@ public class Category extends TimeRecord {
     @ElementCollection(targetClass = UserType.class)
     @Enumerated(value = EnumType.STRING)
     private Set<UserType> userTypes = new HashSet<>();
+    private int priority;
 
     public Category(final String name) {
         this.name = name;

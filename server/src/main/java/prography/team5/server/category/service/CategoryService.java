@@ -22,7 +22,7 @@ public class CategoryService {
 
     @Transactional(readOnly = true)
     public List<CategoryResponse> findAll() {
-        final List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        final List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
         return CategoryResponse.toResponseWith32px(categories);
     }
 
