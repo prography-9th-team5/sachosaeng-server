@@ -61,12 +61,40 @@
         </div>
     </div>
 
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <form id="editInformationForm">
+                <input type="hidden" id="editInformationId" name="informationId">
+                <label for="editTitle">Title:</label><br>
+                <input type="text" id="editTitle" name="title" placeholder="콘텐츠 제목 입력"><br>
+
+                <label for="editContent">Content:</label><br>
+                <textarea type="text" id="editContent" name="content" placeholder="콘텐츠 내용 입력"></textarea><br>
+
+                <label>Categories:</label><br>
+                <div id="editCategoryCheckboxes">
+                    <!-- 카테고리 체크박스 목록이 여기에 추가됩니다 -->
+                </div><br>
+
+                <label for="editReferenceName">Reference Name:</label><br>
+                <input type="text" id="editReferenceName" name="referenceName" placeholder="콘텐츠 출처를 간략히 입력"><br>
+
+                <label for="editReferenceUrl">Reference Url:</label><br>
+                <textarea type="text" id="editReferenceUrl" name="referenceUrl" placeholder="위에 적은 출처의 url을 입력"></textarea><br>
+
+                <button type="submit">수정</button>
+            </form>
+        </div>
+    </div>
+
     <table>
         <thead>
         <tr>
             <th>id</th>
             <th>콘텐츠 제목</th>
             <th>출처</th>
+            <th>수정</th>
         </tr>
         </thead>
         <tbody>
@@ -74,6 +102,7 @@
             <td th:text="${information.informationId}">Information Id</td>
             <td th:text="${information.title}" class="clickable" th:attr="data-id=${information.informationId}" onclick="openDetailModal(this)">Title</td>
             <td th:text="${information.referenceName}">Reference Name</td>
+            <td><button class="edit-btn" onclick="openEditModal(this)" th:attr="data-id=${information.informationId}">수정</button></td>
         </tr>
         </tbody>
     </table>

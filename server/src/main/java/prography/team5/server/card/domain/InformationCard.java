@@ -41,4 +41,18 @@ public class InformationCard extends Card {
             throw new SachosaengException(ErrorType.CATEGORY_NOT_INCLUDED_IN_INFORMATION);
         }
     }
+
+    public void updateAll(
+            final String title,
+            final String content,
+            final List<Category> categories,
+            final String referenceName,
+            final String referenceUrl
+    ) {
+        this.title = title;
+        this.content = content;
+        this.categories = categories;
+        this.referenceName = referenceName;
+        this.referenceUrl = referenceUrl;
+    }
 }

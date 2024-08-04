@@ -61,4 +61,17 @@ public class InformationAdminService {
         return FullInformationResponse.from(
                 informationCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
     }
+
+    @Transactional
+    public void modifyById(final Long informationId, final InformationCreationRequest request) {
+        final InformationCard informationCard = informationCardRepository.findById(informationId).orElseThrow();
+        final List<Category> categories = categoryRepository.findAllByIdIn(request.categoryIds());
+        informationCard.updateAll(
+                request.title(),
+                request.content(),
+                categories,
+                request.referenceName(),
+                request.referenceUrl()
+        );
+    }
 }
