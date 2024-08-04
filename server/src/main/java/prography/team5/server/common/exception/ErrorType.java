@@ -49,7 +49,10 @@ public enum ErrorType {
     MULTIPLE_CHOICE_NOT_ALLOWED(-9, "복수 선택이 허용되지 않은 투표입니다."),
 
     //정보 에러
-    CATEGORY_NOT_INCLUDED_IN_INFORMATION(-10, "해당 콘텐츠는 해당 카테고리에 속하지 않습니다.");
+    CATEGORY_NOT_INCLUDED_IN_INFORMATION(-10, "해당 콘텐츠는 해당 카테고리에 속하지 않습니다."),
+
+    //버전 에러
+    DUPLICATED_VERSION(-11, "이미 등록된 버전입니다.");
 
     private final int code;
     private final String message;
