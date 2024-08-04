@@ -23,17 +23,21 @@ public class InformationCard extends Card {
     @Column(nullable = false, columnDefinition = "longtext")
     private String referenceUrl;
 
+    private String adminName;
+
     public InformationCard(
             final String title,
             final List<Category> categories,
             final String content,
             final String referenceName,
-            final String referenceUrl
+            final String referenceUrl,
+            final String adminName
     ) {
         super(title, categories);
         this.content = content;
         this.referenceName = referenceName;
         this.referenceUrl = referenceUrl;
+        this.adminName = adminName;
     }
 
     public void checkCategory(final Category category) {
@@ -47,12 +51,14 @@ public class InformationCard extends Card {
             final String content,
             final List<Category> categories,
             final String referenceName,
-            final String referenceUrl
+            final String referenceUrl,
+            final String adminName
     ) {
         this.title = title;
         this.content = content;
         this.categories = categories;
         this.referenceName = referenceName;
         this.referenceUrl = referenceUrl;
+        this.adminName = adminName;
     }
 }

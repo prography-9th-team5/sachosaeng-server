@@ -35,7 +35,8 @@ public class InformationAdminService {
                 categories,
                 informationCreationRequest.content(),
                 informationCreationRequest.referenceName(),
-                informationCreationRequest.referenceUrl()
+                informationCreationRequest.referenceUrl(),
+                informationCreationRequest.adminName()
         );
         final Long cardId = informationCardRepository.save(informationCard).getId();
         return new InformationIdResponse(cardId);
@@ -71,7 +72,8 @@ public class InformationAdminService {
                 request.content(),
                 categories,
                 request.referenceName(),
-                request.referenceUrl()
+                request.referenceUrl(),
+                request.adminName()
         );
     }
 }

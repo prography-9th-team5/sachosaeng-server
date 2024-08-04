@@ -46,7 +46,8 @@ document.getElementById('informationForm').addEventListener('submit', function(e
         content: formData.get('content'),
         categoryIds: categories.map(Number),
         referenceName: formData.get('referenceName'),
-        referenceUrl: formData.get('referenceUrl')
+        referenceUrl: formData.get('referenceUrl'),
+        adminName: formData.get('adminName')
     };
 
     fetch('/admin/information', {
@@ -83,6 +84,7 @@ function openDetailModal(element) {
                 <p><strong>콘텐츠 내용:</strong> ${formattedContent}</p>
                 <p><strong>출처:</strong> ${information.referenceName} </p>
                 <p><strong>출처 url:</strong> ${information.referenceUrl} </p>
+                <p><strong>작성자:</strong> ${information.adminName} </p>
             `;
             detailContent.innerHTML = htmlContent;
 
@@ -113,6 +115,7 @@ function openEditModal(button) {
             document.getElementById('editContent').value = information.content;
             document.getElementById('editReferenceName').value = information.referenceName;
             document.getElementById('editReferenceUrl').value = information.referenceUrl;
+            document.getElementById('editAdminName').value = information.adminName;
 
             // Load categories and mark them
             console.log('Selected categories for editing:', information.categories);
@@ -181,7 +184,8 @@ document.getElementById('editInformationForm').addEventListener('submit', functi
         content: formData.get('content'),
         categoryIds: categories.map(Number),
         referenceName: formData.get('referenceName'),
-        referenceUrl: formData.get('referenceUrl')
+        referenceUrl: formData.get('referenceUrl'),
+        adminName: formData.get('adminName')
     };
 
     const informationId = formData.get('informationId');

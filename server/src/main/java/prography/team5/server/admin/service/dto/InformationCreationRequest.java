@@ -7,6 +7,7 @@ public record InformationCreationRequest(
         String content,
         List<Long> categoryIds,
         String referenceName,
-        String referenceUrl
+        String referenceUrl,
+        String adminName
 ) {
 }
