@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [08/04 업데이트]
+                    1. 버전 관련 api들을 추가하였으니 확인해주세요.
+                    
                     [07/25 업데이트]
                     1. 회원탈퇴 api를 추가하였습니다.
                     

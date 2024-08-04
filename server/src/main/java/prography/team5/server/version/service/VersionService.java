@@ -29,6 +29,9 @@ public class VersionService {
     @Transactional(readOnly = true)
     public List<VersionCheckResponse> findAllIosVersions() {
         final List<Version> allByPlatform = versionRepository.findAllByPlatform(Platform.IOS);
+        if(allByPlatform.isEmpty()) {
+            throw new SachosaengException(ErrorType.NO_VERSION);
+        }
         final Version latestVersion = allByPlatform.get(allByPlatform.size() - 1);
         return allByPlatform.stream()
                 .map(each -> new VersionCheckResponse(
@@ -57,6 +60,54 @@ public class VersionService {
     @Transactional
     public void registerIosVersionForceUpdate(final ForceUpdateRequest request) {
         final List<Version> versions = versionRepository.findAllByPlatformAndNameIn(Platform.IOS,
+                request.versions());
+        versions.forEach(each -> each.forceUpdate(request.forceUpdateRequired()));
+    }
+
+    @Transactional
+    public void registerAndroidVersion(final VersionRequest request) {
+        if(versionRepository.existsByNameAndPlatform(request.version(), Platform.ANDROID)) {
+            throw new SachosaengException(ErrorType.DUPLICATED_VERSION);
+        }
+
+        final Version version = new Version(request.version(), Platform.ANDROID);
+        versionRepository.save(version);
+    }
+
+    @Transactional(readOnly = true)
+    public List<VersionCheckResponse> findAllAndroidVersions() {
+        final List<Version> allByPlatform = versionRepository.findAllByPlatform(Platform.ANDROID);
+        if(allByPlatform.isEmpty()) {
+            throw new SachosaengException(ErrorType.NO_VERSION);
+        }
+        final Version latestVersion = allByPlatform.get(allByPlatform.size() - 1);
+        return allByPlatform.stream()
+                .map(each -> new VersionCheckResponse(
+                        each.getName(),
+                        each.getPlatform().name(),
+                        each.equals(latestVersion),
+                        each.isForceUpdateRequired()
+                )).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public VersionCheckResponse checkAndroidVersion(final String versionName) {
+        final List<Version> allByPlatform = versionRepository.findAllByPlatform(Platform.ANDROID);
+        if(allByPlatform.isEmpty()) {
+            throw new SachosaengException(ErrorType.NO_VERSION);
+        }
+        final Version latestVersion = allByPlatform.get(allByPlatform.size() - 1);
+        final Version version = allByPlatform.stream()
+                .filter(each -> each.getName().equals(versionName))
+                .findFirst()
+                .orElseThrow(() -> new SachosaengException(ErrorType.NO_SPECIFIC_VERSION));
+
+        return new VersionCheckResponse(version.getName(), version.getPlatform().name(), version.equals(latestVersion),version.isForceUpdateRequired());
+    }
+
+    @Transactional
+    public void registerAndroidVersionForceUpdate(final ForceUpdateRequest request) {
+        final List<Version> versions = versionRepository.findAllByPlatformAndNameIn(Platform.ANDROID,
                 request.versions());
         versions.forEach(each -> each.forceUpdate(request.forceUpdateRequired()));
     }

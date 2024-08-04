@@ -13,7 +13,7 @@ import prography.team5.server.version.service.VersionCheckResponse;
 import prography.team5.server.version.service.VersionRequest;
 
 @Tag(name = "0-1. IOS 버전", description = "IOS 버전 관련 기능입니다.")
-public interface VersionApiDocs {
+public interface IosVersionApiDocs {
 
     @Operation(
             summary = "[IOS] 최신 버전 등록 API",
