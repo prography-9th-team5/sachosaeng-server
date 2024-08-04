@@ -32,4 +32,8 @@ public class Version extends TimeRecord {
         this.name = name;
         this.platform = platform;
     }
+
+    public void forceUpdate(final boolean required) {
+        this.forceUpdateRequired = required;
+    }
 }

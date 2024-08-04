@@ -52,7 +52,9 @@ public enum ErrorType {
     CATEGORY_NOT_INCLUDED_IN_INFORMATION(-10, "해당 콘텐츠는 해당 카테고리에 속하지 않습니다."),
 
     //버전 에러
-    DUPLICATED_VERSION(-11, "이미 등록된 버전입니다.");
+    DUPLICATED_VERSION(-11, "이미 등록된 버전입니다."),
+    NO_VERSION(-11, "등록된 버전이 하나도 없습니다."),
+    NO_SPECIFIC_VERSION(-11, "등록되지 않은 버전입니다.");
 
     private final int code;
     private final String message;
