@@ -6,7 +6,7 @@ import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.service.dto.CategoryResponse;
 
-public record SimpleVoteWithCategoryResponse(Long voteId, String title, Long participantCount, boolean isVoted, CategoryResponse category) {
+public record SimpleVoteWithCategoryResponse(Long voteId, String title, Long participantCount, boolean isVoted, CategoryResponse category, boolean isClosed) {
 
     public static SimpleVoteWithCategoryResponse toHotVoteResponse(final VoteCard vote, final boolean isVoted) {
         final Category category = vote.getCategories().get(0);
@@ -15,7 +15,8 @@ public record SimpleVoteWithCategoryResponse(Long voteId, String title, Long par
                 vote.getTitle(),
                 vote.getHotParticipantCount(),
                 isVoted,
-                CategoryResponse.toResponseWith18px(category)
+                CategoryResponse.toResponseWith18px(category),
+                vote.isClosed()
         );
     }
 
@@ -32,7 +33,8 @@ public record SimpleVoteWithCategoryResponse(Long voteId, String title, Long par
                 vote.getTitle(),
                 vote.getParticipantCount(),
                 isVoted,
-                CategoryResponse.toResponseWith18px(category)
+                CategoryResponse.toResponseWith18px(category),
+                vote.isClosed()
         );
     }
 }

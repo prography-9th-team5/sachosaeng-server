@@ -5,14 +5,15 @@ import java.util.Map;
 import prography.team5.server.card.domain.VoteCard;
 
 
-public record SimpleVoteResponse(Long voteId, String title, Long participantCount, boolean isVoted) {
+public record SimpleVoteResponse(Long voteId, String title, Long participantCount, boolean isVoted, boolean isClosed) {
 
     public static SimpleVoteResponse toResponse(final VoteCard voteCard, final boolean isVoted) {
         return new SimpleVoteResponse(
                 voteCard.getId(),
                 voteCard.getTitle(),
                 voteCard.getParticipantCount(),
-                isVoted
+                isVoted,
+                voteCard.isClosed()
         );
     }
 
@@ -24,7 +25,7 @@ public record SimpleVoteResponse(Long voteId, String title, Long participantCoun
     }
 
     public static SimpleVoteResponse toHotVoteResponse(final VoteCard voteCard, final boolean isVoted) {
-        return new SimpleVoteResponse(voteCard.getId(), voteCard.getTitle(), voteCard.getHotParticipantCount(), isVoted);
+        return new SimpleVoteResponse(voteCard.getId(), voteCard.getTitle(), voteCard.getHotParticipantCount(), isVoted, voteCard.isClosed());
     }
 
     public static List<SimpleVoteResponse> toHotVoteResponse(final List<VoteCard> votes, final Map<Long, Boolean> isVotedAnalysis) {
