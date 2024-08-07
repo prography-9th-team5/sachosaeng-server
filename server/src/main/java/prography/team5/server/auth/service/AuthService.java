@@ -65,7 +65,7 @@ public class AuthService {
 
     @Transactional
     public void withdraw(final Accessor accessor, final WithdrawRequest withdrawRequest) {
-        final User user = userRepository.findById(accessor.id()).orElseThrow();
+        final User user = userRepository.findById(accessor.id()).orElseThrow(() -> new SachosaengException(ErrorType.INVALID_USER_ID));
         final Withdraw withdraw = Withdraw.of(accessor.id(), user.getEmail(), withdrawRequest.reason());
         //todo: 개발용 임시 주석
         user.withdraw();
