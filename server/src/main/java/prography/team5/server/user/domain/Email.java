@@ -2,6 +2,7 @@ package prography.team5.server.user.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import java.util.UUID;
 import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -39,6 +40,9 @@ public class Email {
     }
 
     public void encrypt() {
-        this.value = EmailEncryptor.encrypt(this.value);
+        //todo: 개발용 임시 주석
+        //this.value = EmailEncryptor.encrypt(this.value);
+        UUID uuid = UUID.randomUUID();
+        this.value = "email@test" + uuid.toString();
     }
 }

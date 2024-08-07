@@ -67,8 +67,9 @@ public class AuthService {
     public void withdraw(final Accessor accessor, final WithdrawRequest withdrawRequest) {
         final User user = userRepository.findById(accessor.id()).orElseThrow();
         final Withdraw withdraw = Withdraw.of(accessor.id(), user.getEmail(), withdrawRequest.reason());
+        //todo: 개발용 임시 주석
         user.withdraw();
-        withdrawRepository.save(withdraw);
+        //withdrawRepository.save(withdraw);
         refreshTokenManager.invalidateRefreshToken(accessor.id());
     }
 }
