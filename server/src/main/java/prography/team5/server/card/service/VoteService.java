@@ -9,6 +9,7 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.auth.service.dto.Accessor;
@@ -129,7 +130,7 @@ public class VoteService {
     @Transactional(readOnly = true)
     public List<CategoryVoteSuggestionsResponse> findSuggestionsOfAllCategories(final Accessor accessor) {
         //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
-        final List<Category> categories = categoryRepository.findAll();
+        final List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
         for (Category category : categories) {
             final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
@@ -147,7 +148,7 @@ public class VoteService {
 
     @Transactional(readOnly = true)
     public List<CategoryVoteSuggestionsResponse> findSuggestionsOfMy(final Long userId) {
-        final List<MyCategory> myCategories = myCategoryRepository.findAllByUserId(userId);
+        final List<MyCategory> myCategories = myCategoryRepository.findAllByUserIdOrderByCategoryPriorityAsc(userId);
         //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
         if(myCategories.isEmpty()) {
             final User user = userRepository.findById(userId).orElseThrow();
