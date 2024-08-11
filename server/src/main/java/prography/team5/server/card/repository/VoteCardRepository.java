@@ -30,4 +30,10 @@ public interface VoteCardRepository extends JpaRepository<VoteCard, Long> {
 
     @Query("SELECT c FROM VoteCard c ORDER BY c.participantCount ASC, c.id ASC")
     List<VoteCard> findWithFewestParticipants(PageRequest pageRequest);
+
+    @Query("SELECT MIN(c.participantCount) FROM VoteCard c")
+    Integer findMinParticipantCount();
+
+    @Query("SELECT c FROM VoteCard c WHERE c.participantCount = :minCount ORDER BY c.id ASC")
+    List<VoteCard> findWithFewestParticipants(@Param("minCount") Integer minCount);
 }

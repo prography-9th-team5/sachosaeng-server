@@ -1,6 +1,7 @@
 package prography.team5.server.card.service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,6 @@ public class DailyVoteService {
     private final VoteCardRepository voteCardRepository;
     private final UserVotingAnalysis userVotingAnalysis;
 
-    //todo: 오늘의 투표 선정 정책은? 일단은 가장 투표수 낮은거 하나 내보냄.
     @Transactional
     public SimpleVoteWithCategoryResponse getTodayVote(final Accessor accessor) {
         final LocalDate today = LocalDate.now();
@@ -33,9 +33,13 @@ public class DailyVoteService {
             final boolean isVoted = userVotingAnalysis.analyzeIsVoted(voteCard.getId(), accessor.id());
             return SimpleVoteWithCategoryResponse.toResponseWith18px(voteCard, isVoted);
         }
-        final List<VoteCard> withFewestParticipants = voteCardRepository.findWithFewestParticipants(
-                PageRequest.ofSize(1)
-        );
+        Integer minParticipantCount = voteCardRepository.findMinParticipantCount();
+        final List<VoteCard> withFewestParticipants = voteCardRepository.findWithFewestParticipants(minParticipantCount);
+        Collections.shuffle(withFewestParticipants);
+
+        if (withFewestParticipants.isEmpty()) {
+            throw new IllegalArgumentException("No votes");
+        }
         final VoteCard voteCard = withFewestParticipants.get(0);
         dailyVoteCardRepository.save(new DailyVoteCard(voteCard));
         final boolean isVoted = userVotingAnalysis.analyzeIsVoted(voteCard.getId(), accessor.id());
