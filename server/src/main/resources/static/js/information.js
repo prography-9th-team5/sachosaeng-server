@@ -207,3 +207,37 @@ document.getElementById('editInformationForm').addEventListener('submit', functi
             alert('An error occurred. Please try again later.');
         });
 });
+
+function filterInformationByCategory() {
+    // 선택된 카테고리의 값을 가져옵니다.
+    const selectedCategory = document.getElementById('categorySelect').value;
+
+    // 모든 정보 행을 가져옵니다.
+    const informationRows = document.querySelectorAll('#informationTableBody tr');
+
+    // 각 정보 행을 반복합니다.
+    informationRows.forEach(row => {
+        // 행의 데이터 속성에서 카테고리 ID 목록을 가져옵니다.
+        const categoryIdsString = row.getAttribute('data-category-ids');
+
+        // 정규 표현식으로 categoryId 값을 추출합니다.
+        const matches = categoryIdsString.match(/categoryId=(\d+)/g);
+
+        // matches가 null이 아닌 경우에만 map()을 호출합니다.
+        const categoryIds = matches ? matches.map(match => match.split('=')[1]) : [];
+
+        // 선택된 카테고리 값과 데이터 속성 ID들을 출력해 확인합니다.
+        console.log('Selected Category:', selectedCategory);
+        console.log('Category IDs:', categoryIds);
+
+        // 선택된 카테고리가 "all"이거나 카테고리 목록에 포함되어 있는지 확인합니다.
+        if (selectedCategory === 'all' || categoryIds.includes(selectedCategory)) {
+            // 조건을 만족하면 행을 표시합니다.
+            row.style.display = '';
+        } else {
+            // 조건을 만족하지 않으면 행을 숨깁니다.
+            row.style.display = 'none';
+        }
+    });
+}
+

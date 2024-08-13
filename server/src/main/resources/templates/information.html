@@ -21,6 +21,15 @@
 <div class="container">
     <h1>Information Cards</h1>
 
+    <!-- Category Filter -->
+    <div class="category-filter">
+        <label for="categorySelect">카테고리 필터 적용하기:</label>
+        <select id="categorySelect" onchange="filterInformationByCategory()">
+            <option value="all">전체</option>
+            <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}">Category Name</option>
+        </select>
+    </div>
+
     <div class="btn-group">
         <button class="add-btn" onclick="openAddModal()">추가</button>
     </div>
@@ -103,12 +112,12 @@
             <th>수정</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="information : ${information}">
-            <td th:text="${information.informationId}">Information Id</td>
-            <td th:text="${information.title}" class="clickable" th:attr="data-id=${information.informationId}" onclick="openDetailModal(this)">Title</td>
-            <td th:text="${information.referenceName}">Reference Name</td>
-            <td><button class="edit-btn" onclick="openEditModal(this)" th:attr="data-id=${information.informationId}">수정</button></td>
+        <tbody id="informationTableBody">
+        <tr th:each="info : ${information}" th:attr="data-category-ids=${info.categories}">
+            <td th:text="${info.informationId}">Information Id</td>
+            <td th:text="${info.title}" class="clickable" th:attr="data-id=${info.informationId}" onclick="openDetailModal(this)">Title</td>
+            <td th:text="${info.referenceName}">Reference Name</td>
+            <td><button class="edit-btn" onclick="openEditModal(this)" th:attr="data-id=${info.informationId}">수정</button></td>
         </tr>
         </tbody>
     </table>

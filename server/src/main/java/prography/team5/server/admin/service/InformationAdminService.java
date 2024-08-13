@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.admin.service.dto.FullInformationResponse;
@@ -50,17 +52,9 @@ public class InformationAdminService {
     }
 
     @Transactional(readOnly = true)
-    public List<FullInformationResponse> findAll(final Long cursor, final Integer pageSize) {
-        final PageRequest pageRequest = PageRequest.ofSize(pageSize);
-        return findAll(cursor, pageRequest);
-    }
-
-    private List<FullInformationResponse> findAll(final Long cursor, final PageRequest pageRequest) {
-        if (Objects.isNull(cursor)) {
-            return FullInformationResponse.from(informationCardRepository.findLatestCards(pageRequest).getContent());
-        }
-        return FullInformationResponse.from(
-                informationCardRepository.findBeforeCursor(cursor, pageRequest).getContent());
+    public List<FullInformationResponse> findAll() {
+        final List<InformationCard> all = informationCardRepository.findAll(Sort.by(Direction.DESC, "id"));
+        return FullInformationResponse.from(all);
     }
 
     @Transactional

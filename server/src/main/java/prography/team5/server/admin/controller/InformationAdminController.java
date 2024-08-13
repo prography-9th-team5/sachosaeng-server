@@ -16,6 +16,8 @@ import prography.team5.server.admin.service.InformationAdminService;
 import prography.team5.server.admin.service.dto.FullInformationResponse;
 import prography.team5.server.card.service.dto.InformationIdResponse;
 import prography.team5.server.admin.service.dto.InformationCreationRequest;
+import prography.team5.server.category.service.CategoryService;
+import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
 
 @RestController
@@ -24,12 +26,14 @@ import prography.team5.server.common.CommonApiResponse;
 public class InformationAdminController {
 
     private final InformationAdminService informationAdminService;
+    private final CategoryService categoryService;
 
     @GetMapping
     public ModelAndView information(ModelAndView modelAndView) {
-        //todo: 게시글 많을때도 옛날 게시글 조회되게!
-        final List<FullInformationResponse> information = informationAdminService.findAll(null,100);
+        final List<FullInformationResponse> information = informationAdminService.findAll();
         modelAndView.addObject("information", information);
+        final List<CategoryResponse> categories = categoryService.findAll();
+        modelAndView.addObject("categories", categories);
         modelAndView.setViewName("information");
         return modelAndView;
     }
