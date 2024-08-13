@@ -22,6 +22,15 @@
 <div class="container">
     <h1>Vote Topics</h1>
 
+    <!-- Category Filter -->
+    <div class="category-filter">
+        <label for="categorySelect">카테고리 필터 적용하기:</label>
+        <select id="categorySelect" onchange="filterVotesByCategory()">
+            <option value="all">전체</option>
+            <option th:each="category : ${categories}" th:value="${category.categoryId}" th:text="${category.name}">Category Name</option>
+        </select>
+    </div>
+
     <div class="btn-group">
         <button class="add-btn" onclick="openAddModal()">추가</button>
     </div>
@@ -112,8 +121,8 @@
             <th>수정</th> <!-- 추가된 부분 -->
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="vote : ${votes}">
+        <tbody id="votesTableBody">
+        <tr th:each="vote : ${votes}"  th:attr="data-category-ids=${vote.categoryIds}">
             <td th:text="${vote.voteId}">Vote ID</td>
             <td th:text="${vote.title}" class="clickable" th:attr="data-id=${vote.voteId}" onclick="openDetailModal(this)">Title</td>
             <td th:text="${vote.userId}">User ID</td>

@@ -33,13 +33,10 @@ public class VoteAdminService {
     }
 
     @Transactional(readOnly = true)
-    public List<SimpleVoteWithWriterResponse> findAll(
-            final int pageNumber,
-            final Integer pageSize
-    ) {
-        final PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Direction.DESC, "id"));
-        final Page<VoteCard> all = voteCardRepository.findAll(pageRequest);
-        return SimpleVoteWithWriterResponse.toResponse(all.getContent());
+    public List<SimpleVoteWithWriterResponse> findAll() {
+        //final PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Direction.DESC, "id"));
+        final List<VoteCard> all = voteCardRepository.findAll(Sort.by(Direction.DESC, "id"));
+        return SimpleVoteWithWriterResponse.toResponse(all);
     }
 
     @Transactional(readOnly = true)

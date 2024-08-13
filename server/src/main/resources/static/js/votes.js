@@ -221,3 +221,36 @@ document.getElementById('editVoteForm').addEventListener('submit', function(even
             alert('Failed to update vote.');
         });
 });
+
+function filterVotesByCategory() {
+    // 선택된 카테고리의 값을 가져옵니다.
+    const selectedCategory = document.getElementById('categorySelect').value;
+
+    // 모든 투표 행을 가져옵니다.
+    const voteRows = document.querySelectorAll('#votesTableBody tr');
+
+    // 각 투표 행을 반복합니다.
+    voteRows.forEach(row => {
+        // 행의 데이터 속성에서 카테고리 ID 목록을 가져옵니다.
+        const categoryIdsString = row.getAttribute('data-category-ids');
+
+        // 데이터 속성에서 불필요한 문자를 제거하여 JSON 문자열로 변환합니다.
+        const jsonString = '[' + categoryIdsString.replace('[', '').replace(']', '').replace(/'/g, '') + ']';
+
+        // JSON 형식으로 파싱하여 카테고리 ID 목록을 가져옵니다.
+        const categoryIds = JSON.parse(jsonString);
+
+        // 선택된 카테고리 값과 데이터 속성 ID들을 출력해 확인합니다.
+        console.log('Selected Category:', selectedCategory);
+        console.log('Category IDs:', categoryIds);
+
+        // 선택된 카테고리가 "all"이거나 카테고리 목록에 포함되어 있는지 확인합니다.
+        if (selectedCategory === 'all' || categoryIds.includes(parseInt(selectedCategory))) {
+            // 조건을 만족하면 행을 표시합니다.
+            row.style.display = '';
+        } else {
+            // 조건을 만족하지 않으면 행을 숨깁니다.
+            row.style.display = 'none';
+        }
+    });
+}

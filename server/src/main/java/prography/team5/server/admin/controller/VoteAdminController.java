@@ -3,6 +3,8 @@ package prography.team5.server.admin.controller;
 import io.swagger.v3.oas.annotations.Hidden;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,8 @@ import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.card.service.dto.VoteRequest;
+import prography.team5.server.category.service.CategoryService;
+import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
 
 @RestController
@@ -28,11 +32,14 @@ import prography.team5.server.common.CommonApiResponse;
 public class VoteAdminController {
 
     private final VoteAdminService voteAdminService;
+    private final CategoryService categoryService;
 
     @GetMapping
     public ModelAndView votes(ModelAndView modelAndView) {
-        final List<SimpleVoteWithWriterResponse> votes = voteAdminService.findAll(0, 200);
+        final List<SimpleVoteWithWriterResponse> votes = voteAdminService.findAll();
+        final List<CategoryResponse> categories = categoryService.findAll();
         modelAndView.addObject("votes", votes);
+        modelAndView.addObject("categories", categories);
         modelAndView.setViewName("votes");
         return modelAndView;
     }
