@@ -11,4 +11,6 @@ public interface SuggestionVoteCardRepository extends JpaRepository<SuggestionVo
 
     @Query("SELECT s FROM SuggestionVoteCard s WHERE s.viewDate >= :startDate")
     List<SuggestionVoteCard> findRecentSuggestionVoteCards(@Param("startDate") LocalDate startDate);
+
+    List<SuggestionVoteCard> findAllByViewDate(LocalDate viewDate);
 }

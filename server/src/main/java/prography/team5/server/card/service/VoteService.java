@@ -1,5 +1,6 @@
 package prography.team5.server.card.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.domain.Card;
 import prography.team5.server.card.domain.SortType;
+import prography.team5.server.card.domain.SuggestionVoteCard;
 import prography.team5.server.card.domain.UserVoteOption;
+import prography.team5.server.card.repository.SuggestionVoteCardRepository;
 import prography.team5.server.card.repository.UserVoteOptionRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.VoteCardRepository;
@@ -44,6 +47,7 @@ public class VoteService {
     private final UserRepository userRepository;
     private final UserVoteOptionRepository userVoteOptionRepository;
     private final UserVotingAnalysis userVotingAnalysis;
+    private final SuggestionVoteCardRepository suggestionVoteCardRepository;
 
     @Transactional(readOnly = true)
     public VoteResponse findByVoteId(final Long userId, final long voteId, final Long categoryId) {
@@ -129,14 +133,12 @@ public class VoteService {
 
     @Transactional(readOnly = true)
     public List<CategoryVoteSuggestionsResponse> findSuggestionsOfAllCategories(final Accessor accessor) {
-        //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
         final List<Category> categories = categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "priority"));
+        final List<SuggestionVoteCard> suggestionCards = suggestionVoteCardRepository.findAllByViewDate(LocalDate.now());
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
         for (Category category : categories) {
-            final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
-                    category.getId(),
-                    PageRequest.ofSize(3)
-            ).getContent();
+            final List<VoteCard> votes = suggestionCards.stream().filter(each -> each.getCategory().equals(category))
+                    .map(SuggestionVoteCard::getVoteCard).toList();
             final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
                     votes.stream().map(Card::getId).toList(),
                     accessor.id()
@@ -149,7 +151,6 @@ public class VoteService {
     @Transactional(readOnly = true)
     public List<CategoryVoteSuggestionsResponse> findSuggestionsOfMy(final Long userId) {
         final List<MyCategory> myCategories = myCategoryRepository.findAllByUserIdOrderByCategoryPriorityAsc(userId);
-        //todo: 지금은 최신순으로 임시 땜빵중 로테이션 돌리는 로직으로 변경요망
         if(myCategories.isEmpty()) {
             final User user = userRepository.findById(userId).orElseThrow();
             return suggestBasedOnUserType(user.getUserType(), userId);
@@ -159,12 +160,11 @@ public class VoteService {
 
     private List<CategoryVoteSuggestionsResponse> suggestBasedOnUserType(final UserType userType, final long userId) {
         final List<Category> categories = categoryRepository.findAllByUserType(userType);
+        final List<SuggestionVoteCard> suggestionCards = suggestionVoteCardRepository.findAllByViewDate(LocalDate.now());
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
         for (Category category : categories) {
-            final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
-                    category.getId(),
-                    PageRequest.ofSize(3)
-            ).getContent();
+            final List<VoteCard> votes = suggestionCards.stream().filter(each -> each.getCategory().equals(category))
+                    .map(SuggestionVoteCard::getVoteCard).toList();
             final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
                     votes.stream().map(Card::getId).toList(),
                     userId
@@ -179,12 +179,11 @@ public class VoteService {
             final long userId
     ) {
         List<CategoryVoteSuggestionsResponse> response = new ArrayList<>();
+        final List<SuggestionVoteCard> suggestionCards = suggestionVoteCardRepository.findAllByViewDate(LocalDate.now());
         for (MyCategory myCategory : myCategories) {
             final Category category = myCategory.getCategory();
-            final List<VoteCard> votes = voteCardRepository.findLatestCardsByCategoriesId(
-                    category.getId(),
-                    PageRequest.ofSize(3)
-            ).getContent();
+            final List<VoteCard> votes = suggestionCards.stream().filter(each -> each.getCategory().equals(category))
+                    .map(SuggestionVoteCard::getVoteCard).toList();
             final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
                     votes.stream().map(Card::getId).toList(),
                     userId

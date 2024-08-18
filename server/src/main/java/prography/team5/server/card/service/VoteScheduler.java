@@ -27,12 +27,14 @@ public class VoteScheduler {
     private final SuggestionVoteCardRepository suggestionVoteCardRepository;
     private final VoteCardRepository voteCardRepository;
     private final CategoryRepository categoryRepository;
-    @Scheduled(cron = "0 47 1 * * *", zone = "Asia/Seoul")
+
+    @Scheduled(cron = "0 30 2 * * *", zone = "Asia/Seoul")
     @Transactional
     public void scheduleTomorrowVote() {
         // 다음날 날짜를 계산합니다.
-        final LocalDate tomorrow = LocalDate.now();
+        final LocalDate tomorrow = LocalDate.now().plusDays(1);
 
+        // todo: 최근 6일간 노출되지 않았던 투표를 노출하기!
         log.info("suggestion-vote empty! At " + LocalDateTime.now() + ", start creating suggestion votes for " + tomorrow);
         final List<Category> categories = categoryRepository.findAll();
         final List<VoteCard> votes = voteCardRepository.findAll();
