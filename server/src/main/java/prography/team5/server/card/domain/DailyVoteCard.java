@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,8 +26,10 @@ public class DailyVoteCard extends TimeRecord {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private VoteCard voteCard;
+    private LocalDate viewDate;
 
-    public DailyVoteCard(final VoteCard voteCard) {
+    public DailyVoteCard(final VoteCard voteCard, final LocalDate viewDate) {
         this.voteCard = voteCard;
+        this.viewDate = viewDate;
     }
 }
