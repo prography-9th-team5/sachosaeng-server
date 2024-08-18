@@ -20,7 +20,7 @@ public class EmbeddingService {
     private final EmbeddedInformationRepository embeddedInformationRepository;
 
     //트랜잭션X
-    public void embed() {
+    public synchronized void embed() {
         // embeddedInformationRepository에가 가장 마지막에 embedded된 information id를 가져온다.
         Long lastEmbeddedId = embeddedInformationRepository.findTopByOrderByIdDesc()
                 .map(EmbeddedInformation::getInformationId)
