@@ -115,6 +115,13 @@ public class VoteCard extends Card {
         }
     }
 
+    public boolean isSameCategory(final Category category) {
+        if (this.categories.contains(category)) {
+            return true;
+        }
+        return false;
+    }
+
     public static long getHotCountFloor() {
         return HOT_COUNT_FLOOR;
     }
