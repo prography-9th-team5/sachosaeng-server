@@ -28,24 +28,44 @@ public class VoteScheduler {
     private final VoteCardRepository voteCardRepository;
     private final CategoryRepository categoryRepository;
 
-    @Scheduled(cron = "0 30 2 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 25 2 * * *", zone = "Asia/Seoul")
     @Transactional
-    public void scheduleTomorrowVote() {
+    public void scheduleTomorrowSuggestionVote() {
         // 다음날 날짜를 계산합니다.
         final LocalDate tomorrow = LocalDate.now().plusDays(1);
+        final LocalDate sixDaysAgo = LocalDate.now().minusDays(6);
 
-        // todo: 최근 6일간 노출되지 않았던 투표를 노출하기!
         log.info("suggestion-vote empty! At " + LocalDateTime.now() + ", start creating suggestion votes for " + tomorrow);
+        final List<SuggestionVoteCard> recentSuggestionVotes = suggestionVoteCardRepository.findRecentSuggestionVoteCards(sixDaysAgo);
         final List<Category> categories = categoryRepository.findAll();
         final List<VoteCard> votes = voteCardRepository.findAll();
         List<SuggestionVoteCard> save = new ArrayList<>();
         for (Category category : categories) {
+            final List<VoteCard> recent = recentSuggestionVotes.stream()
+                    .map(SuggestionVoteCard::getVoteCard).filter(voteCard -> voteCard.isSameCategory(category)).toList();
             final List<VoteCard> cardsOfCategory = new ArrayList<>(votes.stream().filter(each -> each.isSameCategory(category)).toList());
-            Collections.shuffle(cardsOfCategory);
-            int length = Math.min(cardsOfCategory.size(), 3);
-            for (int i = 0; i < length; i++) {
+            final List<VoteCard> notRecent = new ArrayList<>(
+                    cardsOfCategory.stream().filter(each -> !recent.contains(each)).toList());
+            Collections.shuffle(notRecent);
+
+            // 3개를 선택
+            int length = Math.min(notRecent.size(), 3);
+            List<VoteCard> selectedCards = new ArrayList<>(notRecent.subList(0, length));
+
+            if (length < 3 && cardsOfCategory.size() > length) {
+                // notRecent에 부족한 부분을 cardsOfCategory에서 채움 (중복 제외)
+                List<VoteCard> remainingCards = new ArrayList<>(cardsOfCategory);
+                remainingCards.removeAll(selectedCards);
+                if (!remainingCards.isEmpty()) {
+                    Collections.shuffle(remainingCards);
+                    final int toAdd = Math.min(remainingCards.size(), 3 - length);
+                    selectedCards.addAll(remainingCards.subList(0, toAdd));
+                }
+            }
+
+            for (VoteCard selectedCard : selectedCards) {
                 save.add(new SuggestionVoteCard(
-                        cardsOfCategory.get(i),
+                        selectedCard,
                         category,
                         tomorrow
                 ));
