@@ -92,14 +92,23 @@ document.getElementById('voteForm').addEventListener('submit', function(event) {
         },
         body: JSON.stringify(voteRequest),
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(errorData => {
+                    // 에러 메시지를 추출하여 catch 블록으로 전달
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                });
+            }
+        })
         .then(data => {
             alert(data.message);
             location.reload();
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('Failed to create vote.');
+            alert(error);
         });
 })
 
@@ -211,14 +220,23 @@ document.getElementById('editVoteForm').addEventListener('submit', function(even
         },
         body: JSON.stringify(voteRequest),
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(errorData => {
+                    // 에러 메시지를 추출하여 catch 블록으로 전달
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                });
+            }
+        })
         .then(data => {
             alert(data.message);
             location.reload();
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('Failed to update vote.');
+            alert(error);
         });
 });
 

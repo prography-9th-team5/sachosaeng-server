@@ -29,12 +29,10 @@ public class InformationAdminService {
     public InformationIdResponse create(final InformationCreationRequest informationCreationRequest) {
         final List<Long> categoryIds = informationCreationRequest.categoryIds();
         final List<Category> categories = categoryRepository.findAllByIdIn(categoryIds);
-        if (categories.isEmpty()) {
-            throw new RuntimeException(); //todo:
-        }
         final InformationCard informationCard = new InformationCard(
                 informationCreationRequest.title(),
                 categories,
+                informationCreationRequest.subtitle(),
                 informationCreationRequest.content(),
                 informationCreationRequest.referenceName(),
                 informationCreationRequest.referenceUrl(),
@@ -63,6 +61,7 @@ public class InformationAdminService {
         final List<Category> categories = categoryRepository.findAllByIdIn(request.categoryIds());
         informationCard.updateAll(
                 request.title(),
+                request.subtitle(),
                 request.content(),
                 categories,
                 request.referenceName(),

@@ -42,12 +42,13 @@ document.getElementById('informationForm').addEventListener('submit', function(e
     const categories = Array.from(formData.getAll('categories'));
 
     const requestBody = {
-        title: formData.get('title'),
-        content: formData.get('content'),
+        title: formData.get('title').trim() || null,
+        subtitle: formData.get('subtitle').trim() || null,
+        content: formData.get('content').trim() || null,
         categoryIds: categories.map(Number),
-        referenceName: formData.get('referenceName'),
-        referenceUrl: formData.get('referenceUrl'),
-        adminName: formData.get('adminName')
+        referenceName: formData.get('referenceName').trim() || null,
+        referenceUrl: formData.get('referenceUrl').trim() || null,
+        adminName: formData.get('adminName').trim() || null
     };
 
     fetch('/admin/information', {
@@ -57,14 +58,23 @@ document.getElementById('informationForm').addEventListener('submit', function(e
         },
         body: JSON.stringify(requestBody)
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(errorData => {
+                    // 에러 메시지를 추출하여 catch 블록으로 전달
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                });
+            }
+        })
         .then(data => {
             alert(data.message); // Show success message or handle response accordingly
             location.reload();// Optionally, you can redirect or update the UI
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('An error occurred. Please try again later.');
+            alert(error);
         });
 });
 
@@ -81,6 +91,7 @@ function openDetailModal(element) {
                 <h2>콘텐츠 상세보기</h2>
                 <p><strong>제목:</strong> ${information.title}</p>
                 <p><strong>카테고리:</strong> ${information.categories.map(category => category.name).join(', ')}</p>
+                <p><strong>소제목:</strong> ${information.subtitle}</p>
                 <p><strong>콘텐츠 내용:</strong> ${formattedContent}</p>
                 <p><strong>출처:</strong> ${information.referenceName} </p>
                 <p><strong>출처 url:</strong> ${information.referenceUrl} </p>
@@ -112,6 +123,7 @@ function openEditModal(button) {
             // Populate the edit form with current data
             document.getElementById('editInformationId').value = informationId;
             document.getElementById('editTitle').value = information.title;
+            document.getElementById('editSubtitle').value = information.subtitle;
             document.getElementById('editContent').value = information.content;
             document.getElementById('editReferenceName').value = information.referenceName;
             document.getElementById('editReferenceUrl').value = information.referenceUrl;
@@ -180,12 +192,13 @@ document.getElementById('editInformationForm').addEventListener('submit', functi
     console.log(categories)
 
     const requestBody = {
-        title: formData.get('title'),
-        content: formData.get('content'),
+        title: formData.get('title').trim() || null,
+        subtitle: formData.get('subtitle').trim() || null,
+        content: formData.get('content').trim() || null,
         categoryIds: categories.map(Number),
-        referenceName: formData.get('referenceName'),
-        referenceUrl: formData.get('referenceUrl'),
-        adminName: formData.get('adminName')
+        referenceName: formData.get('referenceName').trim() || null,
+        referenceUrl: formData.get('referenceUrl').trim() || null,
+        adminName: formData.get('adminName').trim() || null
     };
 
     const informationId = formData.get('informationId');
@@ -197,14 +210,23 @@ document.getElementById('editInformationForm').addEventListener('submit', functi
         },
         body: JSON.stringify(requestBody)
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(errorData => {
+                    // 에러 메시지를 추출하여 catch 블록으로 전달
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                });
+            }
+        })
         .then(data => {
             alert(data.message); // Show success message or handle response accordingly
             location.reload(); // Optionally, you can redirect or update the UI
         })
         .catch(error => {
             console.error('Error updating information:', error);
-            alert('An error occurred. Please try again later.');
+            alert(error);
         });
 });
 

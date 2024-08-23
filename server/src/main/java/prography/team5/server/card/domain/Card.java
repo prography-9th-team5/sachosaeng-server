@@ -11,8 +11,11 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import prography.team5.server.common.domian.TimeRecord;
 import prography.team5.server.category.domain.Category;
+import prography.team5.server.common.exception.ErrorType;
+import prography.team5.server.common.exception.SachosaengException;
 
 @Getter
 @EqualsAndHashCode(of = {"id"}, callSuper = false)
@@ -29,7 +32,21 @@ public abstract class Card extends TimeRecord {
     protected List<Category> categories;
 
     protected Card(final String title, final List<Category> categories) {
+        validateTitle(title);
+        validateCategory(categories);
         this.title = title;
         this.categories = categories;
+    }
+
+    protected void validateCategory(List<Category> categories) {
+        if (categories.isEmpty()) {
+            throw new SachosaengException(ErrorType.CARD_CATEGORY_EMPTY);
+        }
+    }
+
+    protected void validateTitle(String title) {
+        if(Strings.isBlank(title)) {
+            throw new SachosaengException(ErrorType.CARD_TITLE_EMPTY);
+        }
     }
 }

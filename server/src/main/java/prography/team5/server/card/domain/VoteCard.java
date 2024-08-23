@@ -12,6 +12,7 @@ import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.util.Strings;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.common.exception.ErrorType;
 import prography.team5.server.common.exception.SachosaengException;
@@ -40,13 +41,13 @@ public class VoteCard extends Card {
     }
 
     public static VoteCard of(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final String adminName) {
-        if(title.isEmpty()) {
+        if(Strings.isBlank(title)) {
             throw new SachosaengException(ErrorType.EMPTY_TITLE);
         }
         if (categories.isEmpty()) {
             throw new SachosaengException(ErrorType.EMPTY_CATEGORY);
         }
-        if (isBlank(adminName)) {
+        if (Strings.isBlank(adminName)) {
             throw new SachosaengException(ErrorType.EMPTY_ADMIN_NAME);
         }
         return new VoteCard(title, categories, isMultipleChoiceAllowed, adminName);

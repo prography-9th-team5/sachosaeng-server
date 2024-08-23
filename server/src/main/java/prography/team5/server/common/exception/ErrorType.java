@@ -31,8 +31,9 @@ public enum ErrorType {
     INVALID_USER_ID(-6, "존재하지 않는 유저입니다."),
     INVALID_USER_TYPE(-6, "존재하지 않는 유저 타입입니다."),
 
-    //정보 카드 에러
-    INVALID_INFORMATION_CARD_ID(-7, "존재하지 않는 정보id입니다."),
+    //카드 공통 에러
+    CARD_CATEGORY_EMPTY(-7, "카테고리가 비어있을 수 없습니다."),
+    CARD_TITLE_EMPTY(-7, "제목이 비어있을 수 없습니다."),
 
     //처리할 수 없는 url
     PAGE_NOT_FOUND(-8, "해당 url을 찾을 수 없습니다."),
@@ -49,7 +50,11 @@ public enum ErrorType {
     MULTIPLE_CHOICE_NOT_ALLOWED(-9, "복수 선택이 허용되지 않은 투표입니다."),
 
     //정보 에러
+    INVALID_INFORMATION_CARD_ID(-10, "존재하지 않는 정보id입니다."),
     CATEGORY_NOT_INCLUDED_IN_INFORMATION(-10, "해당 콘텐츠는 해당 카테고리에 속하지 않습니다."),
+    INFORMATION_REFERENCE_EMPTY(-10, "출처 이름이 비어있을 수 없습니다."),
+    INFORMATION_REFERENCE_URL_EMPTY(-10, "출처 url이 비어있을 수 없습니다."),
+    INFORMATION_TITLE_EMPTY(-10, "제목이 비어있을 수 없습니다"),
 
     //버전 에러
     DUPLICATED_VERSION(-11, "이미 등록된 버전입니다."),

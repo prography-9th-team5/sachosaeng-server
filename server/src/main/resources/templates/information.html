@@ -41,6 +41,9 @@
                 <label for="title">Title:</label><br>
                 <input type="text" id="title" name="title" placeholder="콘텐츠 제목 입력"><br>
 
+                <label for="subtitle">Subtitle:</label><br>
+                <input type="text" id="subtitle" name="subtitle" placeholder="콘텐츠 소제목 입력(소제목이 없다면 비워둡니다)"><br>
+
                 <label for="content">Content:</label><br>
                 <textarea type="text" id="content" name="content" placeholder="콘텐츠 내용 입력"></textarea><br>
 
@@ -78,8 +81,12 @@
             <span class="close" onclick="closeEditModal()">&times;</span>
             <form id="editInformationForm">
                 <input type="hidden" id="editInformationId" name="informationId">
+
                 <label for="editTitle">Title:</label><br>
                 <input type="text" id="editTitle" name="title" placeholder="콘텐츠 제목 입력"><br>
+
+                <label for="editSubtitle">Subtitle:</label><br>
+                <input type="text" id="editSubtitle" name="subtitle" placeholder="콘텐츠 소제목 입력"><br>
 
                 <label for="editContent">Content:</label><br>
                 <textarea type="text" id="editContent" name="content" placeholder="콘텐츠 내용 입력"></textarea><br>

@@ -4,6 +4,8 @@ import java.util.List;
 
 public record InformationCreationRequest(
         String title,
+
+        String subtitle,
         String content,
         List<Long> categoryIds,
         String referenceName,

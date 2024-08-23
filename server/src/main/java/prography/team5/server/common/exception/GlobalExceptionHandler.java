@@ -1,6 +1,7 @@
 package prography.team5.server.common.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
@@ -14,6 +15,8 @@ import static prography.team5.server.common.exception.ErrorType.DUPLICATED_EMAIL
 import static prography.team5.server.common.exception.ErrorType.EMPTY_ADMIN_NAME;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_TITLE;
+import static prography.team5.server.common.exception.ErrorType.INFORMATION_REFERENCE_EMPTY;
+import static prography.team5.server.common.exception.ErrorType.INFORMATION_REFERENCE_URL_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
 import static prography.team5.server.common.exception.ErrorType.INVALID_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_EMAIL;
@@ -72,8 +75,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(INVALID_REFRESH_TOKEN, UNAUTHORIZED);
         errorTypeToHttpStatus.put(REFRESH_TOKEN_EXPIRATION, UNAUTHORIZED);
 
+        //409
+        errorTypeToHttpStatus.put(DUPLICATED_EMAIL, CONFLICT);
+
         //400
-        errorTypeToHttpStatus.put(DUPLICATED_EMAIL, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_EMAIL, BAD_REQUEST);
         errorTypeToHttpStatus.put(INVALID_EMAIL_FORMAT, BAD_REQUEST);
         errorTypeToHttpStatus.put(DUPLICATED_CATEGORY, BAD_REQUEST);
@@ -91,6 +96,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(MULTIPLE_CHOICE_NOT_ALLOWED, BAD_REQUEST);
         errorTypeToHttpStatus.put(CATEGORY_NOT_INCLUDED_IN_INFORMATION, BAD_REQUEST);
         errorTypeToHttpStatus.put(WITHDRAW_EMAIL, BAD_REQUEST);
+        errorTypeToHttpStatus.put(INFORMATION_REFERENCE_EMPTY, BAD_REQUEST);
+        errorTypeToHttpStatus.put(INFORMATION_REFERENCE_URL_EMPTY, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)
