@@ -21,6 +21,8 @@ public interface InformationApiDocs {
                     카드가 2개 이상의 카테고리에 속할 경우를 고려하여,
                     파라미터로 category-id를 넘기면 응답에 해당 category 정보를 넣어 반환합니다.
                     category-id를 넘기지 않아도 카드가 속한 카테고리들 중 하나의 정보를 넣어 반환합니다.
+                    
+                    subtitle이 없을 경우는 null이 표시됩니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "정보 조회 성공입니다.")

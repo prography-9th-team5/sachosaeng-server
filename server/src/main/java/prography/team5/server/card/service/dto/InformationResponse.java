@@ -7,6 +7,7 @@ import prography.team5.server.category.service.dto.CategoryResponse;
 public record InformationResponse(
         Long informationId,
         String title,
+        String subtitle,
         String content,
         CategoryResponse category,
         String referenceName
@@ -16,6 +17,7 @@ public record InformationResponse(
         return new InformationResponse(
                 informationCard.getId(),
                 informationCard.getTitle(),
+                informationCard.getSubtitle(),
                 informationCard.getContent(),
                 CategoryResponse.toResponse(category),
                 informationCard.getReferenceName()
