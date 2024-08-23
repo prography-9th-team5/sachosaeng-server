@@ -9,6 +9,8 @@ import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_EXP
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_MALFORMED;
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_SIGNATURE_FAIL;
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_UNSUPPORTED;
+import static prography.team5.server.common.exception.ErrorType.CARD_CATEGORY_EMPTY;
+import static prography.team5.server.common.exception.ErrorType.CARD_TITLE_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.CATEGORY_NOT_INCLUDED_IN_INFORMATION;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_EMAIL;
@@ -98,6 +100,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(WITHDRAW_EMAIL, BAD_REQUEST);
         errorTypeToHttpStatus.put(INFORMATION_REFERENCE_EMPTY, BAD_REQUEST);
         errorTypeToHttpStatus.put(INFORMATION_REFERENCE_URL_EMPTY, BAD_REQUEST);
+        errorTypeToHttpStatus.put(CARD_CATEGORY_EMPTY, BAD_REQUEST);
+        errorTypeToHttpStatus.put(CARD_TITLE_EMPTY, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)
