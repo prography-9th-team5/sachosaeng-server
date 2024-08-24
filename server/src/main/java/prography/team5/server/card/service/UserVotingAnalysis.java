@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import prography.team5.server.card.domain.UserVoteOption;
 import prography.team5.server.card.domain.VoteCard;
@@ -17,6 +18,7 @@ import prography.team5.server.user.domain.UserType;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class UserVotingAnalysis {
 
     private final UserVoteOptionRepository userVoteOptionRepository;
@@ -82,10 +84,11 @@ public class UserVotingAnalysis {
     }
 
     public boolean analyzeIsVoted(final long voteId, final Long userId) {
+        log.info("{userId, voteId} for vote analyze: {" + userId + ", " + voteId + "}");
         if (userId == null) {
             return false;
         }
-        final boolean exists = userVoteOptionRepository.existsByUserIdAndVoteId(voteId, userId);
+        final boolean exists = userVoteOptionRepository.existsByUserIdAndVoteId(userId, voteId);
         return exists;
     }
 }
