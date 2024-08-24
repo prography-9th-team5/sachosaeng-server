@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [08/24 업데이트]
+                    1. 회원가입(join)시 userType을 받도록 추가하였습니다.
+                    
                     [08/23 업데이트]
                     1. 회원가입할때 이메일 중복시 상태코드 409를 반환하도록 수정하였습니다.\n
                     2. 단일 연관 콘텐츠 조회시(/api/v1/information/{informationId}) 소제목(subtitle)이 추가되었습니다. 없을경우 null이 표시됩니다.

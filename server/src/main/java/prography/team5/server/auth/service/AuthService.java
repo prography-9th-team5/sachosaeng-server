@@ -10,6 +10,7 @@ import prography.team5.server.auth.domain.WithdrawRepository;
 import prography.team5.server.auth.service.dto.AccessTokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
+import prography.team5.server.auth.service.dto.JoinRequest;
 import prography.team5.server.auth.service.dto.LoginResponse;
 import prography.team5.server.auth.service.dto.WithdrawRequest;
 import prography.team5.server.common.exception.ErrorType;
@@ -28,14 +29,14 @@ public class AuthService {
     private final WithdrawRepository withdrawRepository;
 
     @Transactional
-    public long joinNewUser(final EmailRequest emailRequest) {
-        if (userRepository.existsByEmailValue(emailRequest.email())) {
+    public long joinNewUser(final JoinRequest joinRequest) {
+        if (userRepository.existsByEmailValue(joinRequest.email())) {
             throw new SachosaengException(ErrorType.DUPLICATED_EMAIL);
         }
-        if (withdrawRepository.existsByEncryptedEmail(EmailEncryptor.encrypt(emailRequest.email()))) {
+        if (withdrawRepository.existsByEncryptedEmail(EmailEncryptor.encrypt(joinRequest.email()))) {
             throw new SachosaengException(ErrorType.WITHDRAW_EMAIL);
         }
-        final User user = new User(emailRequest.email());
+        final User user = new User(joinRequest.email(), joinRequest.userType());
         userRepository.save(user);
         return user.getId();
     }
