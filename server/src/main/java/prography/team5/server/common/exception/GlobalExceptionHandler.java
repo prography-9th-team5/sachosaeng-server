@@ -121,7 +121,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                    final HttpStatusCode status,
                                                                    final WebRequest request) {
         final ErrorType errorType = PAGE_NOT_FOUND;
-        log.warn(errorType.getMessage(), ex);
+        //log.warn(errorType.getMessage(), ex);
         return ResponseEntity.status(errorTypeToHttpStatus.get(errorType))
                 .body(new CommonApiResponse<>(errorType.getCode(), errorType.getMessage()));
     }
