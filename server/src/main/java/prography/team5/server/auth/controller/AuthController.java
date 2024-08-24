@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import prography.team5.server.auth.service.dto.JoinRequest;
 import prography.team5.server.auth.service.dto.WithdrawRequest;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.AuthApiDocs;
@@ -26,8 +27,8 @@ public class AuthController implements AuthApiDocs {
     private final AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity<CommonApiResponse<Void>> join(@RequestBody final EmailRequest emailRequest) {
-        authService.joinNewUser(emailRequest);
+    public ResponseEntity<CommonApiResponse<Void>> join(@RequestBody final JoinRequest joinRequest) {
+        authService.joinNewUser(joinRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import prography.team5.server.auth.controller.AuthRequired;
+import prography.team5.server.auth.service.dto.JoinRequest;
 import prography.team5.server.auth.service.dto.WithdrawRequest;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.service.dto.AccessTokenResponse;
@@ -21,10 +22,10 @@ public interface AuthApiDocs {
 
     @Operation(
             summary = "회원 가입 API",
-            description = "이메일을 통해 회원가입을 할 수 있습니다."
+            description = "이메일을 통해 회원가입을 할 수 있습니다. 유저타입: STUDENT(학생), JOB_SEEKER(취준생), NEW_EMPLOYEE(입사 1~3년차 직장인), OTHER(기타)"
     )
     @ApiResponse(responseCode = "200", description = "회원가입 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> join(final EmailRequest emailRequest);
+    ResponseEntity<CommonApiResponse<Void>> join(@RequestBody final JoinRequest joinRequest);
 
     @Operation(
             summary = "로그인 API",
