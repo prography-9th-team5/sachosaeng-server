@@ -40,10 +40,10 @@ public class User extends TimeRecord {
     @Enumerated(value = EnumType.STRING)
     private UserType userType;
 
-    public User(final String email) {
+    public User(final String email, final String userType) {
         this.email = Email.from(email);
         this.nickname = RandomNicknameGenerator.generate();
-        this.userType = UserType.UNDEFINED;
+        this.userType = UserType.convert(userType);
     }
 
     public String getEmail() {
