@@ -29,8 +29,7 @@ public class RequestResponseLoggingFilter implements Filter {
 
         final String responseBody = new String(responseWrapper.getContentAsByteArray());
 
-        log.info("Request ID: {}, Response Status: {}, Response Body: {}", req.getRequestId(),
-                responseWrapper.getStatus(), responseBody);
+        log.info("Request ID: {}, Response Status: {}", req.getRequestId(), responseWrapper.getStatus());
 
         responseWrapper.copyBodyToResponse();
     }
