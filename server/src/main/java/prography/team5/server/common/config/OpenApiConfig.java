@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [08/25 업데이트]
+                    1. 기존에는 data가 없을시 응답에 data 필드가 없었는데, 이제 모든 응답에 data 필드가 포함되도록 하였으며, data가 없을경우 data가 빈 문자열로 가도록 수정했습니다.
+                    
                     [08/24 업데이트]
                     1. 회원가입(join)시 userType을 받도록 추가하였습니다.
                     
