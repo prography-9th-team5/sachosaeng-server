@@ -1,4 +1,4 @@
-package prography.team5.server.logging;
+package prography.team5.server.common.logging;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
