@@ -1,4 +1,4 @@
-package prography.team5.server.embedding;
+package prography.team5.server.embedding.config;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;

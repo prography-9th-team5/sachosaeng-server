@@ -1,4 +1,4 @@
-package prography.team5.server.embedding;
+package prography.team5.server.embedding.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.VoteCardRepository;
+import prography.team5.server.embedding.service.dto.SimilarInformationResponse;
 
 @Service
 @RequiredArgsConstructor

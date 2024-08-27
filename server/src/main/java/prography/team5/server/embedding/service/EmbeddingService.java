@@ -1,4 +1,4 @@
-package prography.team5.server.embedding;
+package prography.team5.server.embedding.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.repository.InformationCardRepository;
 import prography.team5.server.category.domain.Category;
+import prography.team5.server.embedding.domain.EmbeddedInformation;
+import prography.team5.server.embedding.domain.EmbeddedInformationRepository;
 
 @Service
 @RequiredArgsConstructor

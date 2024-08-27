@@ -1,4 +1,4 @@
-package prography.team5.server.embedding;
+package prography.team5.server.embedding.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package prography.team5.server.embedding;
+package prography.team5.server.embedding.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.embedding.SimilarInformationApiDocs;
+import prography.team5.server.embedding.service.SimilarInformationQueryService;
+import prography.team5.server.embedding.service.dto.SimilarInformationResponse;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/similar-information")
-public class SimilarInformationQueryController implements SimilarInformationApiDocs{
+public class SimilarInformationQueryController implements SimilarInformationApiDocs {
 
     private final SimilarInformationQueryService similarInformationQueryService;
 
