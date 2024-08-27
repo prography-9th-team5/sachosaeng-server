@@ -16,7 +16,7 @@ public class EmbeddingController {
 
     private final EmbeddingService embeddingService;
 
-    // todo: 주기적으로 api 호출로 임베딩할지? 아니면 정보 콘텐츠가 추가될때마다 알아서 임베딩될지?
+    // 스케줄링으로 임베딩이 안되었을때 호출하는 용도임
     @Hidden
     @GetMapping("/ai/embedding")
     public ResponseEntity<CommonApiResponse<Void>> embed() {

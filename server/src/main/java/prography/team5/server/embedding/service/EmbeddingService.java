@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.repository.InformationCardRepository;
@@ -15,6 +17,7 @@ import prography.team5.server.embedding.domain.EmbeddedInformationRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmbeddingService {
 
     private final VectorStore vectorStore;
@@ -22,7 +25,9 @@ public class EmbeddingService {
     private final EmbeddedInformationRepository embeddedInformationRepository;
 
     //트랜잭션X
+    @Scheduled(cron = "0 0 4 * * *", zone = "Asia/Seoul")
     public synchronized void embed() {
+        log.info("embedding start");
         // embeddedInformationRepository에가 가장 마지막에 embedded된 information id를 가져온다.
         Long lastEmbeddedId = embeddedInformationRepository.findTopByOrderByIdDesc()
                 .map(EmbeddedInformation::getInformationId)
@@ -50,5 +55,6 @@ public class EmbeddingService {
 
         vectorStore.add(documents);
         embeddedInformationRepository.saveAll(embeddedInformation);
+        log.info("embedding end");
     }
 }
