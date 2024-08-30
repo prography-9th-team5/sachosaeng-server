@@ -68,6 +68,7 @@ public class UserVotingAnalysis {
     }
 
     public Map<Long, Boolean> analyzeIsVoted(final List<Long> voteIds, final Long userId) {
+        log.info("{userId} for vote analyze: {" + userId +"}");
         //userId가 null이라면 모든 voteId에 대해 false를 저장
         if (userId == null) {
             return voteIds.stream()

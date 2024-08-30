@@ -2,6 +2,7 @@ package prography.team5.server.auth.controller;
 
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import prography.team5.server.auth.service.AuthService;
 import prography.team5.server.auth.service.dto.Accessor;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
@@ -37,6 +39,8 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
             return Accessor.createAnonymousAccessor();
         }
         final String token = HeaderUtils.extractToken(authorizationHeader, TOKEN_TYPE);
-        return authService.verifyUserFromToken(token);
+        final Accessor accessor = authService.verifyUserFromToken(token);
+        log.info("Is accessor anonymous? {}", accessor.isAnonymous());
+        return accessor;
     }
 }
