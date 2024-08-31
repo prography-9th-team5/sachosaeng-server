@@ -34,7 +34,6 @@ public interface AuthApiDocs {
     @ApiResponse(responseCode = "200", description = "로그인 성공입니다.")
     ResponseEntity<CommonApiResponse<LoginResponse>> login(final EmailRequest emailRequest);
 
-    @Hidden
     @Operation(
             summary = "엑세스 토큰 재발급 API -> 스웨거에서 작동 안됨ㅜ",
             description = "Cookie에 Refresh={리프레시 토큰}을 담아 보내면 엑세스 토큰을 재발급 할 수 있습니다."
