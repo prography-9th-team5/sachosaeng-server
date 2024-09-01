@@ -7,4 +7,6 @@ public interface RefreshTokenManager {
     long extractUserId(String token);
 
     void invalidateRefreshToken(final long userId);
+
+    void extend(final String token);
 }

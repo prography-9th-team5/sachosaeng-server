@@ -32,4 +32,8 @@ public class RefreshToken {
     public boolean isExpired() {
         return expiredAt.isBefore(LocalDateTime.now());
     }
+
+    public void updateExpiredAt(LocalDateTime expiredAt) {
+        this.expiredAt = expiredAt;
+    }
 }

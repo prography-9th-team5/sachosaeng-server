@@ -61,6 +61,7 @@ public class AuthService {
         }
         final long userId = refreshTokenManager.extractUserId(refreshToken);
         final String accessToken = accessTokenManager.provide(userId);
+        refreshTokenManager.extend(refreshToken);
         return new AccessTokenResponse(accessToken);
     }
 

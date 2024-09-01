@@ -42,4 +42,12 @@ public class UUIDRefreshTokenManager implements RefreshTokenManager {
             throw new SachosaengException(ErrorType.REFRESH_TOKEN_EXPIRATION);
         }
     }
+
+    @Override
+    public void extend(final String token) {
+        final RefreshToken refreshToken = refreshTokenRepository.findByToken(token)
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_REFRESH_TOKEN));
+        final LocalDateTime updatedExpiredAt = LocalDateTime.now().plusDays(expirationDays);
+        refreshToken.updateExpiredAt(updatedExpiredAt);
+    }
 }
