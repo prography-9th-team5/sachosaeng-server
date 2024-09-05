@@ -1,5 +1,6 @@
 package prography.team5.server.bookmark.service;
 
+import static prography.team5.server.common.exception.ErrorType.BOOKMARK_EXISTS;
 import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
 
@@ -31,7 +32,9 @@ public class BookmarkService {
     public void createVoteCardBookmark(final Long userId, final VoteCardBookmarkCreationRequest request) {
         final VoteCard voteCard = voteCardRepository.findById(request.voteId())
                 .orElseThrow(() -> new SachosaengException(INVALID_VOTE_CARD_ID));
-        //todo: 이미 북마크되어있다면 X
+        if(voteCardBookmarkRepository.existsByVoteCardAndUserId(voteCard, userId)) {
+            throw new SachosaengException(BOOKMARK_EXISTS);
+        }
         final VoteCardBookmark voteCardBookmark = new VoteCardBookmark(voteCard, userId);
         voteCardBookmarkRepository.save(voteCardBookmark);
     }
@@ -40,7 +43,9 @@ public class BookmarkService {
     public void createInformationCardBookmark(final Long userId, final InformationCardBookmarkCreationRequest request) {
         final InformationCard informationCard = informationCardRepository.findById(request.informationId())
                 .orElseThrow(() -> new SachosaengException(INVALID_INFORMATION_CARD_ID));
-        //todo: 이미 북마크되어있다면 X
+        if(informationCardBookmarkRepository.existsByInformationCardAndUserId(informationCard, userId)) {
+            throw new SachosaengException(BOOKMARK_EXISTS);
+        }
         final InformationCardBookmark informationCardBookmark = new InformationCardBookmark(informationCard, userId);
         informationCardBookmarkRepository.save(informationCardBookmark);
     }

@@ -59,7 +59,10 @@ public enum ErrorType {
     //버전 에러
     DUPLICATED_VERSION(-11, "이미 등록된 버전입니다."),
     NO_VERSION(-11, "등록된 버전이 하나도 없습니다."),
-    NO_SPECIFIC_VERSION(-11, "등록되지 않은 버전입니다.");
+    NO_SPECIFIC_VERSION(-11, "등록되지 않은 버전입니다."),
+
+    //북마크 에러
+    BOOKMARK_EXISTS(-12, "이미 북마크가 등록되어 있습니다.");
 
     private final int code;
     private final String message;
