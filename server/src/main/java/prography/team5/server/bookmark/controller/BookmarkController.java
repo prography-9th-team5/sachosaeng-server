@@ -15,6 +15,7 @@ import prography.team5.server.bookmark.service.BookmarkService;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
+import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
 
 @RequiredArgsConstructor
@@ -43,6 +44,14 @@ public class BookmarkController implements BookmarkApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
+    @GetMapping("/vote-categories")
+    public ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findVoteCardBookmarkCategories(
+            @AuthRequired Accessor accessor
+    ) {
+        List<CategoryResponse> response = bookmarkService.findVoteCardBookmarkCategories(accessor.id());
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
 
     @PostMapping("/information")
     public ResponseEntity<CommonApiResponse<Void>> createInformationCardBookmark(

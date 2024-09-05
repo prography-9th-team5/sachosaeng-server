@@ -4,7 +4,9 @@ import static prography.team5.server.common.exception.ErrorType.BOOKMARK_EXISTS;
 import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -21,6 +23,8 @@ import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.InformationCardRepository;
 import prography.team5.server.card.repository.VoteCardRepository;
+import prography.team5.server.category.domain.Category;
+import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.exception.SachosaengException;
 
 @Service
@@ -49,7 +53,18 @@ public class BookmarkService {
                 userId,
                 Sort.by(Direction.DESC, "id")
         );
-        return VoteCardBookmarkResponse.from(bookmarks);
+        return VoteCardBookmarkResponse.toResponse(bookmarks);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CategoryResponse> findVoteCardBookmarkCategories(final Long userId) {
+        final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(userId);
+        List<Category> categories = bookmarks.stream()
+                .flatMap(each -> each.getVoteCard().getCategories().stream())
+                .distinct()
+                .sorted(Comparator.comparing(Category::getPriority))
+                .toList();
+        return CategoryResponse.toResponse(categories);
     }
 
     @Transactional
@@ -62,4 +77,5 @@ public class BookmarkService {
         final InformationCardBookmark informationCardBookmark = new InformationCardBookmark(informationCard, userId);
         informationCardBookmarkRepository.save(informationCardBookmark);
     }
+
 }

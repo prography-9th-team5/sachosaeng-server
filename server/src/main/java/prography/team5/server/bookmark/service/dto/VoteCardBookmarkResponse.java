@@ -9,15 +9,15 @@ public record VoteCardBookmarkResponse(
         String description
 ) {
 
-    private static VoteCardBookmarkResponse from(final VoteCardBookmark bookmark) {
+    private static VoteCardBookmarkResponse toResponse(final VoteCardBookmark bookmark) {
         return new VoteCardBookmarkResponse(
                 bookmark.getVoteCard().getId(),
                 bookmark.getVoteCard().getTitle(),
-                ""
+                "임시 문구입니다"
         );
     }
 
-    public static List<VoteCardBookmarkResponse> from(final List<VoteCardBookmark> bookmarks) {
-        return bookmarks.stream().map(VoteCardBookmarkResponse::from).toList();
+    public static List<VoteCardBookmarkResponse> toResponse(final List<VoteCardBookmark> bookmarks) {
+        return bookmarks.stream().map(VoteCardBookmarkResponse::toResponse).toList();
     }
 }

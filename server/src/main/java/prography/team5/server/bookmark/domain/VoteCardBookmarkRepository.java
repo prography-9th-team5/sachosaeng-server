@@ -10,4 +10,6 @@ public interface VoteCardBookmarkRepository extends JpaRepository<VoteCardBookma
     boolean existsByVoteCardAndUserId(VoteCard voteCard, Long userId);
 
     List<VoteCardBookmark> findAllByUserId(Long userId, Sort sort);
+
+    List<VoteCardBookmark> findAllByUserId(Long userId);
 }
