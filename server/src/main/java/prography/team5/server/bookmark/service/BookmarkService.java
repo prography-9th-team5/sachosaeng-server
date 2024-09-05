@@ -1,5 +1,6 @@
 package prography.team5.server.bookmark.service;
 
+import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
 
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,8 @@ public class BookmarkService {
     @Transactional
     public void createInformationCardBookmark(final Long userId, final InformationCardBookmarkCreationRequest request) {
         final InformationCard informationCard = informationCardRepository.findById(request.informationId())
-                .orElseThrow(() -> new SachosaengException(INVALID_VOTE_CARD_ID));
+                .orElseThrow(() -> new SachosaengException(INVALID_INFORMATION_CARD_ID));
+        //todo: 이미 북마크되어있다면 X
         final InformationCardBookmark informationCardBookmark = new InformationCardBookmark(informationCard, userId);
         informationCardBookmarkRepository.save(informationCardBookmark);
     }
