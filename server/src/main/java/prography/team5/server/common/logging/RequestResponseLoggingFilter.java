@@ -32,7 +32,7 @@ public class RequestResponseLoggingFilter implements Filter {
         // 응답의 Content-Type 헤더를 확인하여 JSON인지 판별
         String contentType = responseWrapper.getContentType();
         if (contentType != null && contentType.contains("application/json")) {
-            log.info("Request ID: {}, Response Status: {}, Response Body: {}", req.getRequestId(), responseWrapper.getStatus(), responseBody);
+            log.info("Request ID: {}, Response Status: {}", req.getRequestId(), responseWrapper.getStatus());
         } else {
             log.info("Request ID: {}, Response Status: {}", req.getRequestId(), responseWrapper.getStatus());
         }

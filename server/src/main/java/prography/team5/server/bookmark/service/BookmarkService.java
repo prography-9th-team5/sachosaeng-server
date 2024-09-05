@@ -4,7 +4,10 @@ import static prography.team5.server.common.exception.ErrorType.BOOKMARK_EXISTS;
 import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.bookmark.domain.InformationCardBookmark;
@@ -13,6 +16,7 @@ import prography.team5.server.bookmark.domain.VoteCardBookmark;
 import prography.team5.server.bookmark.domain.VoteCardBookmarkRepository;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
 import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.InformationCardRepository;
@@ -37,6 +41,15 @@ public class BookmarkService {
         }
         final VoteCardBookmark voteCardBookmark = new VoteCardBookmark(voteCard, userId);
         voteCardBookmarkRepository.save(voteCardBookmark);
+    }
+
+    @Transactional(readOnly = true)
+    public List<VoteCardBookmarkResponse> findVoteCardBookmark(final Long userId) {
+        final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(
+                userId,
+                Sort.by(Direction.DESC, "id")
+        );
+        return VoteCardBookmarkResponse.from(bookmarks);
     }
 
     @Transactional

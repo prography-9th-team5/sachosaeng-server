@@ -6,11 +6,14 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
 import prography.team5.server.card.service.dto.VoteResponse;
 import prography.team5.server.common.CommonApiResponse;
 
@@ -40,9 +43,20 @@ public interface BookmarkApiDocs {
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<VoteResponse>> createVoteCardBookmark(
+    ResponseEntity<CommonApiResponse<Void>> createVoteCardBookmark(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody VoteCardBookmarkCreationRequest request
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 투표 북마크 조회 API",
+            description = """
+                    투표 북마크를 조회합니다. default는 전체 카테고리 조회입니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
+    ResponseEntity<CommonApiResponse<List<VoteCardBookmarkResponse>>> findVoteCardBookmark(
+            @Parameter(hidden = true) Accessor accessor
     );
 
     @Operation(
@@ -68,7 +82,7 @@ public interface BookmarkApiDocs {
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<VoteResponse>> createInformationCardBookmark(
+    ResponseEntity<CommonApiResponse<Void>> createInformationCardBookmark(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody InformationCardBookmarkCreationRequest request
     );
