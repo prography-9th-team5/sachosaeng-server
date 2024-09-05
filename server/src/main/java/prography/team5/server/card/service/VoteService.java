@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.auth.service.dto.Accessor;
+import prography.team5.server.bookmark.domain.VoteCardBookmarkRepository;
 import prography.team5.server.card.domain.Card;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.domain.SuggestionVoteCard;
@@ -48,6 +49,7 @@ public class VoteService {
     private final UserVoteOptionRepository userVoteOptionRepository;
     private final UserVotingAnalysis userVotingAnalysis;
     private final SuggestionVoteCardRepository suggestionVoteCardRepository;
+    private final VoteCardBookmarkRepository voteCardBookmarkRepository;
 
     @Transactional(readOnly = true)
     public VoteResponse findByVoteId(final Long userId, final long voteId, final Long categoryId) {
@@ -63,11 +65,12 @@ public class VoteService {
         }
         final List<UserVoteOption> voted = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
         String analysis = userVotingAnalysis.analyzeResult(voteId, userId);
-        if(!voted.isEmpty()) {
+        final boolean isBookmarked = voteCardBookmarkRepository.existsByVoteCardAndUserId(voteCard, userId);
+        if(!voted.isEmpty()) { // 유저가 투표한 경우
             final List<Long> voteOptionIds = voted.stream().map(UserVoteOption::getVoteOptionId).toList();
-            return VoteResponse.toResponseWith32px(category, true, voteOptionIds, voteCard, analysis);
+            return VoteResponse.toResponseWith32px(category, true, isBookmarked, voteOptionIds, voteCard, analysis);
         }
-        return VoteResponse.toResponseWith32px(category, false, Collections.emptyList(), voteCard, analysis);
+        return VoteResponse.toResponseWith32px(category, false, isBookmarked, Collections.emptyList(), voteCard, analysis);
     }
 
     //todo: 리팩터링 완전 필요 -> 관리자 페이지에서 사용함

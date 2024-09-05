@@ -9,6 +9,7 @@ public record VoteResponse(
         Long voteId,
         boolean isClosed,
         boolean isVoted,
+        boolean isBookmarked,
         List<Long> chosenVoteOptionId,
         CategoryResponse category,
         String title,
@@ -20,6 +21,7 @@ public record VoteResponse(
     public static VoteResponse toResponseWith32px(
             final Category category,
             final boolean isVoted,
+            final boolean isBookmarked,
             final List<Long> voteOptionId,
             final VoteCard voteCard,
             final String description
@@ -28,6 +30,7 @@ public record VoteResponse(
                 voteCard.getId(),
                 voteCard.isClosed(),
                 isVoted,
+                isBookmarked,
                 voteOptionId,
                 CategoryResponse.toResponseWith32px(category),
                 voteCard.getTitle(),
