@@ -1,6 +1,7 @@
 package prography.team5.server.bookmark.service;
 
 import static prography.team5.server.common.exception.ErrorType.BOOKMARK_EXISTS;
+import static prography.team5.server.common.exception.ErrorType.INVALID_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
 
@@ -24,6 +25,7 @@ import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.InformationCardRepository;
 import prography.team5.server.card.repository.VoteCardRepository;
 import prography.team5.server.category.domain.Category;
+import prography.team5.server.category.domain.CategoryRepository;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.exception.SachosaengException;
 
@@ -35,6 +37,7 @@ public class BookmarkService {
     private final VoteCardRepository voteCardRepository;
     private final InformationCardBookmarkRepository informationCardBookmarkRepository;
     private final InformationCardRepository informationCardRepository;
+    private final CategoryRepository categoryRepository;
 
     @Transactional
     public void createVoteCardBookmark(final Long userId, final VoteCardBookmarkCreationRequest request) {
@@ -65,6 +68,19 @@ public class BookmarkService {
                 .sorted(Comparator.comparing(Category::getPriority))
                 .toList();
         return CategoryResponse.toResponse(categories);
+    }
+
+    @Transactional(readOnly = true)
+    public List<VoteCardBookmarkResponse> findVoteCardBookmarkByCategory(final Long userId, final Long categoryId) {
+        final Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new SachosaengException(INVALID_CATEGORY));
+        final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(
+                userId,
+                Sort.by(Direction.DESC, "id")
+        );
+        final List<VoteCardBookmark> filteredBookmarks = bookmarks.stream()
+                .filter(each -> each.getVoteCard().isSameCategory(category)).toList();
+        return VoteCardBookmarkResponse.toResponse(filteredBookmarks);
     }
 
     @Transactional

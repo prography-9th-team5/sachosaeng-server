@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
@@ -67,6 +69,34 @@ public interface BookmarkApiDocs {
     @ApiResponse(responseCode = "200", description = "카테고리 조회를 성공한 경우 200을 반환합니다.")
     ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findVoteCardBookmarkCategories(
             @Parameter(hidden = true) Accessor accessor
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 특정 카테고리의 투표 북마크 조회 API",
+            description = """
+                    categoryId를 path에 담아 보내면 해당 카테고리의 투표 북마크를 조회합니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
+    @ApiResponse(
+            responseCode = "400",
+            description = "categoryId가 유효하지 않다면 400을 반환합니다.",
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = @ExampleObject(
+                            value = """
+                        {
+                          "code": 0,
+                          "message": "string",
+                          "data": ""
+                        }
+                    """
+                    )
+            )
+    )
+    ResponseEntity<CommonApiResponse<List<VoteCardBookmarkResponse>>> findVoteCardBookmarkByCategory(
+            @Parameter(hidden = true) Accessor accessor,
+            @PathVariable(name = "categoryId") final Long categoryId
     );
 
     @Operation(
