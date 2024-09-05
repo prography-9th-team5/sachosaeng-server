@@ -17,7 +17,7 @@ import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
 import prography.team5.server.auth.service.dto.LoginResponse;
 
-@Tag(name = "1. 인증", description = "인증 관련 기능입니다.")
+@Tag(name = "01. 인증", description = "인증 관련 기능입니다.")
 public interface AuthApiDocs {
 
     @Operation(

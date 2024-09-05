@@ -13,7 +13,7 @@ import prography.team5.server.card.service.dto.CategoryHotVotePreviewsResponse;
 import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.common.CommonApiResponse;
 
-@Tag(name = "6. 인기 투표", description = "인기 투표 관련 기능입니다.")
+@Tag(name = "06. 인기 투표", description = "인기 투표 관련 기능입니다.")
 public interface HotVoteApiDocs {
 
     @Operation(

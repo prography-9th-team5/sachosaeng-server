@@ -2,15 +2,13 @@ package prography.team5.server.bookmark.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
+import prography.team5.server.bookmark.BookmarkApiDocs;
 import prography.team5.server.bookmark.service.BookmarkService;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
@@ -20,7 +18,7 @@ import prography.team5.server.common.CommonApiResponse;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/bookmarks")
-public class BookmarkController {
+public class BookmarkController implements BookmarkApiDocs {
 
     private final BookmarkService bookmarkService;
 
@@ -28,7 +26,7 @@ public class BookmarkController {
     public ResponseEntity<CommonApiResponse<VoteResponse>> createVoteCardBookmark(
             @AuthRequired Accessor accessor,
             @RequestBody VoteCardBookmarkCreationRequest request
-            ) {
+    ) {
         bookmarkService.createVoteCardBookmark(accessor.id(), request);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));

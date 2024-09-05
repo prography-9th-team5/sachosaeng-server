@@ -10,7 +10,7 @@ import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.service.dto.SimpleVoteWithCategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
 
-@Tag(name = "7. 오늘의 투표", description = "오늘 투표 관련 기능입니다.")
+@Tag(name = "07. 오늘의 투표", description = "오늘 투표 관련 기능입니다.")
 public interface DailyVoteApiDocs {
 
     @Operation(

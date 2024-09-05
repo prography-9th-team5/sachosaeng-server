@@ -12,7 +12,7 @@ import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.mycategory.service.dto.MyCategoryRequest;
 
-@Tag(name = "4. 관심 카테고리", description = "관심 카테고리 관련 기능입니다.")
+@Tag(name = "04. 관심 카테고리", description = "관심 카테고리 관련 기능입니다.")
 public interface MyCategoryApiDocs {
 
     @Operation(

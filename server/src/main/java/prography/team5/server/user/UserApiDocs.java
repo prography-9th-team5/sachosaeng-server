@@ -14,7 +14,7 @@ import prography.team5.server.user.service.dto.NicknameRequest;
 import prography.team5.server.user.service.dto.UserResponse;
 import prography.team5.server.user.service.dto.UserTypeRequest;
 
-@Tag(name = "2. 유저 정보", description = "유저 정보 관련 기능입니다.")
+@Tag(name = "02. 유저 정보", description = "유저 정보 관련 기능입니다.")
 public interface UserApiDocs {
 
     @Operation(

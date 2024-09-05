@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.card.service.dto.InformationResponse;
 import prography.team5.server.common.CommonApiResponse;
 
-@Tag(name = "9. 정보 콘텐츠 카드", description = "정보 콘텐츠 카드 관련 기능입니다.")
+@Tag(name = "09. 정보 콘텐츠 카드", description = "정보 콘텐츠 카드 관련 기능입니다.")
 public interface InformationApiDocs {
 
     @Operation(

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.embedding.service.dto.SimilarInformationResponse;
 
-@Tag(name = "8. 연관 정보성 콘텐츠 조회", description = "특정 투표와 관련된 연관 정보 콘텐츠를 조회하하는 기능 관련입니다.")
+@Tag(name = "08. 연관 정보성 콘텐츠 조회", description = "특정 투표와 관련된 연관 정보 콘텐츠를 조회하하는 기능 관련입니다.")
 public interface SimilarInformationApiDocs {
 
     @Operation(

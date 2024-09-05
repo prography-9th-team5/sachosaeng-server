@@ -12,7 +12,7 @@ import prography.team5.server.version.service.ForceUpdateRequest;
 import prography.team5.server.version.service.VersionCheckResponse;
 import prography.team5.server.version.service.VersionRequest;
 
-@Tag(name = "0-2. Android 버전", description = "Android 버전 관련 기능입니다.")
+@Tag(name = "00-2. Android 버전", description = "Android 버전 관련 기능입니다.")
 public interface AndroidVersionApiDocs {
 
     @Operation(

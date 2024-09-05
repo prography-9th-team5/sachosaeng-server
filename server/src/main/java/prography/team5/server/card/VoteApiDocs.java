@@ -19,7 +19,7 @@ import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
 import prography.team5.server.common.CommonApiResponse;
 
-@Tag(name = "5. 투표 카드", description = "투표 카드 관련 기능입니다.")
+@Tag(name = "05. 투표 카드", description = "투표 카드 관련 기능입니다.")
 public interface VoteApiDocs {
 
     @Operation(
