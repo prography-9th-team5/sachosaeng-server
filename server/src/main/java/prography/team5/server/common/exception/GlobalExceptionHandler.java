@@ -10,6 +10,7 @@ import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_MAL
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_SIGNATURE_FAIL;
 import static prography.team5.server.common.exception.ErrorType.ACCESS_TOKEN_UNSUPPORTED;
 import static prography.team5.server.common.exception.ErrorType.BOOKMARK_EXISTS;
+import static prography.team5.server.common.exception.ErrorType.BOOKMARK_USER_NOT_SAME;
 import static prography.team5.server.common.exception.ErrorType.CARD_CATEGORY_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.CARD_TITLE_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.CATEGORY_NOT_INCLUDED_IN_INFORMATION;
@@ -104,6 +105,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(CARD_CATEGORY_EMPTY, BAD_REQUEST);
         errorTypeToHttpStatus.put(CARD_TITLE_EMPTY, BAD_REQUEST);
         errorTypeToHttpStatus.put(BOOKMARK_EXISTS, BAD_REQUEST);
+        errorTypeToHttpStatus.put(BOOKMARK_USER_NOT_SAME, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)

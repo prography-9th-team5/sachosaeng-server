@@ -1,6 +1,7 @@
 package prography.team5.server.bookmark.service;
 
 import static prography.team5.server.common.exception.ErrorType.BOOKMARK_EXISTS;
+import static prography.team5.server.common.exception.ErrorType.BOOKMARK_USER_NOT_SAME;
 import static prography.team5.server.common.exception.ErrorType.INVALID_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
@@ -19,6 +20,7 @@ import prography.team5.server.bookmark.domain.VoteCardBookmark;
 import prography.team5.server.bookmark.domain.VoteCardBookmarkRepository;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
 import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.domain.VoteCard;
@@ -48,6 +50,18 @@ public class BookmarkService {
         }
         final VoteCardBookmark voteCardBookmark = new VoteCardBookmark(voteCard, userId);
         voteCardBookmarkRepository.save(voteCardBookmark);
+    }
+
+    @Transactional
+    public void deleteVoteCardBookmarks(final Long userId, final VoteCardBookmarkDeletionRequest request) {
+        List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByIdIn(request.voteBookmarkIds());
+
+        for (VoteCardBookmark bookmark : bookmarks) {
+            if (!bookmark.getUserId().equals(userId)) {
+                throw new SachosaengException(BOOKMARK_USER_NOT_SAME);
+            }
+        }
+        voteCardBookmarkRepository.deleteAllByIdInBatch(request.voteBookmarkIds());
     }
 
     @Transactional(readOnly = true)
@@ -93,5 +107,4 @@ public class BookmarkService {
         final InformationCardBookmark informationCardBookmark = new InformationCardBookmark(informationCard, userId);
         informationCardBookmarkRepository.save(informationCardBookmark);
     }
-
 }

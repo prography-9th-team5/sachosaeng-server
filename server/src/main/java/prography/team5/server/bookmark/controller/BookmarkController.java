@@ -3,6 +3,7 @@ package prography.team5.server.bookmark.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import prography.team5.server.bookmark.BookmarkApiDocs;
 import prography.team5.server.bookmark.service.BookmarkService;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
@@ -32,6 +34,16 @@ public class BookmarkController implements BookmarkApiDocs {
             @RequestBody VoteCardBookmarkCreationRequest request
     ) {
         bookmarkService.createVoteCardBookmark(accessor.id(), request);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+    }
+
+    @DeleteMapping("/votes")
+    public ResponseEntity<CommonApiResponse<Void>> deleteVoteCardBookmarks(
+            @AuthRequired Accessor accessor,
+            @RequestBody VoteCardBookmarkDeletionRequest request
+    ) {
+        bookmarkService.deleteVoteCardBookmarks(accessor.id(), request);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
@@ -59,7 +71,8 @@ public class BookmarkController implements BookmarkApiDocs {
             @AuthRequired Accessor accessor,
             @PathVariable(name = "categoryId") final Long categoryId
     ) {
-        List<VoteCardBookmarkResponse> response = bookmarkService.findVoteCardBookmarkByCategory(accessor.id(), categoryId);
+        List<VoteCardBookmarkResponse> response = bookmarkService.findVoteCardBookmarkByCategory(accessor.id(),
+                categoryId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
