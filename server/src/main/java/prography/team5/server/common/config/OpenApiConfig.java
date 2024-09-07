@@ -20,6 +20,10 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [09/07 업데이트]
+                    1. '연관콘텐츠' 북마크 관련된 신규 API들을 10번 섹션에 업데이트 하였습니다. \n
+                    2. 기존 API 중, 단일 연관콘텐츠 조회 API에서 유저가 해당 투표를 북마크했는지 여부인 isBookmarked가 추가되었습니다. 그리고 Authorization 헤더에 인증 토큰을 담아 보내지 않으면 isBookmarked는 항상 false로 조회됩니다. Authorization 헤더에 꼭 인증토큰을 넣도록 업데이트해주세요!
+                    
                     [09/06 업데이트]
                     1. '투표' 북마크 관련된 신규 API들을 10번 섹션에 업데이트 하였습니다. \n
                     2. 기존 API 중, 단일 투표 조회 API에서 유저가 해당 투표를 북마크했는지 여부인 isBookmarked가 추가되었습니다.
