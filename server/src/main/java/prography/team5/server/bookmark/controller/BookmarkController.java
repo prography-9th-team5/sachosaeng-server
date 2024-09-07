@@ -16,6 +16,7 @@ import prography.team5.server.bookmark.BookmarkApiDocs;
 import prography.team5.server.bookmark.service.BookmarkService;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -104,5 +105,14 @@ public class BookmarkController implements BookmarkApiDocs {
         bookmarkService.deleteInformationCardBookmarks(accessor.id(), request);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+    }
+
+    @GetMapping("/information")
+    public ResponseEntity<CommonApiResponse<List<InformationCardBookmarkResponse>>> findInformationCardBookmark(
+            @AuthRequired Accessor accessor
+    ) {
+        List<InformationCardBookmarkResponse> response = bookmarkService.findInformationCardBookmark(accessor.id());
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -79,7 +80,7 @@ public interface BookmarkApiDocs {
     );
 
     @Operation(
-            summary = "[인증 토큰 필요] 투표 북마크 조회 API",
+            summary = "[인증 토큰 필요] ALL에 대한 투표 북마크 조회 API",
             description = """
                     투표 북마크를 조회합니다. 전체 카테고리에 대한 조회입니다.
                     """
@@ -182,5 +183,16 @@ public interface BookmarkApiDocs {
     ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmarks(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody InformationCardBookmarkDeletionRequest request
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] ALL에 대한 연관 콘텐츠 북마크 조회 API",
+            description = """
+                    연관 콘텐츠 북마크를 조회합니다. 전체 카테고리에 대한 조회입니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
+    ResponseEntity<CommonApiResponse<List<InformationCardBookmarkResponse>>> findInformationCardBookmark(
+            @Parameter(hidden = true) Accessor accessor
     );
 }

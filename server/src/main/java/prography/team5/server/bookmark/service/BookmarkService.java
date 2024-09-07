@@ -20,6 +20,7 @@ import prography.team5.server.bookmark.domain.VoteCardBookmark;
 import prography.team5.server.bookmark.domain.VoteCardBookmarkRepository;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -65,6 +66,7 @@ public class BookmarkService {
         voteCardBookmarkRepository.deleteAllByIdInBatch(request.voteBookmarkIds());
     }
 
+    //todo: description 은 1위인 답변에 대한 정보 표시
     @Transactional(readOnly = true)
     public List<VoteCardBookmarkResponse> findVoteCardBookmark(final Long userId) {
         final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(
@@ -119,5 +121,14 @@ public class BookmarkService {
             }
         }
         informationCardBookmarkRepository.deleteAllByIdInBatch(request.informationBookmarkIds());
+    }
+
+    @Transactional(readOnly = true)
+    public List<InformationCardBookmarkResponse> findInformationCardBookmark(final Long userId) {
+        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(
+                userId,
+                Sort.by(Direction.DESC, "id")
+        );
+        return InformationCardBookmarkResponse.toResponse(bookmarks);
     }
 }
