@@ -15,6 +15,8 @@ import prography.team5.server.card.service.dto.HotVotePreviewsResponse;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;
 import prography.team5.server.category.domain.HotVotesDesign;
+import prography.team5.server.common.exception.ErrorType;
+import prography.team5.server.common.exception.SachosaengException;
 
 @RequiredArgsConstructor
 @Service
@@ -40,7 +42,8 @@ public class HotVoteService {
     public CategoryHotVotePreviewsResponse findHotVotesByCategoryId(final Integer size, final Long categoryId, final Accessor accessor) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(6);
-        final Category category = categoryRepository.findById(categoryId).orElseThrow();
+        final Category category = categoryRepository.findById(categoryId).orElseThrow(()-> new SachosaengException(
+                ErrorType.INVALID_CATEGORY));
         final List<VoteCard> votes = hotVoteRepository.findHotVotesOfCategory(size, categoryId, startDate, endDate);
         final Map<Long, Boolean> isVotedAnalysis = userVotingAnalysis.analyzeIsVoted(
                 votes.stream().map(Card::getId).toList(),
