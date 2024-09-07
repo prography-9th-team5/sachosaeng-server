@@ -1,8 +1,10 @@
 package prography.team5.server.card.service;
 
+import io.jsonwebtoken.lang.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import prography.team5.server.bookmark.domain.InformationCardBookmarkRepository;
 import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.repository.InformationCardRepository;
 import prography.team5.server.card.service.dto.InformationResponse;
@@ -17,13 +19,18 @@ public class InformationService {
 
     private final InformationCardRepository informationCardRepository;
     private final CategoryRepository categoryRepository;
+    private final InformationCardBookmarkRepository informationCardBookmarkRepository;
 
     @Transactional(readOnly = true)
-    public InformationResponse find(final long informationId, final Long categoryId) {
+    public InformationResponse find(final Long userId, final long informationId, final Long categoryId) {
         final InformationCard informationCard = informationCardRepository.findById(informationId)
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_INFORMATION_CARD_ID));
         Category category = getCategory(categoryId, informationCard);
-        return InformationResponse.from(informationCard, category);
+        if(Objects.isEmpty(userId)) {
+            return InformationResponse.from(informationCard, category, false);
+        }
+        final boolean isBookmarked = informationCardBookmarkRepository.existsByInformationCardAndUserId(informationCard, userId);
+        return InformationResponse.from(informationCard, category, isBookmarked);
     }
 
     private Category getCategory(final Long categoryId, final InformationCard informationCard) {

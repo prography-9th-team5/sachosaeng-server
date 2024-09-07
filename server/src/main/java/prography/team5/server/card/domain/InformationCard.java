@@ -86,4 +86,8 @@ public class InformationCard extends Card {
         this.referenceUrl = referenceUrl;
         this.adminName = adminName;
     }
+
+    public boolean isSameCategory(final Category category) {
+        return this.categories.contains(category);
+    }
 }

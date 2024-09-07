@@ -19,6 +19,8 @@ import prography.team5.server.bookmark.domain.InformationCardBookmarkRepository;
 import prography.team5.server.bookmark.domain.VoteCardBookmark;
 import prography.team5.server.bookmark.domain.VoteCardBookmarkRepository;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -64,6 +66,7 @@ public class BookmarkService {
         voteCardBookmarkRepository.deleteAllByIdInBatch(request.voteBookmarkIds());
     }
 
+    //todo: description 은 1위인 답변에 대한 정보 표시
     @Transactional(readOnly = true)
     public List<VoteCardBookmarkResponse> findVoteCardBookmark(final Long userId) {
         final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(
@@ -106,5 +109,54 @@ public class BookmarkService {
         }
         final InformationCardBookmark informationCardBookmark = new InformationCardBookmark(informationCard, userId);
         informationCardBookmarkRepository.save(informationCardBookmark);
+    }
+
+    @Transactional
+    public void deleteInformationCardBookmarks(final Long userId, final InformationCardBookmarkDeletionRequest request) {
+        List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByIdIn(request.informationBookmarkIds());
+
+        for (InformationCardBookmark bookmark : bookmarks) {
+            if (!bookmark.getUserId().equals(userId)) {
+                throw new SachosaengException(BOOKMARK_USER_NOT_SAME);
+            }
+        }
+        informationCardBookmarkRepository.deleteAllByIdInBatch(request.informationBookmarkIds());
+    }
+
+    @Transactional(readOnly = true)
+    public List<InformationCardBookmarkResponse> findInformationCardBookmark(final Long userId) {
+        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(
+                userId,
+                Sort.by(Direction.DESC, "id")
+        );
+        return InformationCardBookmarkResponse.toResponse(bookmarks);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CategoryResponse> findInformationCardBookmarkCategories(final Long userId) {
+        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(userId);
+        List<Category> categories = bookmarks.stream()
+                .flatMap(each -> each.getInformationCard().getCategories().stream())
+                .distinct()
+                .sorted(Comparator.comparing(Category::getPriority))
+                .toList();
+        return CategoryResponse.toResponse(categories);
+    }
+
+    @Transactional(readOnly = true)
+    public List<InformationCardBookmarkResponse> findInformationCardBookmarkByCategory(
+            final Long userId,
+            final Long categoryId
+    ) {
+        final Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new SachosaengException(INVALID_CATEGORY));
+        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(
+                userId,
+                Sort.by(Direction.DESC, "id")
+        );
+        final List<InformationCardBookmark> filteredBookmarks = bookmarks.stream()
+                .filter(each -> each.getInformationCard().isSameCategory(category))
+                .toList();
+        return InformationCardBookmarkResponse.toResponse(filteredBookmarks);
     }
 }

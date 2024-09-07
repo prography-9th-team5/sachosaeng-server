@@ -15,6 +15,8 @@ import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.BookmarkApiDocs;
 import prography.team5.server.bookmark.service.BookmarkService;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -28,6 +30,10 @@ public class BookmarkController implements BookmarkApiDocs {
 
     private final BookmarkService bookmarkService;
 
+    /*
+    여기는
+    투표 콘텐츠
+     */
     @PostMapping("/votes")
     public ResponseEntity<CommonApiResponse<Void>> createVoteCardBookmark(
             @AuthRequired Accessor accessor,
@@ -77,6 +83,10 @@ public class BookmarkController implements BookmarkApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
+    /*
+    여기는
+    정보 콘텐츠
+     */
     @PostMapping("/information")
     public ResponseEntity<CommonApiResponse<Void>> createInformationCardBookmark(
             @AuthRequired Accessor accessor,
@@ -85,5 +95,44 @@ public class BookmarkController implements BookmarkApiDocs {
         bookmarkService.createInformationCardBookmark(accessor.id(), request);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+    }
+
+    @DeleteMapping("/information")
+    public ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmarks(
+            @AuthRequired Accessor accessor,
+            @RequestBody InformationCardBookmarkDeletionRequest request
+    ) {
+        bookmarkService.deleteInformationCardBookmarks(accessor.id(), request);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+    }
+
+    @GetMapping("/information")
+    public ResponseEntity<CommonApiResponse<List<InformationCardBookmarkResponse>>> findInformationCardBookmark(
+            @AuthRequired Accessor accessor
+    ) {
+        List<InformationCardBookmarkResponse> response = bookmarkService.findInformationCardBookmark(accessor.id());
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/information-categories")
+    public ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findInformationCardBookmarkCategories(
+            @AuthRequired Accessor accessor
+    ) {
+        List<CategoryResponse> response = bookmarkService.findInformationCardBookmarkCategories(accessor.id());
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/information/categories/{categoryId}")
+    public ResponseEntity<CommonApiResponse<List<InformationCardBookmarkResponse>>> findInformationCardBookmarkByCategory(
+            @AuthRequired Accessor accessor,
+            @PathVariable(name = "categoryId") final Long categoryId
+    ) {
+        List<InformationCardBookmarkResponse> response = bookmarkService.findInformationCardBookmarkByCategory(accessor.id(),
+                categoryId);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 }
