@@ -6,6 +6,7 @@ import prography.team5.server.category.service.dto.CategoryResponse;
 
 public record InformationResponse(
         Long informationId,
+        boolean isBookmarked,
         String title,
         String subtitle,
         String content,
@@ -13,9 +14,10 @@ public record InformationResponse(
         String referenceName
 ) {
 
-    public static InformationResponse from(final InformationCard informationCard, final Category category) {
+    public static InformationResponse from(final InformationCard informationCard, final Category category, final boolean isBookmarked) {
         return new InformationResponse(
                 informationCard.getId(),
+                isBookmarked,
                 informationCard.getTitle(),
                 informationCard.getSubtitle(),
                 informationCard.getContent(),
