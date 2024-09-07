@@ -15,6 +15,7 @@ import prography.team5.server.auth.service.dto.LoginResponse;
 import prography.team5.server.auth.service.dto.WithdrawRequest;
 import prography.team5.server.common.exception.ErrorType;
 import prography.team5.server.common.exception.SachosaengException;
+import prography.team5.server.user.domain.SocialType;
 import prography.team5.server.user.domain.User;
 import prography.team5.server.user.domain.UserRepository;
 
@@ -29,7 +30,7 @@ public class AuthService {
     private final WithdrawRepository withdrawRepository;
 
     @Transactional
-    public long joinNewUser(final JoinRequest joinRequest) {
+    public long joinNewUser(final JoinRequest joinRequest, final SocialType socialType) {
         if (userRepository.existsByEmailValue(joinRequest.email())) {
             throw new SachosaengException(ErrorType.DUPLICATED_EMAIL);
         }
@@ -42,7 +43,7 @@ public class AuthService {
     }
 
     @Transactional
-    public LoginResponse login(final EmailRequest emailRequest) {
+    public LoginResponse login(final EmailRequest emailRequest, final SocialType socialType) {
         final User user = userRepository.findByEmailValue(emailRequest.email())
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_EMAIL));
         final String accessToken = accessTokenManager.provide(user.getId());

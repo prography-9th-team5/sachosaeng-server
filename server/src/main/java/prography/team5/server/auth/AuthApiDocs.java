@@ -1,38 +1,49 @@
 package prography.team5.server.auth;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import prography.team5.server.auth.controller.AuthRequired;
-import prography.team5.server.auth.service.dto.JoinRequest;
-import prography.team5.server.auth.service.dto.WithdrawRequest;
-import prography.team5.server.common.CommonApiResponse;
+import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.auth.service.dto.AccessTokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
+import prography.team5.server.auth.service.dto.JoinRequest;
 import prography.team5.server.auth.service.dto.LoginResponse;
+import prography.team5.server.auth.service.dto.WithdrawRequest;
+import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.user.domain.SocialType;
 
 @Tag(name = "01. 인증", description = "인증 관련 기능입니다.")
 public interface AuthApiDocs {
 
     @Operation(
             summary = "회원 가입 API",
-            description = "이메일을 통해 회원가입을 할 수 있습니다. 유저타입: STUDENT(학생), JOB_SEEKER(취준생), NEW_EMPLOYEE(입사 1~3년차 직장인), OTHER(기타)"
+            description = """
+                    이메일을 통해 회원가입을 할 수 있습니다. 유저타입: STUDENT(학생), JOB_SEEKER(취준생), NEW_EMPLOYEE(입사 1~3년차 직장인), OTHER(기타)\n
+                    애플로 회원가입의 경우 type=APPLE 이라는 추가적인 쿼리 파라미터가 필요합니다.
+                    """
     )
     @ApiResponse(responseCode = "200", description = "회원가입 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> join(@RequestBody final JoinRequest joinRequest);
+    ResponseEntity<CommonApiResponse<Void>> join(
+            @RequestBody final JoinRequest joinRequest,
+            @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
+    );
 
     @Operation(
             summary = "로그인 API",
-            description = "이메일을 통해 로그인을 할 수 있습니다. 로그인을 할 때 엑세스 토큰과 리프레시 토큰을 발급합니다."
+            description = """
+                    이메일을 통해 로그인을 할 수 있습니다. 로그인을 할 때 엑세스 토큰과 리프레시 토큰을 발급합니다.\n
+                    애플로 로그인의 경우 type=APPLE 이라는 추가적인 쿼리 파라미터가 필요합니다.
+                    """
     )
     @ApiResponse(responseCode = "200", description = "로그인 성공입니다.")
-    ResponseEntity<CommonApiResponse<LoginResponse>> login(final EmailRequest emailRequest);
+    ResponseEntity<CommonApiResponse<LoginResponse>> login(
+            final EmailRequest emailRequest,
+            @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
+    );
 
     @Operation(
             summary = "엑세스 토큰 재발급 API -> 스웨거에서 작동 안됨ㅜ",

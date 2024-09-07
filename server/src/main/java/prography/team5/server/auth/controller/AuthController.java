@@ -8,16 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import prography.team5.server.auth.service.dto.JoinRequest;
-import prography.team5.server.auth.service.dto.WithdrawRequest;
-import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.AuthApiDocs;
 import prography.team5.server.auth.service.AuthService;
 import prography.team5.server.auth.service.dto.AccessTokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
+import prography.team5.server.auth.service.dto.JoinRequest;
 import prography.team5.server.auth.service.dto.LoginResponse;
+import prography.team5.server.auth.service.dto.WithdrawRequest;
+import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.user.domain.SocialType;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,15 +29,21 @@ public class AuthController implements AuthApiDocs {
     private final AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity<CommonApiResponse<Void>> join(@RequestBody final JoinRequest joinRequest) {
-        authService.joinNewUser(joinRequest);
+    public ResponseEntity<CommonApiResponse<Void>> join(
+            @RequestBody final JoinRequest joinRequest,
+            @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
+    ) {
+        authService.joinNewUser(joinRequest, socialType);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CommonApiResponse<LoginResponse>> login(@RequestBody final EmailRequest emailRequest) {
-        final LoginResponse response = authService.login(emailRequest);
+    public ResponseEntity<CommonApiResponse<LoginResponse>> login(
+            @RequestBody final EmailRequest emailRequest,
+            @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
+    ) {
+        final LoginResponse response = authService.login(emailRequest, socialType);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
