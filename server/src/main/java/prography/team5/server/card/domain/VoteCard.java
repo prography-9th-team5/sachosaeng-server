@@ -117,10 +117,7 @@ public class VoteCard extends Card {
     }
 
     public boolean isSameCategory(final Category category) {
-        if (this.categories.contains(category)) {
-            return true;
-        }
-        return false;
+        return this.categories.contains(category);
     }
 
     public static long getHotCountFloor() {

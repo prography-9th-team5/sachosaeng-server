@@ -142,4 +142,21 @@ public class BookmarkService {
                 .toList();
         return CategoryResponse.toResponse(categories);
     }
+
+    @Transactional(readOnly = true)
+    public List<InformationCardBookmarkResponse> findInformationCardBookmarkByCategory(
+            final Long userId,
+            final Long categoryId
+    ) {
+        final Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new SachosaengException(INVALID_CATEGORY));
+        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(
+                userId,
+                Sort.by(Direction.DESC, "id")
+        );
+        final List<InformationCardBookmark> filteredBookmarks = bookmarks.stream()
+                .filter(each -> each.getInformationCard().isSameCategory(category))
+                .toList();
+        return InformationCardBookmarkResponse.toResponse(filteredBookmarks);
+    }
 }
