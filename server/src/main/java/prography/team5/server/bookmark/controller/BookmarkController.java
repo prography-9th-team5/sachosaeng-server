@@ -115,4 +115,13 @@ public class BookmarkController implements BookmarkApiDocs {
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
+
+    @GetMapping("/information-categories")
+    public ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findInformationCardBookmarkCategories(
+            @AuthRequired Accessor accessor
+    ) {
+        List<CategoryResponse> response = bookmarkService.findInformationCardBookmarkCategories(accessor.id());
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
 }

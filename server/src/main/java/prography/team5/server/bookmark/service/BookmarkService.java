@@ -131,4 +131,15 @@ public class BookmarkService {
         );
         return InformationCardBookmarkResponse.toResponse(bookmarks);
     }
+
+    @Transactional(readOnly = true)
+    public List<CategoryResponse> findInformationCardBookmarkCategories(final Long userId) {
+        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(userId);
+        List<Category> categories = bookmarks.stream()
+                .flatMap(each -> each.getInformationCard().getCategories().stream())
+                .distinct()
+                .sorted(Comparator.comparing(Category::getPriority))
+                .toList();
+        return CategoryResponse.toResponse(categories);
+    }
 }

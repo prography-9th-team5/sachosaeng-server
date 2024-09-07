@@ -12,4 +12,6 @@ public interface InformationCardBookmarkRepository extends JpaRepository<Informa
     List<InformationCardBookmark> findAllByIdIn(List<Long> longs);
 
     List<InformationCardBookmark> findAllByUserId(Long userId, Sort id);
+
+    List<InformationCardBookmark> findAllByUserId(Long userId);
 }

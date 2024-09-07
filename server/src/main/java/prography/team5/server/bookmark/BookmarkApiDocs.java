@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
@@ -193,6 +194,17 @@ public interface BookmarkApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
     ResponseEntity<CommonApiResponse<List<InformationCardBookmarkResponse>>> findInformationCardBookmark(
+            @Parameter(hidden = true) Accessor accessor
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 사용자가 북마크한 연관 콘텐츠들의 카테고리들만 조회 API",
+            description = """
+                    사용자가 북마크한 연관 콘텐츠들의 카테고리들만 조회합니다. ALL 아이콘은 GET /api/v1/categories/icon-data/all 을 통해 iconUrl과 backgroundColor를 확인할 수 있기 때문에 제외하였습니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "카테고리 조회를 성공한 경우 200을 반환합니다.")
+    ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findInformationCardBookmarkCategories(
             @Parameter(hidden = true) Accessor accessor
     );
 }
