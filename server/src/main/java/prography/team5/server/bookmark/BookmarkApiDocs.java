@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -35,12 +36,12 @@ public interface BookmarkApiDocs {
                     mediaType = "application/json",
                     examples = @ExampleObject(
                             value = """
-                        {
-                          "code": 0,
-                          "message": "string",
-                          "data": ""
-                        }
-                    """
+                                        {
+                                          "code": 0,
+                                          "message": "string",
+                                          "data": ""
+                                        }
+                                    """
                     )
             )
     )
@@ -48,7 +49,6 @@ public interface BookmarkApiDocs {
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody VoteCardBookmarkCreationRequest request
     );
-
 
     @Operation(
             summary = "[인증 토큰 필요] 투표 북마크 제거 API",
@@ -64,12 +64,12 @@ public interface BookmarkApiDocs {
                     mediaType = "application/json",
                     examples = @ExampleObject(
                             value = """
-                        {
-                          "code": 0,
-                          "message": "string",
-                          "data": ""
-                        }
-                    """
+                                        {
+                                          "code": 0,
+                                          "message": "string",
+                                          "data": ""
+                                        }
+                                    """
                     )
             )
     )
@@ -114,12 +114,12 @@ public interface BookmarkApiDocs {
                     mediaType = "application/json",
                     examples = @ExampleObject(
                             value = """
-                        {
-                          "code": 0,
-                          "message": "string",
-                          "data": ""
-                        }
-                    """
+                                        {
+                                          "code": 0,
+                                          "message": "string",
+                                          "data": ""
+                                        }
+                                    """
                     )
             )
     )
@@ -142,17 +142,45 @@ public interface BookmarkApiDocs {
                     mediaType = "application/json",
                     examples = @ExampleObject(
                             value = """
-                        {
-                          "code": 0,
-                          "message": "string",
-                          "data": ""
-                        }
-                    """
+                                        {
+                                          "code": 0,
+                                          "message": "string",
+                                          "data": ""
+                                        }
+                                    """
                     )
             )
     )
     ResponseEntity<CommonApiResponse<Void>> createInformationCardBookmark(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody InformationCardBookmarkCreationRequest request
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 연관 콘텐츠 북마크 제거 API",
+            description = """
+                    제거할 북마크들의 informationBookmarkId들을 담아 보내면 투표 북마크를 제거합니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "북마크 제거에 성공한 경우 200을 반환합니다.")
+    @ApiResponse(
+            responseCode = "400",
+            description = "요청에 포함된 informationBookmarkId에 다른 유저의 북마크가 포함되어있는경우 400을 반환합니다.",
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = @ExampleObject(
+                            value = """
+                                        {
+                                          "code": 0,
+                                          "message": "string",
+                                          "data": ""
+                                        }
+                                    """
+                    )
+            )
+    )
+    ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmarks(
+            @Parameter(hidden = true) Accessor accessor,
+            @RequestBody InformationCardBookmarkDeletionRequest request
     );
 }

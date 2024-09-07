@@ -19,6 +19,7 @@ import prography.team5.server.bookmark.domain.InformationCardBookmarkRepository;
 import prography.team5.server.bookmark.domain.VoteCardBookmark;
 import prography.team5.server.bookmark.domain.VoteCardBookmarkRepository;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -106,5 +107,17 @@ public class BookmarkService {
         }
         final InformationCardBookmark informationCardBookmark = new InformationCardBookmark(informationCard, userId);
         informationCardBookmarkRepository.save(informationCardBookmark);
+    }
+
+    @Transactional
+    public void deleteInformationCardBookmarks(final Long userId, final InformationCardBookmarkDeletionRequest request) {
+        List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByIdIn(request.informationBookmarkIds());
+
+        for (InformationCardBookmark bookmark : bookmarks) {
+            if (!bookmark.getUserId().equals(userId)) {
+                throw new SachosaengException(BOOKMARK_USER_NOT_SAME);
+            }
+        }
+        informationCardBookmarkRepository.deleteAllByIdInBatch(request.informationBookmarkIds());
     }
 }
