@@ -8,7 +8,6 @@ import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CAR
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -52,6 +51,11 @@ public class BookmarkService {
         }
         final VoteCardBookmark voteCardBookmark = new VoteCardBookmark(voteCard, userId);
         voteCardBookmarkRepository.save(voteCardBookmark);
+    }
+
+    @Transactional
+    public void deleteVoteCardBookmark(final Long userId, final Long voteId) {
+        voteCardBookmarkRepository.deleteByUserIdAndVoteCardId(userId, voteId);
     }
 
     @Transactional

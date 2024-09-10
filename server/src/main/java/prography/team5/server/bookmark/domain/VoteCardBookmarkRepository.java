@@ -14,4 +14,6 @@ public interface VoteCardBookmarkRepository extends JpaRepository<VoteCardBookma
     List<VoteCardBookmark> findAllByUserId(Long userId);
 
     List<VoteCardBookmark> findAllByIdIn(List<Long> ids);
+
+    void deleteByUserIdAndVoteCardId(Long userId, Long voteCardId);
 }

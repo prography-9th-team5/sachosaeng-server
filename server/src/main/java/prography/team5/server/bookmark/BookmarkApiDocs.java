@@ -53,6 +53,18 @@ public interface BookmarkApiDocs {
     );
 
     @Operation(
+            summary = "[인증 토큰 필요] voteId로 개별 북마크 삭제 API",
+            description = """
+                    개별 북마크 삭제합니다. 요청에 path에 voteId를 담아 보내면 북마크를 삭제할 수 있습니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "북마크 삭제를 성공한 경우 200을 반환합니다.")
+    ResponseEntity<CommonApiResponse<Void>> deleteVoteCardBookmark(
+            @Parameter(hidden = true) Accessor accessor,
+            @PathVariable(name = "voteId") final Long voteId
+    );
+
+    @Operation(
             summary = "[인증 토큰 필요] 투표 북마크 제거 API",
             description = """
                     제거할 북마크들의 voteBookmarkId들을 담아 보내면 투표 북마크를 제거합니다.
