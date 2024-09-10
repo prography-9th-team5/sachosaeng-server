@@ -116,6 +116,11 @@ public class BookmarkService {
     }
 
     @Transactional
+    public void deleteInformationCardBookmark(final Long userId, final Long informationId) {
+        informationCardBookmarkRepository.deleteByUserIdAndInformationCardId(userId, informationId);
+    }
+
+    @Transactional
     public void deleteInformationCardBookmarks(final Long userId, final InformationCardBookmarkDeletionRequest request) {
         List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByIdIn(request.informationBookmarkIds());
 

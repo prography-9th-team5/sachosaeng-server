@@ -107,6 +107,16 @@ public class BookmarkController implements BookmarkApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
     }
 
+    @DeleteMapping("/information/{informationId}")
+    public ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmark(
+            @AuthRequired Accessor accessor,
+            @PathVariable(name = "informationId") final Long informationId
+    ) {
+        bookmarkService.deleteInformationCardBookmark(accessor.id(), informationId);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+    }
+
     @DeleteMapping("/information")
     public ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmarks(
             @AuthRequired Accessor accessor,
