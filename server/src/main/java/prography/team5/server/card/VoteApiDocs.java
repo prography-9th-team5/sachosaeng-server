@@ -17,6 +17,7 @@ import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
+import prography.team5.server.common.CategoriesWrapper;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.common.EmptyData;
 
@@ -69,18 +70,18 @@ public interface VoteApiDocs {
     );
 
     @Operation(
-            summary = "[홈화면] 전체 카테고리 투표를 3개씩 조회 API",
+            summary = "[홈화면] 전체 카테고리 투표를 3개씩 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     현재는 각 카테고리에 대해 최신순으로 3개 조회하는 중, 투표 노출 로직은 추후 수정 예정입니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfAllCategories(
+    ResponseEntity<CommonApiResponse<CategoriesWrapper<List<CategoryVoteSuggestionsResponse>>>> findSuggestionsOfAllCategories(
             @Parameter(hidden = true) Accessor accessor
     );
 
     @Operation(
-            summary = "[인증 토큰 필요][홈화면] 관심/유저타입 카테고리별로 투표를 3개씩 조회 API",
+            summary = "[인증 토큰 필요][홈화면] 관심/유저타입 카테고리별로 투표를 3개씩 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     기본적으로는 유저의 모든 관심 카테고리별로 투표를 3개씩 조회합니다. \n
                     관심 카테고리가 없다면 유저 타입에 해당하는 모든 카테고리들에 대해 조회합니다. \n
@@ -88,7 +89,7 @@ public interface VoteApiDocs {
                     """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfMy(
+    ResponseEntity<CommonApiResponse<CategoriesWrapper<List<CategoryVoteSuggestionsResponse>>>> findSuggestionsOfMy(
             @Parameter(hidden = true) Accessor accessor
     );
 

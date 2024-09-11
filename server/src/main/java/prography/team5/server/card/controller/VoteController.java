@@ -15,6 +15,7 @@ import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
+import prography.team5.server.common.CategoriesWrapper;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.card.VoteApiDocs;
 import prography.team5.server.card.service.VoteService;
@@ -67,21 +68,21 @@ public class VoteController implements VoteApiDocs {
     }
 
     @GetMapping("/suggestions/all")
-    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfAllCategories(
+    public ResponseEntity<CommonApiResponse<CategoriesWrapper<List<CategoryVoteSuggestionsResponse>>>> findSuggestionsOfAllCategories(
             @AuthRequired(required = false) Accessor accessor
     ) {
         final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestionsOfAllCategories(accessor);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new CategoriesWrapper<>(response)));
     }
 
     @GetMapping("/suggestions/my")
-    public ResponseEntity<CommonApiResponse<List<CategoryVoteSuggestionsResponse>>> findSuggestionsOfMy(
+    public ResponseEntity<CommonApiResponse<CategoriesWrapper<List<CategoryVoteSuggestionsResponse>>>> findSuggestionsOfMy(
             @AuthRequired Accessor accessor
     ) {
         final List<CategoryVoteSuggestionsResponse> response = voteService.findSuggestionsOfMy(accessor.id());
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new CategoriesWrapper<>(response)));
     }
 
     @PutMapping("/{voteId}/choices")

@@ -12,6 +12,7 @@ import prography.team5.server.common.EmptyData;
 import prography.team5.server.version.service.ForceUpdateRequest;
 import prography.team5.server.version.service.VersionCheckResponse;
 import prography.team5.server.version.service.VersionRequest;
+import prography.team5.server.version.service.VersionsWrapper;
 
 @Tag(name = "00-1. IOS 버전", description = "IOS 버전 관련 기능입니다.")
 public interface IosVersionApiDocs {
@@ -26,11 +27,11 @@ public interface IosVersionApiDocs {
     );
 
     @Operation(
-            summary = "[IOS] 모든 버전 조회 API",
+            summary = "[IOS] 모든 버전 조회 API -> []를 {}로 감쌌어요!!",
             description = "모든 버전을 조회할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "모든 버전 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<List<VersionCheckResponse>>> findAllIosVersions();
+    ResponseEntity<CommonApiResponse<VersionsWrapper<List<VersionCheckResponse>>>> findAllIosVersions();
 
     @Operation(
             summary = "[IOS] 버전 체크 API",

@@ -10,15 +10,17 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
+import prography.team5.server.common.InformationWrapper;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
+import prography.team5.server.common.VotesWrapper;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
 import prography.team5.server.category.service.dto.CategoryResponse;
+import prography.team5.server.common.CategoriesWrapper;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.common.EmptyData;
 
@@ -94,29 +96,29 @@ public interface BookmarkApiDocs {
     );
 
     @Operation(
-            summary = "[인증 토큰 필요] ALL에 대한 투표 북마크 조회 API",
+            summary = "[인증 토큰 필요] ALL에 대한 투표 북마크 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     투표 북마크를 조회합니다. 전체 카테고리에 대한 조회입니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
-    ResponseEntity<CommonApiResponse<List<VoteCardBookmarkResponse>>> findVoteCardBookmark(
+    ResponseEntity<CommonApiResponse<VotesWrapper<List<VoteCardBookmarkResponse>>>> findVoteCardBookmark(
             @Parameter(hidden = true) Accessor accessor
     );
 
     @Operation(
-            summary = "[인증 토큰 필요] 사용자가 북마크한 투표들의 카테고리들만 조회 API",
+            summary = "[인증 토큰 필요] 사용자가 북마크한 투표들의 카테고리들만 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     사용자가 북마크한 투표들의 카테고리들만 조회합니다. ALL 아이콘은 GET /api/v1/categories/icon-data/all 을 통해 iconUrl과 backgroundColor를 확인할 수 있기 때문에 제외하였습니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "카테고리 조회를 성공한 경우 200을 반환합니다.")
-    ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findVoteCardBookmarkCategories(
+    ResponseEntity<CommonApiResponse<CategoriesWrapper<List<CategoryResponse>>>> findVoteCardBookmarkCategories(
             @Parameter(hidden = true) Accessor accessor
     );
 
     @Operation(
-            summary = "[인증 토큰 필요] 특정 카테고리의 투표 북마크 조회 API",
+            summary = "[인증 토큰 필요] 특정 카테고리의 투표 북마크 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     categoryId를 path에 담아 보내면 해당 카테고리의 투표 북마크를 조회합니다.
                     """
@@ -138,7 +140,7 @@ public interface BookmarkApiDocs {
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<List<VoteCardBookmarkResponse>>> findVoteCardBookmarkByCategory(
+    ResponseEntity<CommonApiResponse<VotesWrapper<List<VoteCardBookmarkResponse>>>> findVoteCardBookmarkByCategory(
             @Parameter(hidden = true) Accessor accessor,
             @PathVariable(name = "categoryId") final Long categoryId
     );
@@ -212,29 +214,29 @@ public interface BookmarkApiDocs {
     );
 
     @Operation(
-            summary = "[인증 토큰 필요] ALL에 대한 연관 콘텐츠 북마크 조회 API",
+            summary = "[인증 토큰 필요] ALL에 대한 연관 콘텐츠 북마크 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     연관 콘텐츠 북마크를 조회합니다. 전체 카테고리에 대한 조회입니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
-    ResponseEntity<CommonApiResponse<List<InformationCardBookmarkResponse>>> findInformationCardBookmark(
+    ResponseEntity<CommonApiResponse<InformationWrapper<List<InformationCardBookmarkResponse>>>> findInformationCardBookmark(
             @Parameter(hidden = true) Accessor accessor
     );
 
     @Operation(
-            summary = "[인증 토큰 필요] 사용자가 북마크한 연관 콘텐츠들의 카테고리들만 조회 API",
+            summary = "[인증 토큰 필요] 사용자가 북마크한 연관 콘텐츠들의 카테고리들만 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     사용자가 북마크한 연관 콘텐츠들의 카테고리들만 조회합니다. ALL 아이콘은 GET /api/v1/categories/icon-data/all 을 통해 iconUrl과 backgroundColor를 확인할 수 있기 때문에 제외하였습니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "카테고리 조회를 성공한 경우 200을 반환합니다.")
-    ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findInformationCardBookmarkCategories(
+    ResponseEntity<CommonApiResponse<CategoriesWrapper<List<CategoryResponse>>>> findInformationCardBookmarkCategories(
             @Parameter(hidden = true) Accessor accessor
     );
 
     @Operation(
-            summary = "[인증 토큰 필요] 특정 카테고리의 연관 콘텐츠 북마크 조회 API",
+            summary = "[인증 토큰 필요] 특정 카테고리의 연관 콘텐츠 북마크 조회 API -> []를 {}로 감쌌어요!!",
             description = """
                     categoryId를 path에 담아 보내면 해당 카테고리의 연관 콘텐츠 북마크를 조회합니다.
                     """
@@ -256,7 +258,7 @@ public interface BookmarkApiDocs {
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<List<InformationCardBookmarkResponse>>> findInformationCardBookmarkByCategory(
+    ResponseEntity<CommonApiResponse<InformationWrapper<List<InformationCardBookmarkResponse>>>> findInformationCardBookmarkByCategory(
             @Parameter(hidden = true) Accessor accessor,
             @PathVariable(name = "categoryId") final Long categoryId
     );
