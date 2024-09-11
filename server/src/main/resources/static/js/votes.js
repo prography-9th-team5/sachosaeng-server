@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(response => response.json())
         .then(data => {
             const categoryCheckboxes = document.getElementById('categoryCheckboxes');
-            data.data.forEach(category => {
+            data.data.categories.forEach(category => {
                 const categoryDiv = document.createElement('div');
                 categoryDiv.classList.add('category');
 
