@@ -1,6 +1,5 @@
 package prography.team5.server.common;
 
-import java.util.Collections;
 import lombok.Getter;
 
 @Getter

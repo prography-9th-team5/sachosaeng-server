@@ -17,6 +17,7 @@ import prography.team5.server.version.service.ForceUpdateRequest;
 import prography.team5.server.version.service.VersionCheckResponse;
 import prography.team5.server.version.service.VersionRequest;
 import prography.team5.server.version.service.VersionService;
+import prography.team5.server.version.service.VersionsWrapper;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,10 +36,10 @@ public class AndroidVersionController implements AndroidVersionApiDocs {
     }
 
     @GetMapping
-    public ResponseEntity<CommonApiResponse<List<VersionCheckResponse>>> findAllAndroidVersions() {
+    public ResponseEntity<CommonApiResponse<VersionsWrapper<List<VersionCheckResponse>>>> findAllAndroidVersions() {
         List<VersionCheckResponse> response = versionService.findAllAndroidVersions();
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new VersionsWrapper<>(response)));
     }
 
     @GetMapping("/{version}")

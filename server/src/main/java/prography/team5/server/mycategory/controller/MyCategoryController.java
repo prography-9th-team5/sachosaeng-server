@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
+import prography.team5.server.common.CategoriesWrapper;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.common.EmptyData;
 import prography.team5.server.mycategory.MyCategoryApiDocs;
@@ -25,10 +26,10 @@ public class MyCategoryController implements MyCategoryApiDocs {
     private final MyCategoryService myCategoryService;
 
     @GetMapping
-    public ResponseEntity<CommonApiResponse<List<CategoryResponse>>> findAllByUserId(@AuthRequired Accessor accessor) {
+    public ResponseEntity<CommonApiResponse<CategoriesWrapper<List<CategoryResponse>>>> findAllByUserId(@AuthRequired Accessor accessor) {
         final List<CategoryResponse> response = myCategoryService.findAllByUserId(accessor.id());
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new CategoriesWrapper<>(response)));
     }
 
     @PutMapping
@@ -40,14 +41,4 @@ public class MyCategoryController implements MyCategoryApiDocs {
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
-
-/*    @GetMapping("/information")
-    public ResponseEntity<CommonApiResponse<List<InformationResponse>>> findAllInformationByUserId(
-            @AuthRequired Accessor accessor,
-            @RequestParam(name = "cursor", required = false) final Long cursor
-    ) {
-        List<InformationResponse> response = myCategoryService.findAllInformationByUserId(accessor.id(), cursor);
-        return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
-    }*/
 }
