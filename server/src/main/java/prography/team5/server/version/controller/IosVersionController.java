@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.version.IosVersionApiDocs;
 import prography.team5.server.version.service.ForceUpdateRequest;
 import prography.team5.server.version.service.VersionCheckResponse;
@@ -25,12 +26,12 @@ public class IosVersionController implements IosVersionApiDocs {
     private final VersionService versionService;
 
     @PostMapping
-    public ResponseEntity<CommonApiResponse<Void>> registerIosVersion(
+    public ResponseEntity<CommonApiResponse<EmptyData>> registerIosVersion(
             @RequestBody VersionRequest versionRequest
     ) {
         versionService.registerIosVersion(versionRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @GetMapping
@@ -50,11 +51,11 @@ public class IosVersionController implements IosVersionApiDocs {
     }
 
     @PutMapping("/force-update")
-    public ResponseEntity<CommonApiResponse<Void>> registerIosVersionForceUpdate(
+    public ResponseEntity<CommonApiResponse<EmptyData>> registerIosVersionForceUpdate(
             @RequestBody ForceUpdateRequest forceUpdateRequest
     ) {
         versionService.registerIosVersionForceUpdate(forceUpdateRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

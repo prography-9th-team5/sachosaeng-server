@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.category.service.dto.CategoryResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.mycategory.service.dto.MyCategoryRequest;
 
 @Tag(name = "04. 관심 카테고리", description = "관심 카테고리 관련 기능입니다.")
@@ -29,7 +30,7 @@ public interface MyCategoryApiDocs {
             description = "유저의 관심 카테고리를 갱신할 수 있습니다. body에 담아 보낸 카테고리들로 관심 카테고리가 전체 갱신 됩니다."
     )
     @ApiResponse(responseCode = "200", description = "관심 카테고리 갱신 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> updateByUserId(
+    ResponseEntity<CommonApiResponse<EmptyData>> updateByUserId(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody MyCategoryRequest myCategoryRequest
     );

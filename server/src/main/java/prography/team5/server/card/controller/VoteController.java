@@ -21,6 +21,7 @@ import prography.team5.server.card.service.VoteService;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.card.service.dto.VoteResponse;
+import prography.team5.server.common.EmptyData;
 
 @RequiredArgsConstructor
 @RestController
@@ -84,13 +85,13 @@ public class VoteController implements VoteApiDocs {
     }
 
     @PutMapping("/{voteId}/choices")
-    public ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
+    public ResponseEntity<CommonApiResponse<EmptyData>> chooseVoteOption(
             @AuthRequired Accessor accessor,
             @PathVariable(value = "voteId") final long voteId,
             @RequestBody final VoteOptionChoiceRequest request
     ) {
         voteService.chooseVoteOption(accessor.id(), voteId, request);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

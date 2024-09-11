@@ -18,6 +18,7 @@ import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 
 @Tag(name = "05. 투표 카드", description = "투표 카드 관련 기능입니다.")
 public interface VoteApiDocs {
@@ -100,7 +101,7 @@ public interface VoteApiDocs {
                     """
     )
     @ApiResponse(responseCode = "200", description = "투표 리스트 조회 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> chooseVoteOption(
+    ResponseEntity<CommonApiResponse<EmptyData>> chooseVoteOption(
             @Parameter(hidden = true) Accessor accessor,
             @PathVariable(value = "voteId") final long voteId,
             @RequestBody final VoteOptionChoiceRequest request

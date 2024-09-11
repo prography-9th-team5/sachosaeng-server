@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.mycategory.MyCategoryApiDocs;
 import prography.team5.server.mycategory.service.MyCategoryService;
 import prography.team5.server.auth.service.dto.Accessor;
@@ -31,13 +32,13 @@ public class MyCategoryController implements MyCategoryApiDocs {
     }
 
     @PutMapping
-    public ResponseEntity<CommonApiResponse<Void>> updateByUserId(
+    public ResponseEntity<CommonApiResponse<EmptyData>> updateByUserId(
             @AuthRequired Accessor accessor,
             @RequestBody MyCategoryRequest myCategoryRequest
     ) {
         myCategoryService.updateAllByUserId(accessor.id(), myCategoryRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
 /*    @GetMapping("/information")

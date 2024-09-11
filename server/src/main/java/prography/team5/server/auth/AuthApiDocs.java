@@ -14,6 +14,7 @@ import prography.team5.server.auth.service.dto.JoinRequest;
 import prography.team5.server.auth.service.dto.LoginResponse;
 import prography.team5.server.auth.service.dto.WithdrawRequest;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.user.domain.SocialType;
 
 @Tag(name = "01. 인증", description = "인증 관련 기능입니다.")
@@ -27,7 +28,7 @@ public interface AuthApiDocs {
                     """
     )
     @ApiResponse(responseCode = "200", description = "회원가입 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> join(
+    ResponseEntity<CommonApiResponse<EmptyData>> join(
             @RequestBody final JoinRequest joinRequest,
             @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
     );
@@ -59,7 +60,7 @@ public interface AuthApiDocs {
             description = "회원 탈퇴를 할 수 있습니다. 회원 탈퇴 성공시 refresh token은 서버에서 무효화 됩니다. access token은 삭제해주세요."
     )
     @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> withdraw(
+    ResponseEntity<CommonApiResponse<EmptyData>> withdraw(
             @Parameter(hidden = true) final Accessor accessor,
             @RequestBody final WithdrawRequest withdrawRequest
     );
@@ -69,5 +70,5 @@ public interface AuthApiDocs {
             description = "Authorization 헤더에 Bearer {엑세스 토큰}을 담아 보냈을 때 응답이 성공하는지 테스트 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "인증 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> test(@Parameter(hidden = true) final Accessor accessor);
+    ResponseEntity<CommonApiResponse<EmptyData>> test(@Parameter(hidden = true) final Accessor accessor);
 }

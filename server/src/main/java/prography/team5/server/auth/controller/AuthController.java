@@ -19,6 +19,7 @@ import prography.team5.server.auth.service.dto.JoinRequest;
 import prography.team5.server.auth.service.dto.LoginResponse;
 import prography.team5.server.auth.service.dto.WithdrawRequest;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.user.domain.SocialType;
 
 @RequiredArgsConstructor
@@ -29,13 +30,13 @@ public class AuthController implements AuthApiDocs {
     private final AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity<CommonApiResponse<Void>> join(
+    public ResponseEntity<CommonApiResponse<EmptyData>> join(
             @RequestBody final JoinRequest joinRequest,
             @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
     ) {
         authService.joinNewUser(joinRequest, socialType);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @PostMapping("/login")
@@ -58,18 +59,18 @@ public class AuthController implements AuthApiDocs {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<CommonApiResponse<Void>> test(@AuthRequired final Accessor accessor) {
+    public ResponseEntity<CommonApiResponse<EmptyData>> test(@AuthRequired final Accessor accessor) {
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @DeleteMapping("/withdraw")
-    public ResponseEntity<CommonApiResponse<Void>> withdraw(
+    public ResponseEntity<CommonApiResponse<EmptyData>> withdraw(
             @AuthRequired final Accessor accessor,
             @RequestBody final WithdrawRequest withdrawRequest
     ) {
         authService.withdraw(accessor, withdrawRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

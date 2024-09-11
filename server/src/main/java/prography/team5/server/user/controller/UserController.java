@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.user.UserApiDocs;
 import prography.team5.server.user.service.UserService;
 import prography.team5.server.auth.service.dto.Accessor;
@@ -34,22 +35,22 @@ public class UserController implements UserApiDocs {
     }
 
     @PutMapping("/nickname")
-    public ResponseEntity<CommonApiResponse<UserResponse>> updateNickname(
+    public ResponseEntity<CommonApiResponse<EmptyData>> updateNickname(
             @AuthRequired Accessor accessor,
             @RequestBody NicknameRequest nicknameRequest
     ) {
         userService.updateNickname(accessor.id(), nicknameRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @PutMapping("/user-type")
-    public ResponseEntity<CommonApiResponse<UserResponse>> updateUserType(
+    public ResponseEntity<CommonApiResponse<EmptyData>> updateUserType(
             @AuthRequired Accessor accessor,
             @RequestBody UserTypeRequest userTypeRequest
     ) {
         userService.updateUserType(accessor.id(), userTypeRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

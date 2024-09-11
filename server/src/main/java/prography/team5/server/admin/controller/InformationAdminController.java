@@ -19,6 +19,7 @@ import prography.team5.server.admin.service.dto.InformationCreationRequest;
 import prography.team5.server.category.service.CategoryService;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 
 @RestController
 @RequestMapping("/admin/information")
@@ -58,11 +59,11 @@ public class InformationAdminController {
 
     @Hidden
     @PutMapping("/{informationId}")
-    public ResponseEntity<CommonApiResponse<Void>> update(
+    public ResponseEntity<CommonApiResponse<EmptyData>> update(
             @PathVariable(value = "informationId") final long informationId,
             @RequestBody final InformationCreationRequest informationCreationRequest) {
         informationAdminService.modifyById(informationId, informationCreationRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

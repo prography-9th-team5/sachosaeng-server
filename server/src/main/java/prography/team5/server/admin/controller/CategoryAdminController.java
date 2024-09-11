@@ -18,6 +18,7 @@ import prography.team5.server.admin.service.dto.CategoryWithUserTypesResponse;
 import prography.team5.server.category.service.dto.CategoryIdResponse;
 import prography.team5.server.category.service.dto.CategoryRequest;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 
 @RestController
 @RequestMapping("/admin/categories")
@@ -46,12 +47,12 @@ public class CategoryAdminController {
 
     @Hidden
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CommonApiResponse<Void>> update(
+    public ResponseEntity<CommonApiResponse<EmptyData>> update(
             @PathVariable(value = "categoryId") final Long categoryId,
             @RequestBody final CategoryUpdateRequest categoryUpdateRequest
             ) {
         categoryAdminService.update(categoryId, categoryUpdateRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.version.AndroidVersionApiDocs;
 import prography.team5.server.version.service.ForceUpdateRequest;
 import prography.team5.server.version.service.VersionCheckResponse;
@@ -25,12 +26,12 @@ public class AndroidVersionController implements AndroidVersionApiDocs {
     private final VersionService versionService;
 
     @PostMapping
-    public ResponseEntity<CommonApiResponse<Void>> registerAndroidVersion(
+    public ResponseEntity<CommonApiResponse<EmptyData>> registerAndroidVersion(
             @RequestBody VersionRequest versionRequest
     ) {
         versionService.registerAndroidVersion(versionRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @GetMapping
@@ -50,11 +51,11 @@ public class AndroidVersionController implements AndroidVersionApiDocs {
     }
 
     @PutMapping("/force-update")
-    public ResponseEntity<CommonApiResponse<Void>> registerAndroidVersionForceUpdate(
+    public ResponseEntity<CommonApiResponse<EmptyData>> registerAndroidVersionForceUpdate(
             @RequestBody ForceUpdateRequest forceUpdateRequest
     ) {
         versionService.registerAndroidVersionForceUpdate(forceUpdateRequest);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

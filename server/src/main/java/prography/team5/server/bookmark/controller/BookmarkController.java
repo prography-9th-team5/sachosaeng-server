@@ -22,6 +22,7 @@ import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionReque
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,33 +36,33 @@ public class BookmarkController implements BookmarkApiDocs {
     투표 콘텐츠
      */
     @PostMapping("/votes")
-    public ResponseEntity<CommonApiResponse<Void>> createVoteCardBookmark(
+    public ResponseEntity<CommonApiResponse<EmptyData>> createVoteCardBookmark(
             @AuthRequired Accessor accessor,
             @RequestBody VoteCardBookmarkCreationRequest request
     ) {
         bookmarkService.createVoteCardBookmark(accessor.id(), request);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @DeleteMapping("/votes/{voteId}")
-    public ResponseEntity<CommonApiResponse<Void>> deleteVoteCardBookmark(
+    public ResponseEntity<CommonApiResponse<EmptyData>> deleteVoteCardBookmark(
             @AuthRequired Accessor accessor,
             @PathVariable(name = "voteId") final Long voteId
     ) {
         bookmarkService.deleteVoteCardBookmark(accessor.id(), voteId);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @DeleteMapping("/votes")
-    public ResponseEntity<CommonApiResponse<Void>> deleteVoteCardBookmarks(
+    public ResponseEntity<CommonApiResponse<EmptyData>> deleteVoteCardBookmarks(
             @AuthRequired Accessor accessor,
             @RequestBody VoteCardBookmarkDeletionRequest request
     ) {
         bookmarkService.deleteVoteCardBookmarks(accessor.id(), request);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @GetMapping("/votes")
@@ -98,33 +99,33 @@ public class BookmarkController implements BookmarkApiDocs {
     정보 콘텐츠
      */
     @PostMapping("/information")
-    public ResponseEntity<CommonApiResponse<Void>> createInformationCardBookmark(
+    public ResponseEntity<CommonApiResponse<EmptyData>> createInformationCardBookmark(
             @AuthRequired Accessor accessor,
             @RequestBody InformationCardBookmarkCreationRequest request
     ) {
         bookmarkService.createInformationCardBookmark(accessor.id(), request);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @DeleteMapping("/information/{informationId}")
-    public ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmark(
+    public ResponseEntity<CommonApiResponse<EmptyData>> deleteInformationCardBookmark(
             @AuthRequired Accessor accessor,
             @PathVariable(name = "informationId") final Long informationId
     ) {
         bookmarkService.deleteInformationCardBookmark(accessor.id(), informationId);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @DeleteMapping("/information")
-    public ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmarks(
+    public ResponseEntity<CommonApiResponse<EmptyData>> deleteInformationCardBookmarks(
             @AuthRequired Accessor accessor,
             @RequestBody InformationCardBookmarkDeletionRequest request
     ) {
         bookmarkService.deleteInformationCardBookmarks(accessor.id(), request);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
     @GetMapping("/information")

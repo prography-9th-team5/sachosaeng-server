@@ -20,6 +20,7 @@ import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionReque
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 
 @Tag(name = "10. 북마크", description = "북마크 관련 기능입니다.")
 public interface BookmarkApiDocs {
@@ -41,13 +42,13 @@ public interface BookmarkApiDocs {
                                         {
                                           "code": 0,
                                           "message": "string",
-                                          "data": ""
+                                          "data": {}
                                         }
                                     """
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<Void>> createVoteCardBookmark(
+    ResponseEntity<CommonApiResponse<EmptyData>> createVoteCardBookmark(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody VoteCardBookmarkCreationRequest request
     );
@@ -59,7 +60,7 @@ public interface BookmarkApiDocs {
                     """
     )
     @ApiResponse(responseCode = "200", description = "북마크 삭제를 성공한 경우 200을 반환합니다.")
-    ResponseEntity<CommonApiResponse<Void>> deleteVoteCardBookmark(
+    ResponseEntity<CommonApiResponse<EmptyData>> deleteVoteCardBookmark(
             @Parameter(hidden = true) Accessor accessor,
             @PathVariable(name = "voteId") final Long voteId
     );
@@ -81,13 +82,13 @@ public interface BookmarkApiDocs {
                                         {
                                           "code": 0,
                                           "message": "string",
-                                          "data": ""
+                                          "data": {}
                                         }
                                     """
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<Void>> deleteVoteCardBookmarks(
+    ResponseEntity<CommonApiResponse<EmptyData>> deleteVoteCardBookmarks(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody VoteCardBookmarkDeletionRequest request
     );
@@ -131,7 +132,7 @@ public interface BookmarkApiDocs {
                                         {
                                           "code": 0,
                                           "message": "string",
-                                          "data": ""
+                                          "data": {}
                                         }
                                     """
                     )
@@ -159,13 +160,13 @@ public interface BookmarkApiDocs {
                                         {
                                           "code": 0,
                                           "message": "string",
-                                          "data": ""
+                                          "data": {}
                                         }
                                     """
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<Void>> createInformationCardBookmark(
+    ResponseEntity<CommonApiResponse<EmptyData>> createInformationCardBookmark(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody InformationCardBookmarkCreationRequest request
     );
@@ -177,7 +178,7 @@ public interface BookmarkApiDocs {
                     """
     )
     @ApiResponse(responseCode = "200", description = "북마크 삭제를 성공한 경우 200을 반환합니다.")
-    ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmark(
+    ResponseEntity<CommonApiResponse<EmptyData>> deleteInformationCardBookmark(
             @Parameter(hidden = true) Accessor accessor,
             @PathVariable(name = "informationId") final Long informationId
     );
@@ -199,13 +200,13 @@ public interface BookmarkApiDocs {
                                         {
                                           "code": 0,
                                           "message": "string",
-                                          "data": ""
+                                          "data": {}
                                         }
                                     """
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<Void>> deleteInformationCardBookmarks(
+    ResponseEntity<CommonApiResponse<EmptyData>> deleteInformationCardBookmarks(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody InformationCardBookmarkDeletionRequest request
     );
@@ -249,7 +250,7 @@ public interface BookmarkApiDocs {
                                         {
                                           "code": 0,
                                           "message": "string",
-                                          "data": ""
+                                          "data": {}
                                         }
                                     """
                     )

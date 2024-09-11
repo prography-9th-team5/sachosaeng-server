@@ -1,5 +1,6 @@
 package prography.team5.server.admin.controller;
 
+import com.google.protobuf.Empty;
 import io.swagger.v3.oas.annotations.Hidden;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ import prography.team5.server.card.service.dto.VoteRequest;
 import prography.team5.server.category.service.CategoryService;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 
 @RestController
 @RequestMapping("/admin/votes")
@@ -66,12 +68,12 @@ public class VoteAdminController {
 
     @Hidden
     @PutMapping("/{voteId}")
-    public ResponseEntity<CommonApiResponse<VoteWithFullCategoriesResponse>> modifyById(
+    public ResponseEntity<CommonApiResponse<EmptyData>> modifyById(
             @PathVariable(value = "voteId") final Long voteId,
             @RequestBody final VoteWithAdminNameRequest request
     ) {
         voteAdminService.modifyById(voteId, request);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다."));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.version.service.ForceUpdateRequest;
 import prography.team5.server.version.service.VersionCheckResponse;
 import prography.team5.server.version.service.VersionRequest;
@@ -20,7 +21,7 @@ public interface AndroidVersionApiDocs {
             description = "최신 버전을 등록할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "최신 버전 등록 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> registerAndroidVersion(
+    ResponseEntity<CommonApiResponse<EmptyData>> registerAndroidVersion(
             @RequestBody VersionRequest versionRequest
     );
 
@@ -45,7 +46,7 @@ public interface AndroidVersionApiDocs {
             description = "특정 버전들의 강제 업데이트를 등록하거나 해제할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "강제 업데이트 등록 성공입니다.")
-    ResponseEntity<CommonApiResponse<Void>> registerAndroidVersionForceUpdate(
+    ResponseEntity<CommonApiResponse<EmptyData>> registerAndroidVersionForceUpdate(
             @RequestBody ForceUpdateRequest forceUpdateRequest
     );
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.auth.service.dto.Accessor;
+import prography.team5.server.common.EmptyData;
 import prography.team5.server.user.service.dto.NicknameRequest;
 import prography.team5.server.user.service.dto.UserResponse;
 import prography.team5.server.user.service.dto.UserTypeRequest;
@@ -31,7 +32,7 @@ public interface UserApiDocs {
             description = "닉네임을 수정 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "유저 닉네임 수정 성공입니다.")
-    ResponseEntity<CommonApiResponse<UserResponse>> updateNickname(
+    ResponseEntity<CommonApiResponse<EmptyData>> updateNickname(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody NicknameRequest nicknameRequest
     );
@@ -42,7 +43,7 @@ public interface UserApiDocs {
                     + "STUDENT(학생), JOB_SEEKER(취준생), NEW_EMPLOYEE(입사 1~3년차 직장인), OTHER(기타)"
     )
     @ApiResponse(responseCode = "200", description = "유저 닉네임 수정 성공입니다.")
-    ResponseEntity<CommonApiResponse<UserResponse>> updateUserType(
+    ResponseEntity<CommonApiResponse<EmptyData>> updateUserType(
             @Parameter(hidden = true) Accessor accessor,
             @RequestBody UserTypeRequest userTypeRequest
     );

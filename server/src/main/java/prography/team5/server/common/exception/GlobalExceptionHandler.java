@@ -54,6 +54,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import prography.team5.server.common.CommonApiResponse;
+import prography.team5.server.common.EmptyData;
 
 @Slf4j
 @RestControllerAdvice
@@ -109,14 +110,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(SachosaengException.class)
-    public ResponseEntity<CommonApiResponse<Void>> handleSachosaengException(final SachosaengException e) {
+    public ResponseEntity<CommonApiResponse<EmptyData>> handleSachosaengException(final SachosaengException e) {
         HttpStatus httpStatus = errorTypeToHttpStatus.getOrDefault(e.getErrorType(), null);
         if (Objects.isNull(httpStatus)) {
             log.warn("예외에 대한 상태코드 등록 필요: {}", e.getErrorType().toString());
             httpStatus = BAD_REQUEST; //임시로 400 반환
         }
         return ResponseEntity.status(httpStatus)
-                .body(new CommonApiResponse<>(e.getCode(), e.getMessage()));
+                .body(new CommonApiResponse<>(e.getCode(), e.getMessage(), new EmptyData()));
     }
 
     @Override
@@ -127,14 +128,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         final ErrorType errorType = PAGE_NOT_FOUND;
         //log.warn(errorType.getMessage(), ex);
         return ResponseEntity.status(errorTypeToHttpStatus.get(errorType))
-                .body(new CommonApiResponse<>(errorType.getCode(), errorType.getMessage()));
+                .body(new CommonApiResponse<>(errorType.getCode(), errorType.getMessage(), new EmptyData()));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<CommonApiResponse<Void>> handleException(final Exception e) {
+    public ResponseEntity<CommonApiResponse<EmptyData>> handleException(final Exception e) {
         final ErrorType errorType = SERVER_ERROR;
         log.error(errorType.getMessage(), e);
         return ResponseEntity.status(errorTypeToHttpStatus.get(errorType))
-                .body(new CommonApiResponse<>(errorType.getCode(), errorType.getMessage()));
+                .body(new CommonApiResponse<>(errorType.getCode(), errorType.getMessage(), new EmptyData()));
     }
 }
