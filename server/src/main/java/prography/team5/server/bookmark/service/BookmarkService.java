@@ -8,6 +8,7 @@ import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CAR
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -41,12 +42,13 @@ public class BookmarkService {
     private final InformationCardBookmarkRepository informationCardBookmarkRepository;
     private final InformationCardRepository informationCardRepository;
     private final CategoryRepository categoryRepository;
+    private final VoteCardBookmarkDescription voteCardBookmarkDescription;
 
     @Transactional
     public void createVoteCardBookmark(final Long userId, final VoteCardBookmarkCreationRequest request) {
         final VoteCard voteCard = voteCardRepository.findById(request.voteId())
                 .orElseThrow(() -> new SachosaengException(INVALID_VOTE_CARD_ID));
-        if(voteCardBookmarkRepository.existsByVoteCardAndUserId(voteCard, userId)) {
+        if (voteCardBookmarkRepository.existsByVoteCardAndUserId(voteCard, userId)) {
             throw new SachosaengException(BOOKMARK_EXISTS);
         }
         final VoteCardBookmark voteCardBookmark = new VoteCardBookmark(voteCard, userId);
@@ -70,14 +72,15 @@ public class BookmarkService {
         voteCardBookmarkRepository.deleteAllByIdInBatch(request.voteBookmarkIds());
     }
 
-    //todo: description 은 1위인 답변에 대한 정보 표시
     @Transactional(readOnly = true)
     public List<VoteCardBookmarkResponse> findVoteCardBookmark(final Long userId) {
         final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(
                 userId,
                 Sort.by(Direction.DESC, "id")
         );
-        return VoteCardBookmarkResponse.toResponse(bookmarks);
+        final Map<Long, String> descriptions = voteCardBookmarkDescription.createDescriptions(
+                bookmarks.stream().map(VoteCardBookmark::getVoteCard).toList());
+        return VoteCardBookmarkResponse.toResponse(bookmarks, descriptions);
     }
 
     @Transactional(readOnly = true)
@@ -101,14 +104,16 @@ public class BookmarkService {
         );
         final List<VoteCardBookmark> filteredBookmarks = bookmarks.stream()
                 .filter(each -> each.getVoteCard().isSameCategory(category)).toList();
-        return VoteCardBookmarkResponse.toResponse(filteredBookmarks);
+        final Map<Long, String> descriptions = voteCardBookmarkDescription.createDescriptions(
+                bookmarks.stream().map(VoteCardBookmark::getVoteCard).toList());
+        return VoteCardBookmarkResponse.toResponse(filteredBookmarks, descriptions);
     }
 
     @Transactional
     public void createInformationCardBookmark(final Long userId, final InformationCardBookmarkCreationRequest request) {
         final InformationCard informationCard = informationCardRepository.findById(request.informationId())
                 .orElseThrow(() -> new SachosaengException(INVALID_INFORMATION_CARD_ID));
-        if(informationCardBookmarkRepository.existsByInformationCardAndUserId(informationCard, userId)) {
+        if (informationCardBookmarkRepository.existsByInformationCardAndUserId(informationCard, userId)) {
             throw new SachosaengException(BOOKMARK_EXISTS);
         }
         final InformationCardBookmark informationCardBookmark = new InformationCardBookmark(informationCard, userId);
@@ -121,8 +126,10 @@ public class BookmarkService {
     }
 
     @Transactional
-    public void deleteInformationCardBookmarks(final Long userId, final InformationCardBookmarkDeletionRequest request) {
-        List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByIdIn(request.informationBookmarkIds());
+    public void deleteInformationCardBookmarks(final Long userId,
+                                               final InformationCardBookmarkDeletionRequest request) {
+        List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByIdIn(
+                request.informationBookmarkIds());
 
         for (InformationCardBookmark bookmark : bookmarks) {
             if (!bookmark.getUserId().equals(userId)) {

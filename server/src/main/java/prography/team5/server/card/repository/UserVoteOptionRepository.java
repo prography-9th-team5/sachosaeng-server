@@ -35,4 +35,7 @@ public interface UserVoteOptionRepository extends JpaRepository<UserVoteOption, 
 
     @Query("SELECT uvo FROM UserVoteOption uvo JOIN User u ON uvo.userId = u.id WHERE uvo.voteId = :voteId AND u.userType = :userType")
     List<UserVoteOption> findByVoteIdAndUserType(@Param("voteId") Long voteId, @Param("userType") UserType userType);
+
+    List<UserVoteOption> findByVoteIdIn(List<Long> voteIds);
+
 }

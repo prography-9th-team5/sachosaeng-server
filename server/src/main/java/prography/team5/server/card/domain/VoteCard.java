@@ -178,4 +178,12 @@ public class VoteCard extends Card {
             this.adminName = adminName;
         }
     }
+
+    public String getVoteOptionById(final Long voteOptionId) {
+        final VoteOption voteOption = this.voteOptions.stream()
+                .filter(each -> each.getId().equals(voteOptionId))
+                .findFirst()
+                .orElseThrow(() -> new SachosaengException(ErrorType.SERVER_ERROR));
+        return voteOption.getContent();
+    }
 }
