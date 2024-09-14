@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
-import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkWithCursorResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkWithCursorResponse;
@@ -22,7 +22,6 @@ import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CategoriesWrapper;
 import prography.team5.server.common.CommonApiResponse;
 import prography.team5.server.common.EmptyData;
-import prography.team5.server.common.InformationWrapper;
 
 @Tag(name = "10. 북마크", description = "북마크 관련 기능입니다.")
 public interface BookmarkApiDocs {
@@ -224,12 +223,16 @@ public interface BookmarkApiDocs {
     @Operation(
             summary = "[인증 토큰 필요] ALL에 대한 연관 콘텐츠 북마크 조회 API -> []를 {}로 감쌌어요!!",
             description = """
-                    연관 콘텐츠 북마크를 조회합니다. 전체 카테고리에 대한 조회입니다.
+                    연관 콘텐츠 북마크를 조회합니다. 전체 카테고리에 대한 조회입니다. \n
+                    조회하는 기본 북마크수(size)를 별도로 설정하지 않으면 디폴트값인 10으로 조회됩니다. \n
+                    cursor를 별도로 설정하지 않으면 가장 최신의 북마크를 size만큼 조회합니다. 다음 요청부터는 응답에 포함된 nextCursor를 cursor에 담아보내면 됩니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
-    ResponseEntity<CommonApiResponse<InformationWrapper<List<InformationCardBookmarkResponse>>>> findInformationCardBookmark(
-            @Parameter(hidden = true) Accessor accessor
+    ResponseEntity<CommonApiResponse<InformationCardBookmarkWithCursorResponse>> findInformationCardBookmark(
+            @Parameter(hidden = true) Accessor accessor,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     );
 
     @Operation(
@@ -246,7 +249,9 @@ public interface BookmarkApiDocs {
     @Operation(
             summary = "[인증 토큰 필요] 특정 카테고리의 연관 콘텐츠 북마크 조회 API -> []를 {}로 감쌌어요!!",
             description = """
-                    categoryId를 path에 담아 보내면 해당 카테고리의 연관 콘텐츠 북마크를 조회합니다.
+                    categoryId를 path에 담아 보내면 해당 카테고리의 연관 콘텐츠 북마크를 조회합니다. \n
+                    조회하는 기본 북마크수(size)를 별도로 설정하지 않으면 디폴트값인 10으로 조회됩니다. \n
+                    cursor를 별도로 설정하지 않으면 가장 최신의 북마크를 size만큼 조회합니다. 다음 요청부터는 응답에 포함된 nextCursor를 cursor에 담아보내면 됩니다.
                     """
     )
     @ApiResponse(responseCode = "200", description = "북마크 조회를 성공한 경우 200을 반환합니다.")
@@ -266,8 +271,10 @@ public interface BookmarkApiDocs {
                     )
             )
     )
-    ResponseEntity<CommonApiResponse<InformationWrapper<List<InformationCardBookmarkResponse>>>> findInformationCardBookmarkByCategory(
+    ResponseEntity<CommonApiResponse<InformationCardBookmarkWithCursorResponse>> findInformationCardBookmarkByCategory(
             @Parameter(hidden = true) Accessor accessor,
-            @PathVariable(name = "categoryId") final Long categoryId
+            @PathVariable(name = "categoryId") final Long categoryId,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     );
 }

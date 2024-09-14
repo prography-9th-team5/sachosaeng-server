@@ -15,15 +15,12 @@ import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.BookmarkApiDocs;
 import prography.team5.server.bookmark.service.BookmarkService;
-import prography.team5.server.bookmark.service.dto.VoteCardBookmarkWithCursorResponse;
-import prography.team5.server.common.InformationWrapper;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
-import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
-import prography.team5.server.common.VotesWrapper;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkWithCursorResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
-import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
+import prography.team5.server.bookmark.service.dto.VoteCardBookmarkWithCursorResponse;
 import prography.team5.server.category.service.dto.CategoryResponse;
 import prography.team5.server.common.CategoriesWrapper;
 import prography.team5.server.common.CommonApiResponse;
@@ -138,12 +135,14 @@ public class BookmarkController implements BookmarkApiDocs {
     }
 
     @GetMapping("/information")
-    public ResponseEntity<CommonApiResponse<InformationWrapper<List<InformationCardBookmarkResponse>>>> findInformationCardBookmark(
-            @AuthRequired Accessor accessor
+    public ResponseEntity<CommonApiResponse<InformationCardBookmarkWithCursorResponse>> findInformationCardBookmark(
+            @AuthRequired Accessor accessor,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     ) {
-        List<InformationCardBookmarkResponse> response = bookmarkService.findInformationCardBookmark(accessor.id());
+        InformationCardBookmarkWithCursorResponse response = bookmarkService.findInformationCardBookmark(accessor.id(), cursor, size);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new InformationWrapper<>(response)));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @GetMapping("/information-categories")
@@ -156,13 +155,19 @@ public class BookmarkController implements BookmarkApiDocs {
     }
 
     @GetMapping("/information/categories/{categoryId}")
-    public ResponseEntity<CommonApiResponse<InformationWrapper<List<InformationCardBookmarkResponse>>>> findInformationCardBookmarkByCategory(
+    public ResponseEntity<CommonApiResponse<InformationCardBookmarkWithCursorResponse>> findInformationCardBookmarkByCategory(
             @AuthRequired Accessor accessor,
-            @PathVariable(name = "categoryId") final Long categoryId
+            @PathVariable(name = "categoryId") final Long categoryId,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     ) {
-        List<InformationCardBookmarkResponse> response = bookmarkService.findInformationCardBookmarkByCategory(accessor.id(),
-                categoryId);
+        InformationCardBookmarkWithCursorResponse response = bookmarkService.findInformationCardBookmarkByCategory(
+                accessor.id(),
+                categoryId,
+                cursor,
+                size
+        );
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new InformationWrapper<>(response)));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 }

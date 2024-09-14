@@ -24,6 +24,7 @@ import prography.team5.server.bookmark.domain.VoteCardBookmarkRepository;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkResponse;
+import prography.team5.server.bookmark.service.dto.InformationCardBookmarkWithCursorResponse;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
@@ -91,7 +92,8 @@ public class BookmarkService {
         );
     }
 
-    private Slice<VoteCardBookmark> findVoteCardBookmarksWithCursor(final Long userId, Long lastCursor, final Integer size) {
+    private Slice<VoteCardBookmark> findVoteCardBookmarksWithCursor(final Long userId, Long lastCursor,
+                                                                    final Integer size) {
         if (Objects.isNull(lastCursor)) {
             return voteCardBookmarkRepository.findLatestBookmarks(userId, PageRequest.ofSize(size));
         }
@@ -135,11 +137,16 @@ public class BookmarkService {
         );
     }
 
-    private Slice<VoteCardBookmark> findVoteCardBookmarksWithCategoryAndCursor(final Long userId, final Category category, final Long lastCursor, final Integer size) {
+    private Slice<VoteCardBookmark> findVoteCardBookmarksWithCategoryAndCursor(final Long userId,
+                                                                               final Category category,
+                                                                               final Long lastCursor,
+                                                                               final Integer size) {
         if (Objects.isNull(lastCursor)) {
-            return voteCardBookmarkRepository.findLatestBookmarksByUserIdAndCategory(userId, category, PageRequest.ofSize(size));
+            return voteCardBookmarkRepository.findLatestBookmarksByUserIdAndCategory(userId, category,
+                    PageRequest.ofSize(size));
         }
-        return voteCardBookmarkRepository.findLatestBookmarksByUserIdAndCategoryBeforeCursor(userId, category, lastCursor, PageRequest.ofSize(size));
+        return voteCardBookmarkRepository.findLatestBookmarksByUserIdAndCategoryBeforeCursor(userId, category,
+                lastCursor, PageRequest.ofSize(size));
     }
 
     @Transactional
@@ -173,12 +180,30 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public List<InformationCardBookmarkResponse> findInformationCardBookmark(final Long userId) {
-        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(
-                userId,
-                Sort.by(Direction.DESC, "id")
+    public InformationCardBookmarkWithCursorResponse findInformationCardBookmark(
+            final Long userId,
+            final Long cursor,
+            final Integer size
+    ) {
+        Slice<InformationCardBookmark> slice = findInformationCardBookmarkWithCursor(userId, cursor, size);
+        final List<InformationCardBookmark> bookmarks = slice.getContent();
+        final List<InformationCardBookmarkResponse> information = InformationCardBookmarkResponse.toResponse(bookmarks);
+        return new InformationCardBookmarkWithCursorResponse(
+                information,
+                slice.hasNext(),
+                bookmarks.isEmpty() ? null : bookmarks.getLast().getId()
         );
-        return InformationCardBookmarkResponse.toResponse(bookmarks);
+    }
+
+    private Slice<InformationCardBookmark> findInformationCardBookmarkWithCursor(
+            final Long userId,
+            final Long cursor,
+            final Integer size
+    ) {
+        if (Objects.isNull(cursor)) {
+            return informationCardBookmarkRepository.findLatestBookmarks(userId, PageRequest.ofSize(size));
+        }
+        return informationCardBookmarkRepository.findBookmarksBeforeCursor(userId, cursor, PageRequest.ofSize(size));
     }
 
     @Transactional(readOnly = true)
@@ -193,19 +218,35 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public List<InformationCardBookmarkResponse> findInformationCardBookmarkByCategory(
+    public InformationCardBookmarkWithCursorResponse findInformationCardBookmarkByCategory(
             final Long userId,
-            final Long categoryId
+            final Long categoryId,
+            final Long lastCursor,
+            final Integer size
     ) {
         final Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new SachosaengException(INVALID_CATEGORY));
-        final List<InformationCardBookmark> bookmarks = informationCardBookmarkRepository.findAllByUserId(
-                userId,
-                Sort.by(Direction.DESC, "id")
+        final Slice<InformationCardBookmark> slice = findInformationCardBookmarkWithCategoriesAndCursor(
+                userId, category, lastCursor, size);
+
+        final List<InformationCardBookmark> bookmarks = slice.getContent();
+        final List<InformationCardBookmarkResponse> information = InformationCardBookmarkResponse.toResponse(bookmarks);
+        return new InformationCardBookmarkWithCursorResponse(
+                information,
+                slice.hasNext(),
+                bookmarks.isEmpty() ? null : bookmarks.getLast().getId()
         );
-        final List<InformationCardBookmark> filteredBookmarks = bookmarks.stream()
-                .filter(each -> each.getInformationCard().isSameCategory(category))
-                .toList();
-        return InformationCardBookmarkResponse.toResponse(filteredBookmarks);
+    }
+
+    private Slice<InformationCardBookmark> findInformationCardBookmarkWithCategoriesAndCursor(
+            final Long userId,
+            final Category category,
+            final Long cursor,
+            final Integer size
+    ) {
+        if (Objects.isNull(cursor)) {
+            return informationCardBookmarkRepository.findLatestBookmarksByUserIdAndCategory(userId, category, PageRequest.ofSize(size));
+        }
+        return informationCardBookmarkRepository.findLatestBookmarksByUserIdAndCategoryBeforeCursor(userId, cursor, category, PageRequest.ofSize(size));
     }
 }
