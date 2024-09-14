@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [09/14 업데이트]
+                    1. 투표 북마크 목록 조회(전체, 카테고리별)시 페이징 기능을 추가하였습니다.
+                    
                     [09/11 업데이트]
                     1. 단일 투표 상세 조회나 연관 콘텐츠 상세 조회시 바로 북마크를 제거할 수 있도록 voteId와 informationId를 이용한 개별 북마크 삭제 api를 각각 추가했습니다. \n
                     2. 빈값 "" -> {}

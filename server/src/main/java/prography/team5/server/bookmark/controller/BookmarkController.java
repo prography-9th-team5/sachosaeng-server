@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.bookmark.BookmarkApiDocs;
 import prography.team5.server.bookmark.service.BookmarkService;
+import prography.team5.server.bookmark.service.dto.VoteCardBookmarkWithCursorResponse;
 import prography.team5.server.common.InformationWrapper;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.InformationCardBookmarkDeletionRequest;
@@ -69,12 +71,14 @@ public class BookmarkController implements BookmarkApiDocs {
     }
 
     @GetMapping("/votes")
-    public ResponseEntity<CommonApiResponse<VotesWrapper<List<VoteCardBookmarkResponse>>>> findVoteCardBookmark(
-            @AuthRequired Accessor accessor
+    public ResponseEntity<CommonApiResponse<VoteCardBookmarkWithCursorResponse>> findVoteCardBookmark(
+            @AuthRequired Accessor accessor,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     ) {
-        List<VoteCardBookmarkResponse> response = bookmarkService.findVoteCardBookmark(accessor.id());
+        VoteCardBookmarkWithCursorResponse response = bookmarkService.findVoteCardBookmark(accessor.id(), cursor, size);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new VotesWrapper<>(response)));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @GetMapping("/vote-categories")
@@ -87,14 +91,16 @@ public class BookmarkController implements BookmarkApiDocs {
     }
 
     @GetMapping("/votes/categories/{categoryId}")
-    public ResponseEntity<CommonApiResponse<VotesWrapper<List<VoteCardBookmarkResponse>>>> findVoteCardBookmarkByCategory(
+    public ResponseEntity<CommonApiResponse<VoteCardBookmarkWithCursorResponse>> findVoteCardBookmarkByCategory(
             @AuthRequired Accessor accessor,
-            @PathVariable(name = "categoryId") final Long categoryId
+            @PathVariable(name = "categoryId") final Long categoryId,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     ) {
-        List<VoteCardBookmarkResponse> response = bookmarkService.findVoteCardBookmarkByCategory(accessor.id(),
-                categoryId);
+        VoteCardBookmarkWithCursorResponse response = bookmarkService.findVoteCardBookmarkByCategory(accessor.id(),
+                categoryId, cursor, size);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new VotesWrapper<>(response)));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     /*

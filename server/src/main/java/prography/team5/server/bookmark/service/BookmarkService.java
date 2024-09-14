@@ -9,7 +9,10 @@ import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CAR
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,7 @@ import prography.team5.server.bookmark.service.dto.InformationCardBookmarkRespon
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkCreationRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkDeletionRequest;
 import prography.team5.server.bookmark.service.dto.VoteCardBookmarkResponse;
+import prography.team5.server.bookmark.service.dto.VoteCardBookmarkWithCursorResponse;
 import prography.team5.server.card.domain.InformationCard;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.InformationCardRepository;
@@ -73,14 +77,29 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public List<VoteCardBookmarkResponse> findVoteCardBookmark(final Long userId) {
-        final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(
-                userId,
-                Sort.by(Direction.DESC, "id")
-        );
+    public VoteCardBookmarkWithCursorResponse findVoteCardBookmark(final Long userId, Long lastCursor,
+                                                                   final Integer size) {
+        final Slice<VoteCardBookmark> bookmarks = findVoteCardBookmarksWithCursor(userId, lastCursor, size);
         final Map<Long, String> descriptions = voteCardBookmarkDescription.createDescriptions(
                 bookmarks.stream().map(VoteCardBookmark::getVoteCard).toList());
-        return VoteCardBookmarkResponse.toResponse(bookmarks, descriptions);
+        final List<VoteCardBookmark> content = bookmarks.getContent();
+        final List<VoteCardBookmarkResponse> votes = VoteCardBookmarkResponse.toResponse(content, descriptions);
+        return new VoteCardBookmarkWithCursorResponse(
+                votes,
+                bookmarks.hasNext(),
+                content.isEmpty() ? null : content.getLast().getId()
+        );
+    }
+
+    private Slice<VoteCardBookmark> findVoteCardBookmarksWithCursor(final Long userId, Long lastCursor, final Integer size) {
+        if (Objects.isNull(lastCursor)) {
+            return voteCardBookmarkRepository.findLatestBookmarks(userId, PageRequest.ofSize(size));
+        }
+        return voteCardBookmarkRepository.findBookmarksBeforeCursor(
+                userId,
+                lastCursor,
+                PageRequest.ofSize(size)
+        );
     }
 
     @Transactional(readOnly = true)
@@ -95,18 +114,32 @@ public class BookmarkService {
     }
 
     @Transactional(readOnly = true)
-    public List<VoteCardBookmarkResponse> findVoteCardBookmarkByCategory(final Long userId, final Long categoryId) {
+    public VoteCardBookmarkWithCursorResponse findVoteCardBookmarkByCategory(
+            final Long userId,
+            final Long categoryId,
+            final Long lastCursor,
+            final Integer size
+    ) {
         final Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new SachosaengException(INVALID_CATEGORY));
-        final List<VoteCardBookmark> bookmarks = voteCardBookmarkRepository.findAllByUserId(
-                userId,
-                Sort.by(Direction.DESC, "id")
-        );
-        final List<VoteCardBookmark> filteredBookmarks = bookmarks.stream()
-                .filter(each -> each.getVoteCard().isSameCategory(category)).toList();
+
+        Slice<VoteCardBookmark> slice = findVoteCardBookmarksWithCategoryAndCursor(userId, category, lastCursor, size);
+        final List<VoteCardBookmark> bookmarks = slice.getContent();
         final Map<Long, String> descriptions = voteCardBookmarkDescription.createDescriptions(
                 bookmarks.stream().map(VoteCardBookmark::getVoteCard).toList());
-        return VoteCardBookmarkResponse.toResponse(filteredBookmarks, descriptions);
+        final List<VoteCardBookmarkResponse> votes = VoteCardBookmarkResponse.toResponse(bookmarks, descriptions);
+        return new VoteCardBookmarkWithCursorResponse(
+                votes,
+                slice.hasNext(),
+                bookmarks.isEmpty() ? null : bookmarks.getLast().getId()
+        );
+    }
+
+    private Slice<VoteCardBookmark> findVoteCardBookmarksWithCategoryAndCursor(final Long userId, final Category category, final Long lastCursor, final Integer size) {
+        if (Objects.isNull(lastCursor)) {
+            return voteCardBookmarkRepository.findLatestBookmarksByUserIdAndCategory(userId, category, PageRequest.ofSize(size));
+        }
+        return voteCardBookmarkRepository.findLatestBookmarksByUserIdAndCategoryBeforeCursor(userId, category, lastCursor, PageRequest.ofSize(size));
     }
 
     @Transactional

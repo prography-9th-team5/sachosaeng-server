@@ -1,5 +1,6 @@
 package prography.team5.server.bookmark.service;
 
+import io.jsonwebtoken.lang.Objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,9 @@ public class VoteCardBookmarkDescription {
         for (VoteCard voteCard : voteCards) {
             List<UserVoteOption> options = optionsByVoteCardId.get(voteCard.getId());
 
-            if (options.isEmpty()) {
+            if (Objects.isEmpty(options)) {
                 descriptions.put(voteCard.getId(), "");
+                continue;
             }
             // 옵션별로 묶기
             Map<Long, Long> optionsCount = options.stream()
