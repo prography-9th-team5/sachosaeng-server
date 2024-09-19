@@ -8,7 +8,7 @@ public record UserResponse(Long userId, String nickname, String userType) {
         return new UserResponse(
                 user.getId(),
                 user.getNickname(),
-                user.getUserType().getDescription()
+                user.getUserType().name()
         );
     }
 }
