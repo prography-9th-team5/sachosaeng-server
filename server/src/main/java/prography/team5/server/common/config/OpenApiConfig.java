@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [09/19 업데이트]
+                    1. 단일 투표 조회에 복수선택이 가능한지를 나타내는 isMultipleChoiceAllowed 필드가 추가되었습니다.
+                    
                     [09/14 업데이트]
                     1. 투표 북마크 (전체, 카테고리별)목록 조회시 페이징 기능을 추가하였습니다. \n
                     2. 연관콘텐츠 북마크 (전체, 카테고리별)목록 조회시 페이징 기능을 추가하였습니다.

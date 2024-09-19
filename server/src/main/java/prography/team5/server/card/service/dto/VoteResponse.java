@@ -14,6 +14,7 @@ public record VoteResponse(
         CategoryResponse category,
         String title,
         Long participantCount,
+        boolean isMultipleChoiceAllowed,
         List<VoteOptionResponse> voteOptions,
         String description
 ) {
@@ -35,6 +36,7 @@ public record VoteResponse(
                 CategoryResponse.toResponseWith32px(category),
                 voteCard.getTitle(),
                 voteCard.getParticipantCount(),
+                voteCard.isMultipleChoiceAllowed(),
                 voteCard.getVoteOptions()
                         .stream()
                         .map(option -> new VoteOptionResponse(option.getId(), option.getContent(), option.getCount()))
