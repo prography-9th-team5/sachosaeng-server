@@ -79,18 +79,18 @@ public class VoteCard extends Card {
         participantCount++;
     }
 
-    public void changeVoteOption(final List<Long> fromVoteOptionIds, final List<Long> ToVoteOptionIds) {
+    public void changeVoteOption(final List<Long> fromVoteOptionIds, final List<Long> toVoteOptionIds) {
         for (Long fromVoteOptionId : fromVoteOptionIds) {
             final VoteOption fromVoteOption = voteOptions.stream()
                     .filter(each -> Objects.equals(each.getId(), fromVoteOptionId))
                     .findFirst()
-                    .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_OPTION_ID));
+                    .orElseThrow(() -> new SachosaengException(ErrorType.SERVER_ERROR));
             fromVoteOption.decrease();
         }
-        if(ToVoteOptionIds.size() > 1 && !isMultipleChoiceAllowed) {
+        if(toVoteOptionIds.size() > 1 && !isMultipleChoiceAllowed) {
             throw new SachosaengException(ErrorType.MULTIPLE_CHOICE_NOT_ALLOWED);
         }
-        for (Long voteOptionId : ToVoteOptionIds) {
+        for (Long voteOptionId : toVoteOptionIds) {
             final VoteOption voteOption = voteOptions.stream()
                     .filter(each -> Objects.equals(each.getId(), voteOptionId))
                     .findFirst()
