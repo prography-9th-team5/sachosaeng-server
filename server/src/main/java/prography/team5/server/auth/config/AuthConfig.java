@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import prography.team5.server.auth.domain.RefreshTokenRepository;
 import prography.team5.server.auth.infrastructure.JwtTokenManager;
 import prography.team5.server.auth.service.AccessTokenManager;
-import prography.team5.server.auth.service.RefreshTokenManager;
 import prography.team5.server.auth.service.UUIDRefreshTokenManager;
 
 @Configuration
@@ -33,7 +32,7 @@ public class AuthConfig {
     }
 
     @Bean
-    public RefreshTokenManager refreshTokenManager(@Autowired RefreshTokenRepository refreshTokenRepository) {
+    public UUIDRefreshTokenManager refreshTokenManager(@Autowired RefreshTokenRepository refreshTokenRepository) {
         return new UUIDRefreshTokenManager(refreshTokenRepository, refreshTokenExpirationDays);
     }
 }

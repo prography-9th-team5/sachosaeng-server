@@ -14,6 +14,7 @@ import static prography.team5.server.common.exception.ErrorType.BOOKMARK_USER_NO
 import static prography.team5.server.common.exception.ErrorType.CARD_CATEGORY_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.CARD_TITLE_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.CATEGORY_NOT_INCLUDED_IN_INFORMATION;
+import static prography.team5.server.common.exception.ErrorType.DEVICE_NOT_MATCH;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_EMAIL;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_VERSION;
@@ -81,6 +82,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(NO_REFRESH_TOKEN, UNAUTHORIZED);
         errorTypeToHttpStatus.put(INVALID_REFRESH_TOKEN, UNAUTHORIZED);
         errorTypeToHttpStatus.put(REFRESH_TOKEN_EXPIRATION, UNAUTHORIZED);
+        errorTypeToHttpStatus.put(DEVICE_NOT_MATCH, UNAUTHORIZED);
 
         //409
         errorTypeToHttpStatus.put(DUPLICATED_EMAIL, CONFLICT);

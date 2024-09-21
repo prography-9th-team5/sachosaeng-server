@@ -21,8 +21,8 @@ public class AppleAspect {
         }
     }
 
-    @Before(value = "execution(* prography.team5.server.auth.service.AuthService.login(..)) && args(emailRequest, socialType)", argNames = "emailRequest,socialType")
-    public void modifyEmailForAppleLogin(EmailRequest emailRequest, SocialType socialType) {
+    @Before(value = "execution(* prography.team5.server.auth.service.AuthService.login(..)) && args(emailRequest, socialType, device)", argNames = "emailRequest,socialType,device")
+    public void modifyEmailForAppleLogin(EmailRequest emailRequest, SocialType socialType, final String device) {
         if (socialType == SocialType.APPLE) {
             String appleEmail = emailRequest.email() + APPLE_EMAIL;
             emailRequest.updateEmail(appleEmail);

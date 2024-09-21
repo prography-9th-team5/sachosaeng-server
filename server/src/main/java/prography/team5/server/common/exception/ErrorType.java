@@ -16,6 +16,7 @@ public enum ErrorType {
     NO_REFRESH_TOKEN(-3, "Refresh Token이 없습니다."),
     INVALID_REFRESH_TOKEN(-3, "유효하지 않은 Refresh Token입니다."),
     REFRESH_TOKEN_EXPIRATION(-3, "Refresh Token이 만료되었습니다. 다시 로그인이 필요합니다."),
+    DEVICE_NOT_MATCH(-3, "리프레시 토큰을 발급한 기기가 아닙니다."),
 
     //이메일 에러
     DUPLICATED_EMAIL(-4, "이미 가입한 적이 있는 이메일입니다."),

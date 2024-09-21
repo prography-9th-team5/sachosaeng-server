@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.auth.domain.Withdraw;
 import prography.team5.server.auth.domain.WithdrawRepository;
-import prography.team5.server.auth.service.dto.AccessTokenResponse;
+import prography.team5.server.auth.service.dto.TokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
 import prography.team5.server.auth.service.dto.JoinRequest;
@@ -26,7 +26,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final AccessTokenManager accessTokenManager;
-    private final RefreshTokenManager refreshTokenManager;
+    private final UUIDRefreshTokenManager refreshTokenManager;
     private final WithdrawRepository withdrawRepository;
 
     @Transactional
@@ -43,11 +43,11 @@ public class AuthService {
     }
 
     @Transactional
-    public LoginResponse login(final EmailRequest emailRequest, final SocialType socialType) {
+    public LoginResponse login(final EmailRequest emailRequest, final SocialType socialType, final String device) {
         final User user = userRepository.findByEmailValue(emailRequest.email())
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_EMAIL));
         final String accessToken = accessTokenManager.provide(user.getId());
-        final String refreshToken = refreshTokenManager.provide(user.getId());
+        final String refreshToken = refreshTokenManager.provide(user.getId(), device);
         return new LoginResponse(user.getId(), accessToken, refreshToken);
     }
 
@@ -56,13 +56,18 @@ public class AuthService {
     }
 
     @Transactional
-    public AccessTokenResponse refreshAccessToken(final String refreshToken) {
-        if (Objects.isEmpty(refreshToken)) {
+    public TokenResponse refreshAccessToken(
+            final String oldRefreshToken,
+            final String device
+    ) {
+        if (Objects.isEmpty(oldRefreshToken)) {
             throw new SachosaengException(ErrorType.NO_REFRESH_TOKEN);
         }
-        final long userId = refreshTokenManager.extractUserId(refreshToken);
+        refreshTokenManager.checkDevice(oldRefreshToken, device);
+        final long userId = refreshTokenManager.extractUserId(oldRefreshToken);
         final String accessToken = accessTokenManager.provide(userId);
-        return new AccessTokenResponse(accessToken);
+        final String refreshToken = refreshTokenManager.refresh(userId, oldRefreshToken, device);
+        return new TokenResponse(accessToken, refreshToken);
     }
 
     @Transactional

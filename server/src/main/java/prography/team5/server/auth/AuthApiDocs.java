@@ -7,8 +7,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import prography.team5.server.auth.service.dto.AccessTokenResponse;
+import prography.team5.server.auth.service.dto.TokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
 import prography.team5.server.auth.service.dto.JoinRequest;
@@ -44,7 +45,8 @@ public interface AuthApiDocs {
     @ApiResponse(responseCode = "200", description = "로그인 성공입니다.")
     ResponseEntity<CommonApiResponse<LoginResponse>> login(
             final EmailRequest emailRequest,
-            @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
+            @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType,
+            @RequestHeader(value = "X-Device", required = false) final String device
     );
 
     @Operation(
@@ -52,8 +54,9 @@ public interface AuthApiDocs {
             description = "Cookie에 Refresh={리프레시 토큰}을 담아 보내면 엑세스 토큰을 재발급 할 수 있습니다."
     )
     @ApiResponse(responseCode = "200", description = "엑세스 토큰 재발급 성공입니다.")
-    ResponseEntity<CommonApiResponse<AccessTokenResponse>> refreshAccessToken(
-            @CookieValue(value = "Refresh") final String refreshToken
+    ResponseEntity<CommonApiResponse<TokenResponse>> refreshAccessToken(
+            @CookieValue(value = "Refresh") final String refreshToken,
+            @RequestHeader(value = "X-Device", required = false) final String device
     );
 
     @Operation(
