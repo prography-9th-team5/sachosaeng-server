@@ -15,8 +15,9 @@ spring:
 
 auth:
   jwt:
-    secret-key: fightingscs-awesomescs-fantasticscs-scsisthebest-thisiswrittenby59
+    secret-key: testkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkey
     access-token-expiration-minutes: 30
+    join-key: testkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkey
   refresh-token:
     expiration-days: 14
 
