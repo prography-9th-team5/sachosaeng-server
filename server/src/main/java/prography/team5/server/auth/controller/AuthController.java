@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.AuthApiDocs;
 import prography.team5.server.auth.service.AuthService;
+import prography.team5.server.auth.service.dto.JoinResponse;
+import prography.team5.server.auth.service.dto.TokenRequest;
 import prography.team5.server.auth.service.dto.TokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
@@ -31,13 +33,13 @@ public class AuthController implements AuthApiDocs {
     private final AuthService authService;
 
     @PostMapping("/join")
-    public ResponseEntity<CommonApiResponse<EmptyData>> join(
+    public ResponseEntity<CommonApiResponse<JoinResponse>> join(
             @RequestBody final JoinRequest joinRequest,
             @RequestParam(value = "type", defaultValue = "DEFAULT", required = false) SocialType socialType
     ) {
-        authService.joinNewUser(joinRequest, socialType);
+        final JoinResponse response = authService.joinNewUser(joinRequest, socialType);
         return ResponseEntity.ok()
-                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 
     @PostMapping("/login")
@@ -47,6 +49,16 @@ public class AuthController implements AuthApiDocs {
             @RequestHeader(value = "X-Device", required = false) final String device
     ) {
         final LoginResponse response = authService.login(emailRequest, socialType, device);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @PostMapping("/login-by-token")
+    public ResponseEntity<CommonApiResponse<LoginResponse>> loginByToken(
+            @RequestBody final TokenRequest tokenRequest,
+            @RequestHeader(value = "X-Device", required = false) final String device
+    ) {
+        final LoginResponse response = authService.loginByToken(tokenRequest, device);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

@@ -7,4 +7,8 @@ public interface AccessTokenManager {
     String provide(final long id);
 
     Accessor extract(final String token);
+
+    String provideLoginToken(final long id);
+
+    Accessor extractFromLoginToken(final String token);
 }

@@ -13,22 +13,25 @@ import prography.team5.server.auth.service.UUIDRefreshTokenManager;
 public class AuthConfig {
 
     private final String secretKey;
+    private final String joinKey;
     private final long accessTokenExpirationMinutes;
     private final long refreshTokenExpirationDays;
 
     public AuthConfig(
             @Value("${auth.jwt.secret-key}") final String secretKey,
             @Value("${auth.jwt.access-token-expiration-minutes}") final long accessTokenExpirationMinutes,
-            @Value("${auth.refresh-token.expiration-days}") final long refreshTokenExpirationDays
+            @Value("${auth.refresh-token.expiration-days}") final long refreshTokenExpirationDays,
+            @Value("${auth.jwt.join-key}") final String joinKey
     ) {
         this.secretKey = secretKey;
         this.accessTokenExpirationMinutes = accessTokenExpirationMinutes;
         this.refreshTokenExpirationDays = refreshTokenExpirationDays;
+        this.joinKey = joinKey;
     }
 
     @Bean
     public AccessTokenManager accessTokenManager() {
-        return new JwtTokenManager(secretKey, accessTokenExpirationMinutes);
+        return new JwtTokenManager(secretKey, accessTokenExpirationMinutes, joinKey);
     }
 
     @Bean

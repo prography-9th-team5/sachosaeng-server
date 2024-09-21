@@ -11,6 +11,7 @@ public enum ErrorType {
     ACCESS_TOKEN_MALFORMED(-2, "올바른 형식으로 구성된 Access Token이 아닙니다."),
     ACCESS_TOKEN_UNSUPPORTED(-2, "지원하는 형식의 Access Token이 아닙니다."),
     ACCESS_TOKEN_SIGNATURE_FAIL(-2, "Access Token의 signature 검증이 실패하였습니다."),
+    TOKEN_TYPE_NOT_MATCH(-2, "회원 가입시 발급된 토큰이 아닙니다."),
 
     //인증 관련 에러 - 리프레시 토큰
     NO_REFRESH_TOKEN(-3, "Refresh Token이 없습니다."),

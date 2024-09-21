@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.auth.domain.Withdraw;
 import prography.team5.server.auth.domain.WithdrawRepository;
+import prography.team5.server.auth.service.dto.JoinResponse;
+import prography.team5.server.auth.service.dto.TokenRequest;
 import prography.team5.server.auth.service.dto.TokenResponse;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.auth.service.dto.EmailRequest;
@@ -30,7 +32,7 @@ public class AuthService {
     private final WithdrawRepository withdrawRepository;
 
     @Transactional
-    public long joinNewUser(final JoinRequest joinRequest, final SocialType socialType) {
+    public JoinResponse joinNewUser(final JoinRequest joinRequest, final SocialType socialType) {
         if (userRepository.existsByEmailValue(joinRequest.email())) {
             throw new SachosaengException(ErrorType.DUPLICATED_EMAIL);
         }
@@ -39,7 +41,8 @@ public class AuthService {
         }
         final User user = new User(joinRequest.email(), joinRequest.userType());
         userRepository.save(user);
-        return user.getId();
+        final String token = accessTokenManager.provideLoginToken(user.getId());
+        return new JoinResponse(user.getId(), token);
     }
 
     @Transactional
@@ -49,6 +52,14 @@ public class AuthService {
         final String accessToken = accessTokenManager.provide(user.getId());
         final String refreshToken = refreshTokenManager.provide(user.getId(), device);
         return new LoginResponse(user.getId(), accessToken, refreshToken);
+    }
+
+    @Transactional
+    public LoginResponse loginByToken(final TokenRequest tokenRequest, final String device) {
+        final Accessor user = accessTokenManager.extractFromLoginToken(tokenRequest.loginToken());
+        final String accessToken = accessTokenManager.provide(user.id());
+        final String refreshToken = refreshTokenManager.provide(user.id(), device);
+        return new LoginResponse(user.id(), accessToken, refreshToken);
     }
 
     public Accessor verifyUserFromToken(final String token) {
