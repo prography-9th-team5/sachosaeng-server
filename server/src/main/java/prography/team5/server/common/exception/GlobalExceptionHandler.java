@@ -16,6 +16,7 @@ import static prography.team5.server.common.exception.ErrorType.CARD_TITLE_EMPTY
 import static prography.team5.server.common.exception.ErrorType.CATEGORY_NOT_INCLUDED_IN_INFORMATION;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.DUPLICATED_EMAIL;
+import static prography.team5.server.common.exception.ErrorType.DUPLICATED_VERSION;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_ADMIN_NAME;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_TITLE;
@@ -34,6 +35,7 @@ import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_OPT
 import static prography.team5.server.common.exception.ErrorType.MULTIPLE_CHOICE_NOT_ALLOWED;
 import static prography.team5.server.common.exception.ErrorType.NO_AUTHORIZATION_HEADER;
 import static prography.team5.server.common.exception.ErrorType.NO_REFRESH_TOKEN;
+import static prography.team5.server.common.exception.ErrorType.NO_VERSION;
 import static prography.team5.server.common.exception.ErrorType.PAGE_NOT_FOUND;
 import static prography.team5.server.common.exception.ErrorType.REFRESH_TOKEN_EXPIRATION;
 import static prography.team5.server.common.exception.ErrorType.SAME_VOTE_OPTION;
@@ -107,6 +109,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(CARD_TITLE_EMPTY, BAD_REQUEST);
         errorTypeToHttpStatus.put(BOOKMARK_EXISTS, BAD_REQUEST);
         errorTypeToHttpStatus.put(BOOKMARK_USER_NOT_SAME, BAD_REQUEST);
+        errorTypeToHttpStatus.put(NO_VERSION, BAD_REQUEST);
+        errorTypeToHttpStatus.put(DUPLICATED_VERSION, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)
@@ -115,6 +119,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         if (Objects.isNull(httpStatus)) {
             log.warn("예외에 대한 상태코드 등록 필요: {}", e.getErrorType().toString());
             httpStatus = BAD_REQUEST; //임시로 400 반환
+        }else {
+            log.warn("예외 정보: {}", e.getErrorType().toString());
         }
         return ResponseEntity.status(httpStatus)
                 .body(new CommonApiResponse<>(e.getCode(), e.getMessage(), new EmptyData()));
