@@ -51,7 +51,7 @@ public class AuthController implements AuthApiDocs {
 
     @PostMapping("/refresh")
     public ResponseEntity<CommonApiResponse<AccessTokenResponse>> refreshAccessToken(
-            @CookieValue(value = "Refresh", required = false) final String refreshToken
+            @CookieValue(value = "Refresh") final String refreshToken
     ) {
         final AccessTokenResponse response = authService.refreshAccessToken(refreshToken);
         return ResponseEntity.ok()
