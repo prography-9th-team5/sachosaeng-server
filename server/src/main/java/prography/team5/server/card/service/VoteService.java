@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -40,6 +41,7 @@ import prography.team5.server.user.domain.UserType;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class VoteService {
 
     private final VoteCardRepository voteCardRepository;
@@ -198,6 +200,7 @@ public class VoteService {
 
     @Transactional
     public void chooseVoteOption(final Long userId, final long voteId, final VoteOptionChoiceRequest request) {
+        log.info("투표 옵션: {}", request.chosenVoteOptionIds().toString());
         final VoteCard voteCard = voteCardRepository.findById(voteId)
                 .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
         final List<UserVoteOption> votedBefore = userVoteOptionRepository.findByUserIdAndVoteId(userId, voteId);
