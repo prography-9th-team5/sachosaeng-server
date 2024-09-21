@@ -1,8 +1,8 @@
 package prography.team5.server.common.config;
 
-import java.util.Arrays;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -10,17 +10,13 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import prography.team5.server.auth.controller.AuthArgumentResolver;
 
+@RequiredArgsConstructor
 @Configuration
+@Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final AuthArgumentResolver authArgumentResolver;
-    private final String[] domains;
-
-    public WebMvcConfig(final AuthArgumentResolver authArgumentResolver, @Value("${cors.domains:http://localhost:8080}") final String... domains) {
-        System.out.println(Arrays.toString(domains));
-        this.authArgumentResolver = authArgumentResolver;
-        this.domains = domains;
-    }
+    private final AllowedHosts allowedHosts;
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
@@ -36,8 +32,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        log.info("allowed-hosts : {}", allowedHosts.getDomains());
         registry.addMapping("/**")
-                .allowedOrigins(domains)  // Swagger UI 도메인
+                .allowedOrigins(allowedHosts.getDomains().toArray(new String[0]))  // Swagger UI 도메인
                 .allowCredentials(true)  // 쿠키 허용
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");   // 모든 헤더 허용
