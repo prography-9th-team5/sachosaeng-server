@@ -28,3 +28,7 @@ design:
   all-icon:
     icon-url: "http://localhost:8080/icon/all-2x.png"
     background-color: "#E4E7EC"
+
+my-cors:
+  domains:
+    - http://localhost:8080
