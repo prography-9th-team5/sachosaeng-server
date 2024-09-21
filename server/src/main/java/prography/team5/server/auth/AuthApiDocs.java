@@ -39,7 +39,9 @@ public interface AuthApiDocs {
             summary = "로그인 API",
             description = """
                     이메일을 통해 로그인을 할 수 있습니다. 로그인을 할 때 엑세스 토큰과 리프레시 토큰을 발급합니다.\n
-                    애플로 로그인의 경우 type=APPLE 이라는 추가적인 쿼리 파라미터가 필요합니다.
+                    애플로 로그인의 경우 type=APPLE 이라는 추가적인 쿼리 파라미터가 필요합니다.\n
+                    X-Device 헤더에 기기정보를 같이 담아 보내면, 응답으로 발급된 리프레시 토큰을 해당 기기에서만 사용할 수 있도록 보안이 강화됩니다. \n
+                    즉, X-Device 헤더에 기기정보를 담아서 리프레시 토큰을 발급받았을 경우, 해당 리프레시 토큰을 이용해 엑세스 토큰을 재발급하려면, refresh api에도 X-Device 헤더가 필수입니다.\n
                     """
     )
     @ApiResponse(responseCode = "200", description = "로그인 성공입니다.")
@@ -51,7 +53,11 @@ public interface AuthApiDocs {
 
     @Operation(
             summary = "엑세스 토큰 재발급 API -> 스웨거에서 작동 안됨ㅜ",
-            description = "Cookie에 Refresh={리프레시 토큰}을 담아 보내면 엑세스 토큰을 재발급 할 수 있습니다."
+            description = """
+                    Cookie에 Refresh={리프레시 토큰}을 담아 보내면 엑세스 토큰과 리프레시 토큰을 재발급 할 수 있습니다. 기존 리프레시 토큰은 폐기됩니다.\n
+                    X-Device 헤더에 기기정보를 같이 담아 보내면, 응답으로 발급된 리프레시 토큰을 해당 기기에서만 사용할 수 있도록 보안이 강화됩니다. \n
+                    즉, X-Device 헤더에 기기정보를 담아서 리프레시 토큰을 발급받았을 경우, 해당 리프레시 토큰을 이용해 엑세스 토큰을 재발급하는 요청에도 X-Device 헤더가 필수입니다.\n
+                    """
     )
     @ApiResponse(responseCode = "200", description = "엑세스 토큰 재발급 성공입니다.")
     ResponseEntity<CommonApiResponse<TokenResponse>> refreshAccessToken(
