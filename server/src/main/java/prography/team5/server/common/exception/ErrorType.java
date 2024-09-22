@@ -64,6 +64,7 @@ public enum ErrorType {
     NO_SPECIFIC_VERSION(-11, "등록되지 않은 버전입니다."),
 
     //북마크 에러
+    EMPTY_VOTE_CARD_ID(-12, "voteId가 비어있습니다"),
     BOOKMARK_EXISTS(-12, "이미 북마크가 등록되어 있습니다."),
     BOOKMARK_USER_NOT_SAME(-12, "북마크한 유저가 아닙니다.");
 

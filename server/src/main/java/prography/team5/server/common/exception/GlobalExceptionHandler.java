@@ -21,6 +21,7 @@ import static prography.team5.server.common.exception.ErrorType.DUPLICATED_VERSI
 import static prography.team5.server.common.exception.ErrorType.EMPTY_ADMIN_NAME;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.EMPTY_TITLE;
+import static prography.team5.server.common.exception.ErrorType.EMPTY_VOTE_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INFORMATION_REFERENCE_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.INFORMATION_REFERENCE_URL_EMPTY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_AUTHORIZATION_HEADER_FORM;
@@ -113,6 +114,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         errorTypeToHttpStatus.put(BOOKMARK_USER_NOT_SAME, BAD_REQUEST);
         errorTypeToHttpStatus.put(NO_VERSION, BAD_REQUEST);
         errorTypeToHttpStatus.put(DUPLICATED_VERSION, BAD_REQUEST);
+        errorTypeToHttpStatus.put(EMPTY_VOTE_CARD_ID, BAD_REQUEST);
     }
 
     @ExceptionHandler(SachosaengException.class)

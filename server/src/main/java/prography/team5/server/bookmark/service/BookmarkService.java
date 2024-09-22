@@ -2,6 +2,7 @@ package prography.team5.server.bookmark.service;
 
 import static prography.team5.server.common.exception.ErrorType.BOOKMARK_EXISTS;
 import static prography.team5.server.common.exception.ErrorType.BOOKMARK_USER_NOT_SAME;
+import static prography.team5.server.common.exception.ErrorType.EMPTY_VOTE_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_CATEGORY;
 import static prography.team5.server.common.exception.ErrorType.INVALID_INFORMATION_CARD_ID;
 import static prography.team5.server.common.exception.ErrorType.INVALID_VOTE_CARD_ID;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -40,6 +42,7 @@ import prography.team5.server.common.exception.SachosaengException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookmarkService {
 
     private final VoteCardBookmarkRepository voteCardBookmarkRepository;
@@ -51,6 +54,10 @@ public class BookmarkService {
 
     @Transactional
     public void createVoteCardBookmark(final Long userId, final VoteCardBookmarkCreationRequest request) {
+        log.info("voteId: {}", request.voteId());
+        if(Objects.isNull(request.voteId())) {
+            throw new SachosaengException(EMPTY_VOTE_CARD_ID);
+        }
         final VoteCard voteCard = voteCardRepository.findById(request.voteId())
                 .orElseThrow(() -> new SachosaengException(INVALID_VOTE_CARD_ID));
         if (voteCardBookmarkRepository.existsByVoteCardAndUserId(voteCard, userId)) {
