@@ -79,7 +79,7 @@ public class AuthController implements AuthApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
-    @DeleteMapping("/withdraw")
+    @PostMapping("/withdraw")
     public ResponseEntity<CommonApiResponse<EmptyData>> withdraw(
             @AuthRequired final Accessor accessor,
             @RequestBody final WithdrawRequest withdrawRequest

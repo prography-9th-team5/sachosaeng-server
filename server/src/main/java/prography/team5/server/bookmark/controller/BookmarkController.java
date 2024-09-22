@@ -57,7 +57,7 @@ public class BookmarkController implements BookmarkApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
-    @DeleteMapping("/votes")
+    @PostMapping("/votes/delete")
     public ResponseEntity<CommonApiResponse<EmptyData>> deleteVoteCardBookmarks(
             @AuthRequired Accessor accessor,
             @RequestBody VoteCardBookmarkDeletionRequest request
@@ -124,7 +124,7 @@ public class BookmarkController implements BookmarkApiDocs {
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
     }
 
-    @DeleteMapping("/information")
+    @PostMapping("/information/delete")
     public ResponseEntity<CommonApiResponse<EmptyData>> deleteInformationCardBookmarks(
             @AuthRequired Accessor accessor,
             @RequestBody InformationCardBookmarkDeletionRequest request
