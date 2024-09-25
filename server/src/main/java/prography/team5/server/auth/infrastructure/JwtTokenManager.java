@@ -10,11 +10,13 @@ import io.jsonwebtoken.security.SignatureException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import javax.crypto.SecretKey;
+import lombok.extern.slf4j.Slf4j;
 import prography.team5.server.auth.service.AccessTokenManager;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.common.exception.ErrorType;
 import prography.team5.server.common.exception.SachosaengException;
 
+@Slf4j
 public class JwtTokenManager implements AccessTokenManager {
 
     private static final String ACCESSOR_ID = "accessorId";
@@ -79,6 +81,7 @@ public class JwtTokenManager implements AccessTokenManager {
 
     @Override
     public Accessor extractFromLoginToken(final String token) {
+        log.info("token: {}", token);
         try {
             final Claims payload = Jwts.parser()
                     .verifyWith(joinKey)
