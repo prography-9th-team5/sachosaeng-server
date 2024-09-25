@@ -45,12 +45,12 @@ public class JwtTokenManager implements AccessTokenManager {
                 .compact();
     }
 
-    @Override
-    public String provideLoginToken(final long id) {
-        Date now = new Date();
-        return Jwts.builder()
-                .claim(ACCESSOR_ID, id)
-                .claim(CODE, USER_CODE)
+        @Override
+        public String provideLoginToken(final long id) {
+            Date now = new Date();
+            return Jwts.builder()
+                    .claim(ACCESSOR_ID, id)
+                    .claim(CODE, "login")
                 .issuedAt(now)
                 .expiration(new Date(now.getTime() + expirationMinutes * MINUTES_TO_MILLISECONDS))
                 .signWith(joinKey)
