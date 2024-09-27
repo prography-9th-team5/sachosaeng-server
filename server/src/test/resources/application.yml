@@ -25,6 +25,7 @@ auth:
     issuer: "testissuer"
     aud: "testaudience"
     sub: "testsubject"
+    key: "testkey"
 
 design:
   hot-vote:
