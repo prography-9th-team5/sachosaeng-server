@@ -3,7 +3,6 @@ package prography.team5.server.auth.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.AuthApiDocs;
 import prography.team5.server.auth.service.AuthService;
+import prography.team5.server.auth.service.dto.AppleTokenResponse;
 import prography.team5.server.auth.service.dto.JoinResponse;
 import prography.team5.server.auth.service.dto.TokenRequest;
 import prography.team5.server.auth.service.dto.TokenResponse;
@@ -87,5 +87,13 @@ public class AuthController implements AuthApiDocs {
         authService.withdraw(accessor, withdrawRequest);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
+    }
+
+    @GetMapping("/apple-token")
+    public ResponseEntity<CommonApiResponse<AppleTokenResponse>> createAppleToken(
+    ) {
+        AppleTokenResponse response = authService.createAppleToken();
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 }

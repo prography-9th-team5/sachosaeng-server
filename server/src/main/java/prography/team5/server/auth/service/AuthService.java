@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prography.team5.server.auth.domain.Withdraw;
 import prography.team5.server.auth.domain.WithdrawRepository;
+import prography.team5.server.auth.infrastructure.AppleClientSecretManager;
+import prography.team5.server.auth.service.dto.AppleTokenResponse;
 import prography.team5.server.auth.service.dto.JoinResponse;
 import prography.team5.server.auth.service.dto.TokenRequest;
 import prography.team5.server.auth.service.dto.TokenResponse;
@@ -30,6 +32,7 @@ public class AuthService {
     private final AccessTokenManager accessTokenManager;
     private final UUIDRefreshTokenManager refreshTokenManager;
     private final WithdrawRepository withdrawRepository;
+    private final AppleClientSecretManager appleClientSecretManager;
 
     @Transactional
     public JoinResponse joinNewUser(final JoinRequest joinRequest, final SocialType socialType) {
@@ -89,5 +92,9 @@ public class AuthService {
         user.withdraw();
         //withdrawRepository.save(withdraw);
         refreshTokenManager.invalidateRefreshToken(accessor.id());
+    }
+
+    public AppleTokenResponse createAppleToken() {
+        return new AppleTokenResponse(appleClientSecretManager.provideToken());
     }
 }

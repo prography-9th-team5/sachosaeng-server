@@ -20,6 +20,11 @@ auth:
     join-key: testkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkeytestkey
   refresh-token:
     expiration-days: 14
+  apple:
+    kid: "testkid"
+    issuer: "testissuer"
+    aud: "testaudience"
+    sub: "testsubject"
 
 design:
   hot-vote:

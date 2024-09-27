@@ -57,6 +57,9 @@ dependencies {
     implementation 'com.github.ben-manes.caffeine:caffeine'
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.70'
 }
 
 tasks.named('test') {
@@ -67,7 +70,7 @@ processResources.dependsOn('copySecret')
 
 tasks.register('copySecret', Copy) {
     from './server-secret'
-    include "application*.yml"
+    include '**/*'
     into 'src/main/resources'
 }
 
