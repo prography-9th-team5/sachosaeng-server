@@ -105,6 +105,6 @@ public interface AuthApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "인증 성공입니다.")
     ResponseEntity<CommonApiResponse<AppleTokenResponse>> createAppleToken(
-            @AuthRequired final Accessor accessor
+            @Parameter(hidden = true) final Accessor accessor
     );
 }
