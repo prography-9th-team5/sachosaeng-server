@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import prography.team5.server.auth.controller.AuthRequired;
+import prography.team5.server.auth.service.dto.AppleTokenResponse;
 import prography.team5.server.auth.service.dto.JoinResponse;
 import prography.team5.server.auth.service.dto.TokenRequest;
 import prography.team5.server.auth.service.dto.TokenResponse;
@@ -96,4 +98,13 @@ public interface AuthApiDocs {
     )
     @ApiResponse(responseCode = "200", description = "인증 성공입니다.")
     ResponseEntity<CommonApiResponse<EmptyData>> test(@Parameter(hidden = true) final Accessor accessor);
+
+    @Operation(
+            summary = "[인증 토큰 필요] 애플 토큰 생성 API",
+            description = "애플 토큰을 생성합니다."
+    )
+    @ApiResponse(responseCode = "200", description = "인증 성공입니다.")
+    ResponseEntity<CommonApiResponse<AppleTokenResponse>> createAppleToken(
+            @AuthRequired final Accessor accessor
+    );
 }

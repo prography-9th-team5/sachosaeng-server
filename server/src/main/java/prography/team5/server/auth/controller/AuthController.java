@@ -91,6 +91,7 @@ public class AuthController implements AuthApiDocs {
 
     @GetMapping("/apple-token")
     public ResponseEntity<CommonApiResponse<AppleTokenResponse>> createAppleToken(
+            @AuthRequired final Accessor accessor
     ) {
         AppleTokenResponse response = authService.createAppleToken();
         return ResponseEntity.ok()
