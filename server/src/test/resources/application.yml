@@ -29,6 +29,7 @@ auth:
   admin:
     username: "test"
     password: "test"
+    redirect: "http://localhost:8080"
 
 design:
   hot-vote:
