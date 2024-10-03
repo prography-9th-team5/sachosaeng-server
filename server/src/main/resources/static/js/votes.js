@@ -142,7 +142,7 @@ function openEditModal(element) {
             fetch('/api/v1/categories')
                 .then(response => response.json())
                 .then(categoryData => {
-                    categoryData.data.forEach(category => {
+                    categoryData.data.categories.forEach(category => {
                         const categoryDiv = document.createElement('div');
                         categoryDiv.classList.add('category');
 

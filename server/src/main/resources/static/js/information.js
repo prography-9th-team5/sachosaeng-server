@@ -157,7 +157,7 @@ function loadEditCategories(selectedCategories) {
             const editCategoryCheckboxes = document.getElementById('editCategoryCheckboxes');
             editCategoryCheckboxes.innerHTML = ''; // Clear existing categories
 
-            data.data.forEach(category => {
+            data.data.categories.forEach(category => {
                 const categoryDiv = document.createElement('div');
                 categoryDiv.classList.add('category');
 
