@@ -12,6 +12,8 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 
     @Value("${auth.admin.username}")
     private String adminUsername;
+    @Value("${auth.admin.redirect}")
+    private String adminRedirect;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -20,7 +22,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 
         if (session == null || session.getAttribute("user") == null) {
             // 세션이 없거나 만료되었으면 로그인 페이지로 리다이렉트
-            response.sendRedirect("/login-please");
+            response.sendRedirect(adminRedirect + "/login-please");
             return false;
         }
 
@@ -28,7 +30,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
         String username = (String) session.getAttribute("user");
         if (!adminUsername.equals(username)) {
             // 잘못된 사용자 정보일 경우
-            response.sendRedirect("/login-please");
+            response.sendRedirect(adminRedirect + "/login-please");
             return false;
         }
 

@@ -17,6 +17,8 @@ public class AdminHomeController {
     private String adminUsername;
     @Value("${auth.admin.password}")
     private String adminPassword;
+    @Value("${auth.admin.redirect}")
+    private String adminRedirect;
 
     @GetMapping("/admin")
     public ModelAndView home(ModelAndView modelAndView) {
@@ -38,8 +40,8 @@ public class AdminHomeController {
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
             session.setMaxInactiveInterval(3600);//1시간 = 3600
-            return "redirect:/admin";
+            return "redirect:" + adminRedirect + "/admin";
         }
-        return "redirect:/login-please?fail";
+        return "redirect:" + adminRedirect + "/login-please?fail";
     }
 }
