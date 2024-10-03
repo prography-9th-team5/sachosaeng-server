@@ -26,6 +26,9 @@ auth:
     aud: "testaudience"
     sub: "testsubject"
     key: "testkey"
+  admin:
+    username: "test"
+    password: "test"
 
 design:
   hot-vote:
