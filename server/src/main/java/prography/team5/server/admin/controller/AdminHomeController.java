@@ -40,7 +40,11 @@ public class AdminHomeController {
             HttpSession session = request.getSession();
             session.setAttribute("user", username);
             session.setMaxInactiveInterval(3600);//1시간 = 3600
-            return "redirect:" + adminRedirect + "/admin";
+
+            // 원래 요청했던 경로로 리다이렉트
+            String redirectUrl = (String) session.getAttribute("redirectUrl");
+            session.removeAttribute("redirectUrl");
+            return "redirect:" + adminRedirect + redirectUrl;
         }
         return "redirect:" + adminRedirect + "/login-please?fail";
     }

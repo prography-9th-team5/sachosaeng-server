@@ -3,6 +3,7 @@ package prography.team5.server.common.config;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -47,6 +48,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // /admin 경로에 대해 인터셉터 적용
         registry.addInterceptor(adminLoginInterceptor)
-                .addPathPatterns("/admin/**"); // /admin 경로에만 적용
+                .addPathPatterns("/admin/**", "/swagger-ui/**"); // /admin, swagger 경로에만 적용
     }
 }
