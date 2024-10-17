@@ -20,6 +20,10 @@ import org.springframework.context.annotation.Configuration;
                     에러 문서 보러가기-> https://bit.ly/sachosaeng-error-docs \n
                     이제부터 api 추가/수정되는 부분은 아래에 써놓을게요. 궁금한점 이상한점 원하는점은 카톡으로 쏴주세요. \n
                     
+                    [10/17 업데이트]
+                    1. 유저가 투표 등록을 요청하는 API가 추가되었습니다. POST /api/v1/votes
+                    2. 유저의 투표 등록 히스토리를 조회하는 API가 추가되었습니다. GET /api/v1/votes/my
+                    
                     [09/22 업데이트]
                     1. 리프레시 토큰을 이용해 엑세스 토큰을 재발급할 때, 리프레시 토큰도 같이 새로 발급하여 필드에 담아 보내도록 하였습니다. 기존 리프레시 토큰은 폐기됩니다. \n
                     2. refresh, login api 의 경우 X-Device 헤더에 기기정보를 같이 담아 보내면(선택이예요), 응답으로 발급된 리프레시 토큰을 해당 기기에서만 사용할 수 있도록 보안이 강화됩니다. \n
