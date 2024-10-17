@@ -25,7 +25,10 @@ import prography.team5.server.card.repository.UserVoteOptionRepository;
 import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.VoteCardRepository;
 import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.card.service.dto.MyVotePreviewsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
+import prography.team5.server.card.service.dto.VoteCreationRequest;
+import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.category.domain.Category;
 import prography.team5.server.category.domain.CategoryRepository;
@@ -216,5 +219,29 @@ public class VoteService {
         voteCard.changeVoteOption(voteOptionIdesBefore, voteOptionIdsNew);
         userVoteOptionRepository.saveAll(votedNow);
         userVoteOptionRepository.deleteAll(votedBefore);
+    }
+
+    @Transactional
+    public VoteIdResponse create(final VoteCreationRequest request, final Long userId) {
+        final List<Category> categories = categoryRepository.findAllByIdIn(request.categoryIds());
+        final VoteCard voteCard = VoteCard.of(request.title(), categories, request.isMultipleChoiceAllowed(), userId);
+        voteCard.updateVoteOptions(request.voteOptions());
+        return new VoteIdResponse(voteCardRepository.save(voteCard).getId());
+    }
+
+    public MyVotePreviewsResponse findMyVotes(final Long id, final Long cursor, final Integer size) {
+        final PageRequest pageRequest = PageRequest.ofSize(size);
+        long realCursor = Long.MAX_VALUE;
+        if(cursor != null) {
+            realCursor = cursor;
+        }
+        final Slice<VoteCard> slices = voteCardRepository.findByWriterIdBeforeCursor(id, realCursor,
+                pageRequest);
+        final List<VoteCard> votes = slices.getContent();
+        Long nextCursor = null;
+        if(!votes.isEmpty()) {
+            nextCursor = votes.getLast().getId();
+        }
+        return MyVotePreviewsResponse.toResponse(votes, slices.hasNext(), nextCursor);
     }
 }

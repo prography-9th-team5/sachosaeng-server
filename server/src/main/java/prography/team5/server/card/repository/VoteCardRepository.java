@@ -36,4 +36,12 @@ public interface VoteCardRepository extends JpaRepository<VoteCard, Long> {
 
     @Query("SELECT c FROM VoteCard c WHERE c.participantCount = :minCount ORDER BY c.id ASC")
     List<VoteCard> findWithFewestParticipants(@Param("minCount") Integer minCount);
+
+    @Query("SELECT c FROM VoteCard c " +
+            "WHERE c.writerId = :writerId AND c.id < :cursor ORDER BY c.id DESC")
+    Slice<VoteCard>  findByWriterIdBeforeCursor(
+            @Param("writerId") Long writerId,
+            @Param("cursor") long realCursor,
+            PageRequest pageRequest
+    );
 }

@@ -10,11 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.auth.service.dto.Accessor;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
+import prography.team5.server.card.service.dto.MyVotePreviewsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
+import prography.team5.server.card.service.dto.VoteCreationRequest;
+import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.card.service.dto.VoteResponse;
 import prography.team5.server.common.CategoriesWrapper;
@@ -106,5 +110,31 @@ public interface VoteApiDocs {
             @Parameter(hidden = true) Accessor accessor,
             @PathVariable(value = "voteId") final long voteId,
             @RequestBody final VoteOptionChoiceRequest request
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 투표 추가 요청 API",
+            description = """
+                    사용자는 투표 추가를 요청할 수 있습니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "투표 추가 요청 성공입니다.")
+    ResponseEntity<CommonApiResponse<VoteIdResponse>> create(
+            @Parameter(hidden = true) Accessor accessor,
+            @RequestBody final VoteCreationRequest request
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 내가 등록한 투표 히스토리 조회 API",
+            description = """
+                    사용자는 자신이 등록한 투표의 히스토리를 조회할 수 있습니다. status는 등록 상태를 나타내며, PENDING -> APPROVED/REJECTED 로 구분됩니다. \n
+                    첫 요청이후엔, 반드시 응답의 lastCursor를 다음 요청의 cursor에 포함시켜서 보내주세요.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "투표 히스토리 조회 성공입니다.")
+    ResponseEntity<CommonApiResponse<MyVotePreviewsResponse>> findMyVotes(
+            @Parameter(hidden = true) Accessor accessor,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     );
 }

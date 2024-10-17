@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
+import prography.team5.server.card.service.dto.MyVotePreviewsResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.domain.SortType;
+import prography.team5.server.card.service.dto.VoteCreationRequest;
+import prography.team5.server.card.service.dto.VoteIdResponse;
 import prography.team5.server.card.service.dto.VoteOptionChoiceRequest;
 import prography.team5.server.common.CategoriesWrapper;
 import prography.team5.server.common.CommonApiResponse;
@@ -94,5 +98,26 @@ public class VoteController implements VoteApiDocs {
         voteService.chooseVoteOption(accessor.id(), voteId, request);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", new EmptyData()));
+    }
+
+    @PostMapping
+    public ResponseEntity<CommonApiResponse<VoteIdResponse>> create(
+            @AuthRequired Accessor accessor,
+            @RequestBody final VoteCreationRequest request
+    ) {
+        final VoteIdResponse response = voteService.create(request, accessor.id());
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<CommonApiResponse<MyVotePreviewsResponse>> findMyVotes(
+            @AuthRequired Accessor accessor,
+            @RequestParam(name = "cursor", required = false) final Long cursor,
+            @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
+    ) {
+        final MyVotePreviewsResponse response = voteService.findMyVotes(accessor.id(), cursor, size);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }
 }

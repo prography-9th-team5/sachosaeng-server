@@ -4,6 +4,8 @@ import static org.apache.logging.log4j.util.Strings.isBlank;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -29,15 +31,40 @@ public class VoteCard extends Card {
 
     @OneToMany(mappedBy = "voteCard", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VoteOption> voteOptions = new ArrayList<>();
-    private Long writerId;
     private String adminName;
     private boolean isMultipleChoiceAllowed;
     private long participantCount;
 
+    //사용자등록
+    private Long writerId;
+    @Getter
+    @Enumerated(value = EnumType.STRING)
+    private ApprovalStatus approvalStatus;
+
+    //유저를 통한 등록
+    private VoteCard(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final long userId) {
+        super(title, categories);
+        this.isMultipleChoiceAllowed = isMultipleChoiceAllowed;
+        this.writerId = userId;
+        this.approvalStatus = ApprovalStatus.PENDING;
+    }
+
+    public static VoteCard of(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final long userId) {
+        if(Strings.isBlank(title)) {
+            throw new SachosaengException(ErrorType.EMPTY_TITLE);
+        }
+        if (categories.isEmpty()) {
+            throw new SachosaengException(ErrorType.EMPTY_CATEGORY);
+        }
+        return new VoteCard(title, categories, isMultipleChoiceAllowed, userId);
+    }
+
+    //어드민을 통한 등록
     private VoteCard(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final String adminName) {
         super(title, categories);
         this.isMultipleChoiceAllowed = isMultipleChoiceAllowed;
         this.adminName = adminName;
+        this.approvalStatus = ApprovalStatus.APPROVED;
     }
 
     public static VoteCard of(final String title, final List<Category> categories, final boolean isMultipleChoiceAllowed, final String adminName) {
