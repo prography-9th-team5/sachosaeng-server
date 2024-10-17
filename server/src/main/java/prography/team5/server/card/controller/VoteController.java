@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import prography.team5.server.auth.controller.AuthRequired;
 import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.MyVotePreviewsResponse;
+import prography.team5.server.card.service.dto.MyVoteResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.VoteCreationRequest;
@@ -117,6 +118,16 @@ public class VoteController implements VoteApiDocs {
             @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
     ) {
         final MyVotePreviewsResponse response = voteService.findMyVotes(accessor.id(), cursor, size);
+        return ResponseEntity.ok()
+                .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
+    }
+
+    @GetMapping("/my/{voteId}")
+    public ResponseEntity<CommonApiResponse<MyVoteResponse>> findMyVote(
+            @AuthRequired Accessor accessor,
+            @PathVariable(value = "voteId") final long voteId
+    ) {
+        final MyVoteResponse response = voteService.findMyVote(accessor.id(), voteId);
         return ResponseEntity.ok()
                 .body(new CommonApiResponse<>(0, "API 요청이 성공했습니다.", response));
     }

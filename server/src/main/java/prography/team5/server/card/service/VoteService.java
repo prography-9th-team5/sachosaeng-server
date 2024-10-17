@@ -26,6 +26,7 @@ import prography.team5.server.card.domain.VoteCard;
 import prography.team5.server.card.repository.VoteCardRepository;
 import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.MyVotePreviewsResponse;
+import prography.team5.server.card.service.dto.MyVoteResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.service.dto.VoteCreationRequest;
 import prography.team5.server.card.service.dto.VoteIdResponse;
@@ -229,6 +230,7 @@ public class VoteService {
         return new VoteIdResponse(voteCardRepository.save(voteCard).getId());
     }
 
+    @Transactional(readOnly = true)
     public MyVotePreviewsResponse findMyVotes(final Long id, final Long cursor, final Integer size) {
         final PageRequest pageRequest = PageRequest.ofSize(size);
         long realCursor = Long.MAX_VALUE;
@@ -243,5 +245,13 @@ public class VoteService {
             nextCursor = votes.getLast().getId();
         }
         return MyVotePreviewsResponse.toResponse(votes, slices.hasNext(), nextCursor);
+    }
+
+    @Transactional(readOnly = true)
+    public MyVoteResponse findMyVote(final Long userId, final long voteId) {
+        final VoteCard voteCard = voteCardRepository.findByIdAndWriterId(voteId, userId)
+                .orElseThrow(() -> new SachosaengException(ErrorType.INVALID_VOTE_CARD_ID));
+
+        return MyVoteResponse.toResponse(voteCard);
     }
 }

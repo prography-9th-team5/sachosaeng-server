@@ -1,6 +1,7 @@
 package prography.team5.server.card.repository;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -48,4 +49,6 @@ public interface VoteCardRepository extends JpaRepository<VoteCard, Long> {
             @Param("cursor") long realCursor,
             PageRequest pageRequest
     );
+
+    Optional<VoteCard> findByIdAndWriterId(long voteId, Long userId);
 }

@@ -16,6 +16,7 @@ import prography.team5.server.card.domain.SortType;
 import prography.team5.server.card.service.dto.CategoryVotePreviewsResponse;
 import prography.team5.server.card.service.dto.CategoryVoteSuggestionsResponse;
 import prography.team5.server.card.service.dto.MyVotePreviewsResponse;
+import prography.team5.server.card.service.dto.MyVoteResponse;
 import prography.team5.server.card.service.dto.SimpleVoteResponse;
 import prography.team5.server.card.service.dto.VoteCreationRequest;
 import prography.team5.server.card.service.dto.VoteIdResponse;
@@ -136,5 +137,17 @@ public interface VoteApiDocs {
             @Parameter(hidden = true) Accessor accessor,
             @RequestParam(name = "cursor", required = false) final Long cursor,
             @RequestParam(name = "size", required = false, defaultValue = "10") final Integer size
+    );
+
+    @Operation(
+            summary = "[인증 토큰 필요] 내가 등록한 투표 단일 조회 API",
+            description = """
+                    사용자는 자신이 등록한 투표의 상세 내역을 조회할 수 있습니다. status는 등록 상태를 나타내며, PENDING -> APPROVED/REJECTED 로 구분됩니다.
+                    """
+    )
+    @ApiResponse(responseCode = "200", description = "단일 투표 조회 성공입니다.")
+    ResponseEntity<CommonApiResponse<MyVoteResponse>> findMyVote(
+            @Parameter(hidden = true) Accessor accessor,
+            @PathVariable(value = "voteId") final long voteId
     );
 }
