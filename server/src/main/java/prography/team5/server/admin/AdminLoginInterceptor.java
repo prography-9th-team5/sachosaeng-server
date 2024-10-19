@@ -17,22 +17,10 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 세션이 없는 경우 null 반환
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
 
-        if (session == null || session.getAttribute("user") == null) {
-            // 세션이 없거나 만료되었으면 로그인 페이지로 리다이렉트
-            session = request.getSession();
-            session.setAttribute("redirectUrl", request.getRequestURI());
-            response.sendRedirect(adminRedirect + "/login-please");
-            // 세션에 원래 요청 경로를 저장
-            return false;
-        }
-
-        // 세션 값 검증
         String username = (String) session.getAttribute("user");
         if (!adminUsername.equals(username)) {
-            session = request.getSession();
             session.setAttribute("redirectUrl", request.getRequestURI());
             // 잘못된 사용자 정보일 경우
             response.sendRedirect(adminRedirect + "/login-please");
