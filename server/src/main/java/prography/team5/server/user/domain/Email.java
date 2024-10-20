@@ -40,9 +40,6 @@ public class Email {
     }
 
     public void encrypt() {
-        //todo: 개발용 임시 주석
-        //this.value = EmailEncryptor.encrypt(this.value);
-        UUID uuid = UUID.randomUUID();
-        this.value = "email@test" + uuid.toString();
+        this.value = EmailEncryptor.encrypt(this.value);
     }
 }
